@@ -1,0 +1,262 @@
+﻿@model DomainModel.DTO.Conversation.Chat
+<style>
+    .GetMessageContainer {
+        display: flex;
+        height: 1080px
+    }
+
+    .SideBarGetMessageContainer {
+        width: 230px;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .LeftGetMessageContainer {
+        width: 75%;
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+        height: 50%;
+    }
+
+    .HeaderBarGetMessageContainer {
+        width: 100%;
+        height: auto;
+    }
+    .direct-chat-messages {
+        -webkit-transform: translate(0, 0);
+        -ms-transform: translate(0, 0);
+        -o-transform: translate(0, 0);
+        transform: translate(0, 0);
+        padding: 10px;
+        height: 400px;
+        overflow: auto;
+        }
+</style>
+
+<div class="GetMessageContainer">
+    <div class="SideBarGetMessageContainer">
+        @await Component.InvokeAsync("BaseView")
+    </div>
+    <div class="LeftGetMessageContainer">
+        
+        <div class="box box-danger direct-chat direct-chat-danger">
+            <div class="box-header with-border">
+                <h3 class="box-title">گفتگو</h3>
+
+                <div class="box-tools pull-right">
+                    <span data-toggle="tooltip" title="" class="badge bg-red" data-original-title="3 New Messages">
+                        3
+                    </span>
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="" data-widget="chat-pane-toggle" data-original-title="Contacts">
+                        <i class="fa fa-comments"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <!-- Conversations are loaded here -->
+                @foreach (var item in Model.Messages)
+                {
+                    @if (item.EmployeeMessages.Count != 0)
+                    {
+                        <div>
+                            employee
+                            @item.MessageBody
+                        </div>
+                    }
+                    else
+                    {
+                        <div>
+                            @item.MessageBody
+                        </div>
+                    }
+                        
+                }
+                <!--/.direct-chat-messages-->
+                <!-- Contacts are loaded here -->
+                <div class="direct-chat-contacts">
+                    <ul class="contacts-list">
+                        <li>
+                            <a href="#">
+                                <img class="contacts-list-img" src="../dist/img/user1-128x128.jpg" alt="User Image">
+
+                                <div class="contacts-list-info">
+                                    <span class="contacts-list-name">
+                                        محمد
+                                        <small class="contacts-list-date pull-right">2/28/2015</small>
+                                    </span>
+                                    <span class="contacts-list-msg">پشتیبانی</span>
+                                </div>
+                                <!-- /.contacts-list-info -->
+                            </a>
+                        </li>
+                        <!-- End Contact Item -->
+                    </ul>
+                    <!-- /.contatcts-list -->
+                </div>
+                <!-- /.direct-chat-pane -->
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                @if (Model.isAccept == false)
+                {
+                    <span conversation-id="@Model.ConversationId" id="BtnAcceptAdmin" class="btn btn-success btn-flat"> قبول کردن </span>
+                }
+                else
+                {
+                    <form id="AdminMessageForm">
+                        <div class="input-group">
+                            <input value="@Model.ConversationId" name="conversationId" type="hidden" class="form-control">
+                            <input value="@Model.UserName" name="UserName" type="hidden" class="form-control">
+                            <input  type="text"  name="message" placeholder="پیام" class="form-control">
+                            <span class="input-group-btn">
+                                <span id="BtnSendAdminMessage" class="btn btn-danger btn-flat"> ارسال </span>
+                            </span>
+                        </div>
+                    </form>
+                }
+                
+            </div>
+            <!-- /.box-footer-->
+        </div>
+        
+    </div>
+</div>
+<script>
+    $(document).on("click", "#BtnSendAdminMessage", function () {
+        var Url = '@Url.Action("AddMessageInchatToConversation", "Message")';
+        var data = $("#AdminMessageForm").serialize();
+        console.log(data)
+        debugger
+        $.ajax({
+            url: Url,
+            type: "POST",
+            data : data,
+            success: function (result) {
+                window.location.href = window.location.href;
+            },
+            error: function (result) {
+
+            }
+        });
+
+    });
+    $(document).on("click", "#BtnAcceptAdmin", function () {
+        var Url = '@Url.Action("AcceptAdmin", "Message")';
+        var data = $(this).attr("conversation-id");
+        $.ajax({
+            url: Url,
+            type: "POST",
+            data: "conversationId=" +data,
+            success: function (result) {
+                
+                var urlx = '@Url.Action("AcceptAdminUpdate", "Message")';
+                $.ajax({
+                    url: urlx,
+                    type: "POST",
+                    data: result,
+                    success: function (resultupdate) {
+                        window.location.href = window.location.href;
+
+                    },
+                    error: function (result) {
+
+                    }
+                });
+            },
+            error: function (result) {
+
+            }
+        });
+
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* <div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">جدول ریسپانسیو</h3>
+                            <div class="box-tools">
+                                <div class="input-group input-group-sm" style="width: 150px;">
+                                    <input type="text" name="table_search" class="form-control pull-right" placeholder="جستجو">
+                                    <div class="input-group-btn">
+                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-hover">
+                                <tr>
+                                    <th>شماره</th>
+                                    <th>کاربر</th>
+                                    <th>تاریخ</th>
+                                    <th>وضعیت</th>
+                                    <th>دلیل</th>
+                                </tr>
+                                <tr>
+                                    <td>183</td>
+                                    <td>جان</td>
+                                    <td>۱۳ مرداد ۱۳۹۶</td>
+                                    <td><span class="label label-success">تایید شده</span></td>
+                                    <td>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </td>
+                                </tr>
+                                <tr>
+                                    <td>219</td>
+                                    <td>الکساندر</td>
+                                    <td>۱۴ مرداد ۱۳۹۶</td>
+                                    <td><span class="label label-warning">در حال بررسی</span></td>
+                                    <td>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </td>
+                                </tr>
+                                <tr>
+                                    <td>657</td>
+                                    <td>باب</td>
+                                    <td>۱۵ مرداد ۱۳۹۶</td>
+                                    <td><span class="label label-primary">در انتظار</span></td>
+                                    <td>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </td>
+                                </tr>
+                                <tr>
+                                    <td>175</td>
+                                    <td>مایک</td>
+                                    <td>۱۶ مرداد ۱۳۹۶</td>
+                                    <td><span class="label label-danger">رد شده</span></td>
+                                    <td>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+            </div>
+        </div> *@

@@ -1,0 +1,25 @@
+﻿@model IEnumerable<DomainModel.DTO.Message.MessageNotRead>
+<script>
+
+</script>
+@foreach (var messageNotRead in Model)
+{
+    
+    <li>
+        <!-- start message -->
+        <a id="MessageComponentsLinkToMessage" asp-controller="Message" asp-action="GetConversation" asp-route-messageId="@messageNotRead.messageId">
+            <div class="pull-right">
+                <img src="~/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+            </div>
+            <h4>
+                <div id="UserNameMessage">
+                    @messageNotRead.userName
+                </div>
+                <small><i class="fa fa-clock-o"></i> ۵ دقیقه پیش</small>
+            </h4>
+            <p id="MessageNotReadBody">
+                @messageNotRead.messageBody
+            </p>
+        </a>
+    </li>
+}

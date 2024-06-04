@@ -1,0 +1,150 @@
+﻿@model List<DomainModel.Models.User>
+<style>
+    .topTableBtn {
+        margin:  0 14px 10px 0;
+    }
+</style>
+
+<div>
+    <div class="col-lg-4 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-yellow">
+            <div class="inner">
+                <h3>44</h3>
+                <p>
+                    کاربران ثبت شده در 24 ساعت گذشته
+                </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-person-add"></i>
+            </div>
+            <a href="#" class="small-box-footer">اطلاعات بیشتر <i class="fa fa-arrow-circle-left"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-4 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-blue-gradient">
+            <div class="inner">
+                <h3>44</h3>
+                <p>
+                    کاربران ثبت شده در هفته گذشته
+                </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-person-add"></i>
+            </div>
+            <a href="#" class="small-box-footer">اطلاعات بیشتر <i class="fa fa-arrow-circle-left"></i></a>
+        </div>
+    </div>
+    <div class="col-lg-4 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-aqua">
+            <div class="inner">
+                <h3>44</h3>
+                <p>
+                    کاربران ثبت شده در ماه گذشته
+                </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-person-add"></i>
+            </div>
+            <a href="#" class="small-box-footer">اطلاعات بیشتر <i class="fa fa-arrow-circle-left"></i></a>
+        </div>
+    </div>
+</div>
+
+
+<div class="topTableBtn">
+    <div  id="AddNewUserPageBtn" class="btn btn-success">
+        افزودن کابر جدید
+    </div>
+    <div id="FilterBtn" class="btn btn-success">
+        فیلتر ها
+    </div>
+    <div id="SortedBtn" class="btn btn-success">
+        مرتب سازی
+    </div>
+</div>
+
+
+
+<table class="table table-hover table-bordered table-active table-sm">
+    <thead>
+    <tr>
+        <th>
+            آیدی کابر
+        </th>
+        <th>
+            جنسیت
+        </th>
+        <th>
+            سطح دسترسی
+        </th>
+        <th>
+            نام کاربری
+        </th>
+        <th>
+            نام
+        </th>
+        <th>
+            نام خانوادگی
+        </th>
+
+        <th>
+            ایمیل
+        </th>
+        <th>
+            شماره تلفن
+        </th>
+        <th>
+            وضعیت
+        </th>
+                        
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender.GenderName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role.RoleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Active)
+            </td>
+                            
+            <td>
+                <span id="Delete" data="@item.UserId" class="btn btn-danger">  حذف </span>
+                <span id="Update" data="@item.UserId" class="btn btn-success">  ویرایش </span>
+                <span id="Details" data="@item.UserId" class="btn btn-group">  جزئیات </span>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+            
+
+

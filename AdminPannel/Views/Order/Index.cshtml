@@ -1,0 +1,201 @@
+﻿<style>
+    .SideBarGetMessageContainer {
+        width: 230px;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .xxxxx {
+        display: flex;
+    }
+
+    .GetAllOrderContainrt {
+        height: 1050px;
+    }
+
+    .GetAllOrderLeftContainer {
+        display: flex;
+        height: 100%;
+    }
+
+    .MainGetAllOrderContainrt {
+        width: 88%;
+        margin-top: 70px;
+    }
+
+    .modal-dialog-scrollable {
+        width: 60%;
+        margin: auto auto;
+    }
+
+    .HeaderBarContainer {
+        width: 100%;
+        
+    }
+    
+</style>
+<script>
+    $(document).on("click", "#Delete", function () {
+
+        var Url = '@Url.Action("DeleteOrder", "Order")';
+        var data = "orderId=" + $(this).attr("data");
+        $.ajax({
+            url: Url,
+            data: data,
+            type: "Delete",
+            success: function (result) {
+                if (result.success == false) {
+                    $("#modal-body2").html(result.message);
+                    $("#modal2").show();
+                }
+                if (result.success == true) {
+                    $("#modal-body2").html(result.message);
+                    $("#modal2").show();
+                }
+                else {
+                    $("#modal-body2").html(result);
+                    $("#modal2").show();
+                }
+            },
+            error: function (result) {
+
+            }
+        });
+
+    });
+    $(document).on("click", "#Update", function () {
+
+        var Url = '@Url.Action("UpdateOrderPage", "Order")';
+        var data = "orderId=" + $(this).attr("data");
+        $.ajax({
+            url: Url,
+            data: data,
+            type: "GET",
+            success: function (result) {
+                $("#modal").show();
+                $("#modal-body").html(result);
+            },
+            error: function (result) {
+
+            }
+        });
+    });
+
+    $(document).on("click", "#AddNewOrderPageBtn", function () {
+
+        var Url = '@Url.Action("AddNewOrderPage", "Order")';
+        $.ajax({
+            url: Url,
+            type: "GET",
+            success: function (result) {
+                $("#modal").show();
+                $("#modal-body").html(result);
+            },
+            error: function (result) {
+
+            }
+        });
+    });
+    $(document).on("click", "#UpdateFormBtn", function () {
+
+        var Url = '@Url.Action("UpdateOrder", "Order")';
+        var data = $("#UpdateOrderForm").serialize();
+        $.ajax({
+            url: Url,
+            data: data,
+            type: "POST",
+            success: function (result) {
+                if (result.success == false) {
+                    $("#modal-body2").html(result);
+                    $("#modal2").show();
+                }
+                if (result.success == true) {
+                    $("#modal-body2").html(result);
+                    $("#modal2").show();
+                }
+                else {
+                    $("#modal-body2").html(result);
+                    $("#modal2").show();
+                }
+            },
+            error: function (result) {
+
+            }
+        });
+
+
+    });
+    $(document).on("click", "#BtnAddNewOrder", function () {
+
+        var Url = '@Url.Action("AddNewOrder", "Order")';
+        var data = $("#AddNewOrderForm").serialize();
+        $.ajax({
+            url: Url,
+            data: data,
+            type: "POST",
+            success: function (result) {
+
+                if (result.success == false) {
+                    $("#modal-body2").html(result.message);
+                    $("#modal2").show();
+                }
+                if (result.success == true) {
+                    $("#modal-body2").html(result.message);
+                    $("#modal2").show();
+                }
+                else {
+                    $("#modal-body2").html(result);
+                    $("#modal2").show();
+                }
+
+            },
+            error: function (result) {
+
+            }
+        });
+
+
+    });
+    $(document).on("click", "#Details", function () {
+        var Url = '@Url.Action("OrderDetails", "Order")';
+        var id = $(this).attr("data");
+
+        var data = "orderId=" + id;
+        $.ajax({
+            url: Url,
+            data: data,
+            type: "GET",
+            success: function (result) {
+                $(".MainGetAllOrderContainrt").html(result);
+            },
+            error: function (result) {
+
+            }
+        });
+
+
+    });
+    $(document).on("click", "#BtnCloseModal", function () {
+        $("#modal").hide();
+
+    });
+    $(document).on("click", "#BtnCloseModal2", function () {
+
+        $("#modal2").hide();
+    });
+</script>
+
+<div class="GetAllOrderContainrt">
+    <div class="HeaderBarContainer">
+        @await Component.InvokeAsync("HeaderBar")
+    </div>
+    <div class="GetAllOrderLeftContainer">
+        <div class="SideBarGetMessageContainer">
+            @await Component.InvokeAsync("BaseView")
+        </div>
+        <div class="MainGetAllOrderContainrt">
+            @await Component.InvokeAsync("Order")
+
+        </div>
+    </div>
+</div>

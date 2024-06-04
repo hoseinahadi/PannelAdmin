@@ -1,0 +1,81 @@
+﻿@model IEnumerable<DomainModel.Models.Product>
+
+
+
+<div class="topTableBtn">
+    <div id="AddNewPageBtn" class="btn btn-success">
+        افزودن 
+    </div>
+    <div id="FilterBtn" class="btn btn-success">
+        فیلتر ها
+    </div>
+    <div id="SortedBtn" class="btn btn-success">
+        مرتب سازی
+    </div>
+</div>
+
+
+
+<table class="table table-hover table-bordered ta">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OnSale)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Currency.CurrencyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.State)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OnSale)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Currency.CurrencyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.State)
+                </td>
+                
+                <td>
+                    <span id="Delete" data="@item.ProductId" class="btn btn-danger">  حذف </span>
+                    <span id="Update" data="@item.ProductId" class="btn btn-success">  ویرایش </span>
+                    <span id="Details" data="@item.ProductId+" class="btn btn-group">  جزئیات </span>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

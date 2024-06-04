@@ -1,0 +1,64 @@
+﻿@model IEnumerable<DomainModel.Models.Message>
+
+
+<div class="topTableBtn">
+    <div id="AddNewMessagePageBtn" class="btn btn-success">
+        افزودن 
+    </div>
+    <div id="FilterBtn" class="btn btn-success">
+        فیلتر ها
+    </div>
+    <div id="SortedBtn" class="btn btn-success">
+        مرتب سازی
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MessageId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MessageBody)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MessageHeader)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Read)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MessageTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MessageId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MessageBody)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MessageHeader)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Read)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MessageTime)
+            </td>
+            <td>
+
+                <span id="Delete" data="@item.MessageId" class="btn btn-danger"> حذف </span>
+                <span id="Update" data="@item.MessageId" class="btn btn-success"> ویرایش </span>
+                <span id="Details" data="@item.MessageId" class="btn btn-group"> جزئیات </span>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

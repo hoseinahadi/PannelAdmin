@@ -1,0 +1,128 @@
+﻿@model IEnumerable<DomainModel.Models.Product>
+
+<script>
+    document.getElementById("selectProduct").disabled = true;
+    var product = [];
+    $(document).on("change",
+        "#selectProduct",
+        function() {
+            
+            for (let i = 0; i < product.length; i++) {
+                
+            }
+            
+            debugger;
+            if ($(this).attr("data-id")) {
+                
+            }
+            if ($(this).is(':checked')) {
+                product.push($(this).attr("data-id"));
+                
+                
+            } else {
+                const index = product.indexOf($(this).attr("data-id"));
+                if (index > -1) {
+                    product.splice(index, 1);
+                }
+                
+            }
+        });
+    // $(document).on("click",
+    //     "#AddProductToOrder",
+    //     function () {
+            
+    //         for (var i = 0; i < product.length; i++) {
+    //             var newDiv = $('<div id="ProductOrderDiv"></div>').text("آیدی محصول :"+product[i]);
+    //             $("#ProductOrder").append(newDiv);
+    //         }
+    //         $("#modal3").hide();
+    //         console.log(product);
+
+    //     });
+    // $(document).ready(function() {
+    //     $("#selectProduct").change(function() {
+    //         if ($(this).is(':checked')) {
+    //             product.splice(0);
+    //             product.push($(this).attr("data-id"));
+    //         }
+    //     });
+    // });
+    $(document).ready(function() {
+        $("#AddProductToOrder").click(function() {
+            for (var i = 0; i < product.length; i++) {
+                            var newDiv = $('<div id="ProductOrderDiv"></div>').text("آیدی محصول :"+product[i]);
+                            $("#ProductOrder").append(newDiv);
+                            
+            }
+                        $("#modal3").hide();
+            console.log(product);
+            
+
+        });
+    });
+
+</script>
+
+
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            انتخاب
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OnSale)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.State)
+        </th>
+
+
+    </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+                    <input id="selectProduct" type="checkbox"  data-id="@item.ProductId" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OnSale)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.State)
+        </td>
+                
+
+
+
+    </tr>
+}
+    </tbody>
+</table>
+<span id="AddProductToOrder" class="btn btn-success"> افزودن </span>

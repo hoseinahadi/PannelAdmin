@@ -1,0 +1,17 @@
+D:\Project\Back\ASp\AdminPannel\Framework\bin\Debug\net8.0\Framework.deps.json
+D:\Project\Back\ASp\AdminPannel\Framework\bin\Debug\net8.0\Framework.dll
+D:\Project\Back\ASp\AdminPannel\Framework\bin\Debug\net8.0\Framework.pdb
+D:\Project\Back\ASp\AdminPannel\Framework\bin\Debug\net8.0\BusinessServices.dll
+D:\Project\Back\ASp\AdminPannel\Framework\bin\Debug\net8.0\DomainModel.dll
+D:\Project\Back\ASp\AdminPannel\Framework\bin\Debug\net8.0\BusinessServices.pdb
+D:\Project\Back\ASp\AdminPannel\Framework\bin\Debug\net8.0\DomainModel.pdb
+D:\Project\Back\ASp\AdminPannel\Framework\obj\Debug\net8.0\Framework.csproj.AssemblyReference.cache
+D:\Project\Back\ASp\AdminPannel\Framework\obj\Debug\net8.0\Framework.GeneratedMSBuildEditorConfig.editorconfig
+D:\Project\Back\ASp\AdminPannel\Framework\obj\Debug\net8.0\Framework.AssemblyInfoInputs.cache
+D:\Project\Back\ASp\AdminPannel\Framework\obj\Debug\net8.0\Framework.AssemblyInfo.cs
+D:\Project\Back\ASp\AdminPannel\Framework\obj\Debug\net8.0\Framework.csproj.CoreCompileInputs.cache
+D:\Project\Back\ASp\AdminPannel\Framework\obj\Debug\net8.0\Framework.csproj.Up2Date
+D:\Project\Back\ASp\AdminPannel\Framework\obj\Debug\net8.0\Framework.dll
+D:\Project\Back\ASp\AdminPannel\Framework\obj\Debug\net8.0\refint\Framework.dll
+D:\Project\Back\ASp\AdminPannel\Framework\obj\Debug\net8.0\Framework.pdb
+D:\Project\Back\ASp\AdminPannel\Framework\obj\Debug\net8.0\ref\Framework.dll

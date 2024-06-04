@@ -1,0 +1,98 @@
+﻿@model DomainModel.Models.User
+
+@{
+    ViewData["Title"] = "UserProfile";
+}
+<style>
+    .outerContainer {
+        display: flex;
+    }
+</style>
+<h2>
+    پروفایل
+</h2>
+
+<div class="outerContainer">
+    <div class="SideBarGetMessageContainer">
+        @await Component.InvokeAsync("BaseView")
+    </div>
+    <div class="LeftGetMessageContainer">
+        <hr />
+        <dl class="dl-horizontal rtl table table-bordered table-hover">
+            <dt>
+                آیدی کاربر
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.UserId)
+            </dd>
+            <dt>
+                جنسیت
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Gender.GenderName)
+            </dd>
+            <dt>
+                سطح دسترسی
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Role.RoleName)
+            </dd>
+            <dt>
+                نام کاربری
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.UserName)
+            </dd>
+            <dt>
+                نام
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.FirstName)
+            </dd>
+            <dt>
+                نام خانوادگی
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
+
+            <dt>
+                ایمیل
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+            <dt>
+                شماره تلفن
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Phone)
+            </dd>
+            <dt>
+                وضعیت فعال سازی
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Active)
+            </dd>
+            <dt>
+                تاریخ افزودن
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.AddDate)
+            </dd>
+            <dt>
+                تاریخ تولد
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.BirthDay)
+            </dd>
+            <dt>
+                اخرین بازدید
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.LastSeen)
+            </dd>
+        </dl>
+    </div>
+</div>
+

@@ -1,0 +1,2379 @@
+﻿@using DomainModel.Models
+
+@{
+    int messageCount = ViewBag.messageNotReadCount;
+    var UserName = ViewBag.FullName;
+    var UserId = ViewBag.UserId;
+    var RoleId = ViewBag.RoleId;
+    int xxx = 20;
+
+}
+<style>
+    .main-header .navbar-custom-menu, .main-header .navbar-left {
+        float: left;
+        display: flex;
+        width: 96%;
+        justify-content: flex-end;
+    }
+
+    .navbar-nav {
+        float: right;
+        display: flex;
+        flex-direction: row;
+        width: 40%;
+        justify-content: space-between;
+    }
+
+    .st0 {
+        fill: #808080;
+        stroke: #FFFFFF;
+        stroke-width: 0.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .st1 {
+        font-family: 'Roboto-Regular';
+    }
+
+    .st2 {
+        font-size: 14px;
+    }
+
+    .CityInformation {
+        display: none;
+        color: black;
+        flex-direction: column;
+    }
+
+    #CityName {
+        position: absolute;
+    }
+
+    .st0:hover {
+        fill: black;
+    }
+
+    .knob-label {
+        display: flex;
+    }
+    a {
+        cursor: pointer;
+     }
+</style>
+
+
+
+
+<script>
+    $(document).on("mouseover", ".st0", function () {
+        // var cityId = ;
+        var cityId = $(this).attr("city-id");
+        $("#CityNameH1").html(cityId);
+        $(".CityInformation").html(cityId);
+        // مهمممممممممممم اطلاعات صحیح وارد بشه
+        $(".CityInformation").css({ display: "flex" });
+    });
+    $(document).on("click", ".dropdown-toggle", function () {
+
+        var Url = '@Url.Action("NotReadMessage", "Message")';
+
+        $.ajax({
+            url: Url,
+            type: "GET",
+            success: function (result) {
+                $("#MessageNotReadHomePage").html(result);
+            },
+            error: function (result) {
+
+            }
+        });
+
+    });
+    $(document).on("click", "#BtnCloseModal", function () {
+        $("#modal").hidden();
+    });
+
+    $(document).ready(function () {
+        Url = '@Url.Action("OnGetRevenueData", "Table")';
+        $.ajax({
+            type: "Get",
+            url: Url,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                var Order = response.xxx;
+
+                var receive = response.receive;
+                console.log("Order" + " " + Order);
+                console.log("receive" + " " + receive);
+
+                var labels = response.month;
+                var color1 = [];
+                var color2 = [];
+                for (var i = 0; i < response.month.length; i++) {
+                    color1.push("rgba(255, 99, 132, 0.2)");
+                    color2.push("rgba(54, 162, 235, 0.2)");
+                }
+
+                var ctx = document.getElementById("chartContainer");
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'سفارش ها',
+                            data: Order,
+                            backgroundColor: color1,
+                        },
+                        {
+                            label: 'تعداد تحویلی',
+                            data: receive,
+                            backgroundColor: color2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            xAxes: [{
+                                display: false,
+                                ticks: {
+
+                                    beginAtZero: true
+                                },
+                                gridLines: {
+                                    offsetGridLines: true,
+                                    drawOnChartArea: false,
+                                }
+                            },
+                            {
+
+                                ticks: {
+
+                                },
+                                gridLines: {
+                                    offsetGridLines: true
+                                }
+                            }],
+                            yAxes: [{
+                                display: false,
+                                ticks: {
+                                    beginAtZero: true
+                                },
+                                
+                            }]
+                        }
+                    }
+
+                });
+
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+    });
+    $(document).on("click",
+        "#saleChart",
+        function() {
+
+            Url = '@Url.Action("OnGetRevenueData", "Table")';
+            $.ajax({
+                type: "Get",
+                url: Url,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var Order = response.xxx;
+
+                    var receive = response.receive;
+                    console.log("Order" + " " + Order);
+                    console.log("receive" + " " + receive);
+
+                    var labels = response.month;
+                    var color1 = [];
+                    var color2 = [];
+                    for (var i = 0; i < response.month.length; i++) {
+                        color1.push("rgba(255, 99, 132, 0.2)");
+                        color2.push("rgba(54, 162, 235, 0.2)");
+                    }
+
+                    var ctx = document.getElementById("chartContainer");
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'سفارش ها',
+                                data: Order,
+                                backgroundColor: color1,
+                            },
+                            {
+                                label: 'تعداد تحویلی',
+                                data: receive,
+                                backgroundColor: color2
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                xAxes: [{
+                                    display: false,
+                                    ticks: {
+
+                                        beginAtZero: true
+                                    },
+                                    gridLines: {
+                                        offsetGridLines: true,
+                                        drawOnChartArea: false,
+                                    }
+                                },
+                                {
+
+                                    ticks: {
+
+                                    },
+                                    gridLines: {
+                                        offsetGridLines: true
+                                    }
+                                }],
+                                yAxes: [{
+                                    display: false,
+                                    ticks: {
+                                        beginAtZero: true
+                                    },
+
+                                }]
+                            }
+                        }
+
+                    });
+
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        });
+
+
+
+
+    (document).on("click",
+        "#saleChart",
+        function () {
+
+            Url = '@Url.Action("OnGetRevenueData", "Table")';
+            $.ajax({
+                type: "Get",
+                url: Url,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var Order = response.xxx;
+
+                    var receive = response.receive;
+                    console.log("Order" + " " + Order);
+                    console.log("receive" + " " + receive);
+
+                    var labels = response.month;
+                    var color1 = [];
+                    var color2 = [];
+                    for (var i = 0; i < response.month.length; i++) {
+                        color1.push("rgba(255, 99, 132, 0.2)");
+                        color2.push("rgba(54, 162, 235, 0.2)");
+                    }
+
+                    var ctx = document.getElementById("chartContainer");
+                    var myChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'سفارش ها',
+                                data: Order,
+                                backgroundColor: color1,
+                            },
+                            {
+                                label: 'تعداد تحویلی',
+                                data: receive,
+                                backgroundColor: color2
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                xAxes: [{
+                                    display: false,
+                                    ticks: {
+
+                                        beginAtZero: true
+                                    },
+                                    gridLines: {
+                                        offsetGridLines: true,
+                                        drawOnChartArea: false,
+                                    }
+                                },
+                                {
+
+                                    ticks: {
+
+                                    },
+                                    gridLines: {
+                                        offsetGridLines: true
+                                    }
+                                }],
+                                yAxes: [{
+                                    display: false,
+                                    ticks: {
+                                        beginAtZero: true
+                                    },
+
+                                }]
+                            }
+                        }
+
+                    });
+
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        });
+
+</script>
+
+<!DOCTYPE html>
+<html>
+
+
+
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+
+        <header class="main-header">
+            <!-- Logo -->
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <!-- Messages: style can be found in dropdown.less-->
+                        <li id="dropdownMessagesMenu" class="dropdown messages-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-envelope-o"></i>
+                                <span class="label label-success">
+                                    @messageCount
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">
+                                    تعداد @messageCount پیام نخوانده دارید
+                                </li>
+                                <li>
+                                    <!-- inner menu: contains the actual data -->
+                                    <ul id="MessageNotReadHomePage" class="menu">
+                                    </ul>
+                                </li>
+                                <li class="footer"><a asp-controller="Message" asp-action="GetAllMessage">نمایش تمام پیام ها</a></li>
+                            </ul>
+                        </li>
+                        <!-- Notifications: style can be found in dropdown.less -->
+                        <li class="dropdown notifications-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-bell-o"></i>
+                                <span class="label label-warning">۱۰</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">۱۰ اعلان جدید</li>
+                                <li>
+                                    <!-- inner menu: contains the actual data -->
+                                    <ul class="menu">
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-users text-aqua"></i> ۵ کاربر جدید ثبت نام کردند
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-warning text-yellow"></i> اخطار دقت کنید
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-users text-red"></i> ۴ کاربر جدید ثبت نام کردند
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-shopping-cart text-green"></i> ۲۵ سفارش جدید
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-user text-red"></i> نام کاربری را تغییر دادید
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="footer"><a href="#">نمایش همه</a></li>
+                            </ul>
+                        </li>
+                        <!-- Tasks: style can be found in dropdown.less -->
+                        <li class="dropdown tasks-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-flag-o"></i>
+                                <span class="label label-danger">۹</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">۹ کار برای انجام دارید</li>
+                                <li>
+                                    <!-- inner menu: contains the actual data -->
+                                    <ul class="menu">
+                                        <li>
+                                            <!-- Task item -->
+                                            <a href="#">
+                                                <h3>
+                                                    ساخت دکمه
+                                                    <small class="pull-left">20%</small>
+                                                </h3>
+                                                <div class="progress xs">
+                                                    <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar"
+                                                         aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                        <span class="sr-only">20% تکمیل شده</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <!-- end task item -->
+                                        <li>
+                                            <!-- Task item -->
+                                            <a href="#">
+                                                <h3>
+                                                    ساخت قالب جدید
+                                                    <small class="pull-left">40%</small>
+                                                </h3>
+                                                <div class="progress xs">
+                                                    <div class="progress-bar progress-bar-green" style="width: 40%" role="progressbar"
+                                                         aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                        <span class="sr-only">40% تکمیل شده</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <!-- end task item -->
+                                        <li>
+                                            <!-- Task item -->
+                                            <a href="#">
+                                                <h3>
+                                                    تبلیغات
+                                                    <small class="pull-left">60%</small>
+                                                </h3>
+                                                <div class="progress xs">
+                                                    <div class="progress-bar progress-bar-red" style="width: 60%" role="progressbar"
+                                                         aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                        <span class="sr-only">60% تکمیل شده</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <!-- end task item -->
+                                        <li>
+                                            <!-- Task item -->
+                                            <a href="#">
+                                                <h3>
+                                                    ساخت صفحه فرود
+                                                    <small class="pull-left">80%</small>
+                                                </h3>
+                                                <div class="progress xs">
+                                                    <div class="progress-bar progress-bar-yellow" style="width: 80%" role="progressbar"
+                                                         aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                        <span class="sr-only">80% تکمیل شده</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <!-- end task item -->
+                                    </ul>
+                                </li>
+                                <li class="footer">
+                                    <a href="#">نمایش همه</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- User Account: style can be found in dropdown.less -->
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="~/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                                <span class="hidden-xs">
+                                    @UserName
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- User image -->
+                                <li class="user-header">
+                                    <img src="~/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+
+                                    <p>
+                                        @UserName
+                                        <small>مدیریت کل سایت</small>
+                                    </p>
+                                </li>
+                                <!-- Menu Body -->
+                                <li class="user-body">
+                                    <div class="row">
+                                        <div class="col-xs-4 text-center">
+                                            <a href="#">صفحه من</a>
+                                        </div>
+                                        <div class="col-xs-4 text-center">
+                                            <a href="#">فروش</a>
+                                        </div>
+                                        <div class="col-xs-4 text-center">
+                                            <a href="#">دوستان</a>
+                                        </div>
+                                    </div>
+                                    <!-- /.row -->
+                                </li>
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-right">
+                                        <a asp-route-id="@UserId" asp-controller="User" asp-action="UserProfile" class="btn btn-default btn-flat">پروفایل</a>
+                                    </div>
+                                    <div class="pull-left">
+                                        <a asp-controller="Account" asp-action="SignOut" class="btn btn-default btn-flat">خروج</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- Control Sidebar Toggle Button -->
+                        <li>
+                            <a data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- right side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- Sidebar user panel -->
+                <div class="user-panel">
+                    <div class="pull-right image">
+                        <img src="~/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    </div>
+                    <div class="pull-right info">
+                        <p>
+                            @UserName
+                        </p>
+                        <a href="#"><i class="fa fa-circle text-success"></i> آنلاین</a>
+                    </div>
+                </div>
+                <!-- search form -->
+                <form action="#" method="get" class="sidebar-form">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="جستجو">
+                        <span class="input-group-btn">
+                            <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+                <!-- /.search form -->
+                <!-- sidebar menu: : style can be found in sidebar.less -->
+                <ul class="sidebar-menu" data-widget="tree">
+                    <li class="header">منو</li>
+                    <li class="active treeview">
+                        <a href="#">
+                            <i class="fa fa-dashboard"></i> <span>داشبرد</span>
+                            <span class="pull-left-container">
+                                <i class="fa fa-angle-right pull-left"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="active"><a asp-controller="Home" asp-action="HomePage"><i class="fa fa-circle-o"></i> داشبرد اول</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-files-o"></i>
+                            <span>لایه های صفحه</span>
+                            <span class="pull-left-container">
+                                <span class="label label-primary pull-left">4</span>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="~/pages/layout/top-nav.html"><i class="fa fa-circle-o"></i> نوار بالا</a></li>
+                            <li><a href="~/pages/layout/boxed.html"><i class="fa fa-circle-o"></i> باکس ها</a></li>
+                            <li><a href="~/pages/layout/fixed.html"><i class="fa fa-circle-o"></i> فیکس شده</a></li>
+                            <li><a href="~/pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> سایدبار</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="pages/widgets.html">
+                            <i class="fa fa-th"></i> <span>ویجت ها</span>
+                            <span class="pull-left-container">
+                                <small class="label pull-left bg-green">جدید</small>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-pie-chart"></i>
+                            <span>نمودارها</span>
+                            <span class="pull-left-container">
+                                <i class="fa fa-angle-right pull-left"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="~/pages/charts/chartjs.html"><i class="fa fa-circle-o"></i>نمودار ChartJS</a></li>
+                            <li><a href="~/pages/charts/morris.html"><i class="fa fa-circle-o"></i>نمودار Morris</a></li>
+                            <li><a href="~/pages/charts/flot.html"><i class="fa fa-circle-o"></i>نمودار Flot</a></li>
+                            <li><a href="~/pages/charts/inline.html"><i class="fa fa-circle-o"></i>نمودار Inline charts</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-laptop"></i>
+                            <span>اشیای گرافیکی</span>
+                            <span class="pull-left-container">
+                                <i class="fa fa-angle-right pull-left"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="~/pages/UI/general.html"><i class="fa fa-circle-o"></i> عمومی</a></li>
+                            <li><a href="~/pages/UI/icons.html"><i class="fa fa-circle-o"></i> آیکون</a></li>
+                            <li><a href="~/pages/UI/buttons.html"><i class="fa fa-circle-o"></i> دکمه</a></li>
+                            <li><a href="~/pages/UI/sliders.html"><i class="fa fa-circle-o"></i> اسلایدر</a></li>
+                            <li><a href="~/pages/UI/timeline.html"><i class="fa fa-circle-o"></i> تایم لاین</a></li>
+                            <li><a href="~/pages/UI/modals.html"><i class="fa fa-circle-o"></i> مدال</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-edit"></i> <span>فرم ها</span>
+                            <span class="pull-left-container">
+                                <i class="fa fa-angle-right pull-left"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="~/pages/forms/general.html"><i class="fa fa-circle-o"></i> اجزای عمومی</a></li>
+                            <li><a href="~/pages/forms/advanced.html"><i class="fa fa-circle-o"></i> پیشرفته</a></li>
+                            <li><a href="~/pages/forms/editors.html"><i class="fa fa-circle-o"></i> ویرایشگر</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-table"></i> <span>جداول</span>
+                            <span class="pull-left-container">
+                                <i class="fa fa-angle-right pull-left"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a asp-controller="User" asp-action="GetAllUser">
+                                    <i class="fa fa-circle-o"></i>
+                                    کاربران
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Order" asp-action="Index">
+                                    <i class="fa fa-circle-o"></i>
+                                    سفارش ها
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <i class="fa fa-circle-o"></i>
+                                    کارمندان
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Message" asp-action="Index">
+                                    <i class="fa fa-circle-o"></i>
+                                    پیام ها
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Category" asp-action="Index">
+                                    <i class="fa fa-circle-o"></i>
+                                    دسته بندی ها
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Product" asp-action="Index">
+                                    <i class="fa fa-circle-o"></i>
+                                    محصولات
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Image" asp-action="Index">
+                                    <i class="fa fa-circle-o"></i>
+                                    عکس ها
+                                </a>
+                            </li>
+                            <li>
+                                <a asp-controller="Address" asp-action="Index">
+                                    <i class="fa fa-circle-o"></i>
+                                    آدرس ها
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <i class="fa fa-circle-o"></i>
+                                    حمل و نقل
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <i class="fa fa-circle-o"></i>
+                                    سبد خرید
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <i class="fa fa-circle-o"></i>
+                                    نظرات
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <i class="fa fa-circle-o"></i>
+                                    کشور ها
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <i class="fa fa-circle-o"></i>
+                                    واحد پول
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <i class="fa fa-circle-o"></i>
+                                    تخفیفات
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <i class="fa fa-circle-o"></i>
+                                    ویژگی ها
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <i class="fa fa-circle-o"></i>
+                                    جنسیت
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <i class="fa fa-circle-o"></i>
+                                    موقعیت مکانی
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <i class="fa fa-circle-o"></i>
+                                    سطوح دسترسی
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <i class="fa fa-circle-o"></i>
+                                    تامین کنندگان
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <i class="fa fa-circle-o"></i>
+                                    مالیات
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="pages/calendar.html">
+                            <i class="fa fa-calendar"></i> <span>تقویم</span>
+                            <span class="pull-left-container">
+                                <small class="label pull-left bg-red">۳</small>
+                                <small class="label pull-left bg-blue">۱۷</small>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="pages/mailbox/mailbox.html">
+                            <i class="fa fa-envelope"></i> <span>ایمیل ها</span>
+                            <span class="pull-left-container">
+                                <small class="label pull-left bg-yellow">۱۲</small>
+                                <small class="label pull-left bg-green">۱۶</small>
+                                <small class="label pull-left bg-red">۵</small>
+                            </span>
+                        </a>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-folder"></i> <span>مثال ها</span>
+                            <span class="pull-left-container">
+                                <i class="fa fa-angle-right pull-left"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="pages/examples/invoice.html"><i class="fa fa-circle-o"></i> سفارش</a></li>
+                            <li><a href="pages/examples/profile.html"><i class="fa fa-circle-o"></i> پروفایل</a></li>
+                            <li><a href="pages/examples/login.html"><i class="fa fa-circle-o"></i> صفحه ورود</a></li>
+                            <li><a href="pages/examples/register.html"><i class="fa fa-circle-o"></i> ثبت نام</a></li>
+                            <li><a href="pages/examples/lockscreen.html"><i class="fa fa-circle-o"></i> قفل صفحه</a></li>
+                            <li><a href="pages/examples/404.html"><i class="fa fa-circle-o"></i> ارور ۴۰۴</a></li>
+                            <li><a href="pages/examples/500.html"><i class="fa fa-circle-o"></i> ارور ۵۰۰</a></li>
+                            <li><a href="pages/examples/blank.html"><i class="fa fa-circle-o"></i> صفحه خالی</a></li>
+                            <li><a href="pages/examples/pace.html"><i class="fa fa-circle-o"></i> صفحه سریع</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-share"></i> <span>چندسطحی</span>
+                            <span class="pull-left-container">
+                                <i class="fa fa-angle-right pull-left"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="#"><i class="fa fa-circle-o"></i> سطح اول</a></li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-circle-o"></i> سطح اول
+                                    <span class="pull-left-container">
+                                        <i class="fa fa-angle-right pull-left"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="#"><i class="fa fa-circle-o"></i> سطح دوم</a></li>
+                                    <li class="treeview">
+                                        <a href="#">
+                                            <i class="fa fa-circle-o"></i> سطح دوم
+                                            <span class="pull-left-container">
+                                                <i class="fa fa-angle-right pull-left"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li><a href="#"><i class="fa fa-circle-o"></i> سطح سوم</a></li>
+                                            <li><a href="#"><i class="fa fa-circle-o"></i> سطح سوم</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i> سطح اول</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>مستندات</span></a></li>
+                    <li class="header">برچسب ها</li>
+                    <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>مهم</span></a></li>
+                    <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>هشدار</span></a></li>
+                    <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>اطلاعات</span></a></li>
+                </ul>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    داشبرد
+                    <small>کنترل پنل</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> خانه</a></li>
+                    <li class="active">داشبرد</li>
+                </ol>
+            </section>
+
+            <!-- Main content -->
+            <section class="content">
+                <!-- Small boxes (Stat box) -->
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-aqua">
+                            <div class="inner">
+                                <h3>150</h3>
+
+                                <p>سفارش جدید</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">اطلاعات بیشتر <i class="fa fa-arrow-circle-left"></i></a>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-green">
+                            <div class="inner">
+                                <h3>53<sup style="font-size: 20px">%</sup></h3>
+
+                                <p>افزایش امتیاز</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-stats-bars"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">اطلاعات بیشتر <i class="fa fa-arrow-circle-left"></i></a>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-yellow">
+                            <div class="inner">
+                                <h3>44</h3>
+
+                                <p>کاربران ثبت شده</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-person-add"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">اطلاعات بیشتر <i class="fa fa-arrow-circle-left"></i></a>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-xs-6">
+                        <!-- small box -->
+                        <div class="small-box bg-red">
+                            <div class="inner">
+                                <h3>65</h3>
+
+                                <p>بازدید جدید</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-pie-graph"></i>
+                            </div>
+                            <a href="#" class="small-box-footer">اطلاعات بیشتر <i class="fa fa-arrow-circle-left"></i></a>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                </div>
+                <!-- /.row -->
+                <div class="row">
+                    <section class="col-lg-12 col-md-12">
+                        <div class="box box-info">
+                            <div class="box-header">
+                                <i class="fa fa-info-circle"></i>
+                                <h3 class="box-title"> پنل ادمین قطعه فروشی قیاسوند </h3>
+                                <!-- tools box -->
+                                <div class="pull-left box-tools">
+                                    <button type="button" class="btn bg-info btn-sm" data-widget="collapse">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                                <!-- /. tools -->
+                            </div>
+                            <div class="box-body">
+                                <h5>
+                                    فروش قطعات یدکی ایران خودرو و لوازم مصرفی انواع خودرو
+                                </h5>
+                                <br>
+                                <h5>
+                                    <b>
+                                        ویژگی های فروشگاه
+                                    </b>
+                                </h5>
+                                <h5>
+                                    ۱-
+                                    فروش کلیه قطعات ایران خودرو
+
+                                </h5>
+                                <h5>
+                                    ۲-
+                                    فروش کلیه قطعات ایساکو
+                                </h5>
+                                <h5>
+                                    ۳-
+                                    لوازم مصرفی خودرو
+                                </h5>
+                                <h5>۴- لوازم تزئینی</h5>
+
+                                <br>
+                                <h6></h6>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <!-- Main row -->
+                <div class="row">
+                    <!-- right col -->
+                    <section class="col-lg-7 connectedSortable">
+                        <!-- Custom tabs (Charts with tabs)-->
+                        <div class="nav-tabs-custom">
+                            <!-- Tabs within a box -->
+                            <ul class="nav nav-tabs pull-left">
+                                <li class="active"><a id data-toggle="tab">نمودار</a></li>
+                                <li><a id="saleChart" data-toggle="tab">چارت</a></li>
+                                <li class="pull-right header"><i class="fa fa-inbox"></i> فروش</li>
+                            </ul>
+                            <canvas id="chartContainer" class="tab-content no-padding " height="500px" width="700px">
+                                <!-- Morris chart - Sales -->
+                                <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 400px;"></div>
+                                <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 400px;"></div>
+                            </canvas>
+                        </div>
+                        <!-- /.nav-tabs-custom -->
+                        <!-- Chat box -->
+                        <div class="box box-success">
+                            <div class="box-header">
+                                <i class="fa fa-comments-o"></i>
+
+                                <h3 class="box-title">گفتگو</h3>
+
+                                <div class="box-tools pull-left" data-toggle="tooltip" title="وضعیت">
+                                    <div class="btn-group" data-toggle="btn-toggle">
+                                        <button type="button" class="btn btn-default btn-sm active">
+                                            <i class="fa fa-square text-green"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-square text-red"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-body chat" id="chat-box">
+                                <!-- chat item -->
+                                <div class="item">
+                                    <img src="~/dist/img/user4-128x128.jpg" alt="user image" class="online">
+
+                                    <p class="message">
+                                        <a href="#" class="name">
+                                            <small class="text-muted pull-left"><i class="fa fa-clock-o"></i> 2:15</small>
+                                            نسترن
+                                        </a>
+                                        فایل مورد نظر شما
+                                    </p>
+                                    <div class="attachment">
+                                        <h4>فایل ضمیمه</h4>
+
+                                        <p class="filename">
+                                            Theme-thumbnail-image.jpg
+                                        </p>
+
+                                        <div class="pull-left">
+                                            <button type="button" class="btn btn-primary btn-sm btn-flat">دانلود</button>
+                                        </div>
+                                    </div>
+                                    <!-- /.attachment -->
+                                </div>
+                                <!-- /.item -->
+                                <!-- chat item -->
+                                <div class="item">
+                                    <img src="~/dist/img/user3-128x128.jpg" alt="user image" class="offline">
+
+                                    <p class="message">
+                                        <a href="#" class="name">
+                                            <small class="text-muted pull-left"><i class="fa fa-clock-o"></i> 5:15</small>
+                                            نگین
+                                        </a>
+                                        ممنونم
+                                    </p>
+                                </div>
+                                <!-- /.item -->
+                                <!-- chat item -->
+                                <div class="item">
+                                    <img src="~/dist/img/user2-160x160.jpg" alt="user image" class="offline">
+
+                                    <p class="message">
+                                        <a href="#" class="name">
+                                            <small class="text-muted pull-left"><i class="fa fa-clock-o"></i> 5:30</small>
+                                            محمد
+                                        </a>
+                                        با تشکر از شما
+                                    </p>
+                                </div>
+                                <!-- /.item -->
+                            </div>
+                            <!-- /.chat -->
+                            <div class="box-footer">
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="Type message...">
+
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-success"><i class="fa fa-plus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box (chat box) -->
+                        <!-- TO DO List -->
+                        <div class="box box-primary">
+                            <div class="box-header">
+                                <i class="ion ion-clipboard"></i>
+
+                                <h3 class="box-title">لیست کارها</h3>
+
+                                <div class="box-tools pull-left">
+                                    <ul class="pagination pagination-sm inline">
+                                        <li><a href="#">&laquo;</a></li>
+                                        <li><a href="#">1</a></li>
+                                        <li><a href="#">2</a></li>
+                                        <li><a href="#">3</a></li>
+                                        <li><a href="#">&raquo;</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
+                                <ul class="todo-list">
+                                    <li>
+                                        <!-- drag handle -->
+                                        <span class="handle">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </span>
+                                        <!-- checkbox -->
+                                        <input type="checkbox" value="">
+                                        <!-- todo text -->
+                                        <span class="text">ساخت قالب</span>
+                                        <!-- Emphasis label -->
+                                        <small class="label label-danger"><i class="fa fa-clock-o"></i> ۲ دقیقه</small>
+                                        <!-- General tools such as edit or delete-->
+                                        <div class="tools">
+                                            <i class="fa fa-edit"></i>
+                                            <i class="fa fa-trash-o"></i>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span class="handle">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </span>
+                                        <input type="checkbox" value="">
+                                        <span class="text">بهینه سازی قالب سایت</span>
+                                        <small class="label label-info"><i class="fa fa-clock-o"></i> ۴ ساعت</small>
+                                        <div class="tools">
+                                            <i class="fa fa-edit"></i>
+                                            <i class="fa fa-trash-o"></i>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span class="handle">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </span>
+                                        <input type="checkbox" value="">
+                                        <span class="text">ایجاد صفحه فرود سایت</span>
+                                        <small class="label label-warning"><i class="fa fa-clock-o"></i> ۱ روز</small>
+                                        <div class="tools">
+                                            <i class="fa fa-edit"></i>
+                                            <i class="fa fa-trash-o"></i>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span class="handle">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </span>
+                                        <input type="checkbox" value="">
+                                        <span class="text">تبلیغات سایت</span>
+                                        <small class="label label-success"><i class="fa fa-clock-o"></i> ۳ روز</small>
+                                        <div class="tools">
+                                            <i class="fa fa-edit"></i>
+                                            <i class="fa fa-trash-o"></i>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span class="handle">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </span>
+                                        <input type="checkbox" value="">
+                                        <span class="text">بررسی اعلان ها</span>
+                                        <small class="label label-primary"><i class="fa fa-clock-o"></i> ۱ هفته</small>
+                                        <div class="tools">
+                                            <i class="fa fa-edit"></i>
+                                            <i class="fa fa-trash-o"></i>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span class="handle">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </span>
+                                        <input type="checkbox" value="">
+                                        <span class="text">طراحی سیستم جدید</span>
+                                        <small class="label label-default"><i class="fa fa-clock-o"></i> ۲ ماه</small>
+                                        <div class="tools">
+                                            <i class="fa fa-edit"></i>
+                                            <i class="fa fa-trash-o"></i>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer clearfix no-border">
+                                <button type="button" class="btn btn-default pull-left"><i class="fa fa-plus"></i> جدید</button>
+                            </div>
+                        </div>
+                        <!-- /.box -->
+                        <!-- quick email widget -->
+                        <div class="box box-info">
+                            <div class="box-header">
+                                <i class="fa fa-envelope"></i>
+
+                                <h3 class="box-title">ایمیل</h3>
+                                <!-- tools box -->
+                                <div class="pull-left box-tools">
+                                    <button type="button" class="btn btn-info btn-sm" data-widget="remove" data-toggle="tooltip"
+                                            title="Remove">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </div>
+                                <!-- /. tools -->
+                            </div>
+                            <div class="box-body">
+                                <form action="#" method="post">
+                                    <div class="form-group">
+                                        <input type="email" class="form-control" name="emailto" placeholder="ایمیل">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="subject" placeholder="موضوع">
+                                    </div>
+                                    <div>
+                                        <textarea class="textarea" placeholder="متن ایمیل"
+                                                  style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="box-footer clearfix">
+                                <button type="button" class="pull-left btn btn-default" id="sendEmail">
+                                    ارسال
+                                    <i class="fa fa-arrow-circle-left"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </section>
+                    <!-- /.right col -->
+                    <!-- left col (We are only adding the ID to make the widgets sortable)-->
+                    <section class="col-lg-5 connectedSortable">
+
+                        <!-- Map box -->
+                        <div class="box box-solid bg-light-blue-gradient">
+                            <div class="box-header">
+                                <!-- tools box -->
+                                <div class="pull-left box-tools">
+                                    <button type="button" class="btn btn-primary btn-sm daterange pull-left" data-toggle="tooltip"
+                                            title="Date range">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-primary btn-sm pull-left" data-widget="collapse"
+                                            data-toggle="tooltip" title="Collapse" style="margin-left: 5px;">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                                <!-- /. tools -->
+
+                                <i class="fa fa-map-marker"></i>
+
+                                <h3 class="box-title">
+                                    بازدید ها
+                                </h3>
+                            </div>
+                            <div class="box-body">
+                                <div id="world-map" style="height: 350px; width: 100%;">
+                                    <div id="CityName">
+                                        <h1 id="CityNameH1">  </h1>
+
+                                    </div>
+                                    <svg style="width: 100%; height: 100%;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                         viewBox="0 0 800 600" xml:space="preserve">
+
+
+                                    <g id="Iran">
+                                    <path class="st0" city-id="1" d="M126.831,35.275l0.082,0.118l0.441,0.257l0.12,0.07l0.66,0.128l0.711,0.021l-0.092,0.182l-0.121,0.118
+		l0.65,0.465l0.37,0.864l0.924,3.843l0.379,0.805l0.645,0.572l-0.257,0.485l0.115,0.285l0.786,0.571l0.161,0.033l0.334-0.01
+		l0.241,0.066l0.11,0.157l0.067,0.181l0.108,0.14l1.098,0.753l0.014,0.01l0.169,0.204l0.102,0.285l0.252,0.414l0.311,0.377
+		l0.285,0.161l0.249,0.383l0.565,1.266l0.186,0.417l0.263,0.383l0.214,0.43l0.322,1.983l0.199,0.603l0.808-0.251l3.212,1.065
+		l0.08-0.074l0.214-0.147l0.28-0.11l0.29,0.034l0.086,0.25l-0.08,0.374l-0.006,0.34l0.303,0.147l0.43,0.086l0.411,0.259l0.175,0.426
+		l-0.266,0.586l0.205,0.403l0.268,0.202l0.287,0.169l0.29,0.31l0.128,0.314l0.242,0.854l0.156,0.335l0.292,0.216l0.736,0.333
+		l0.148,0.266l-0.068,0.409l-0.126,0.332l-0.091,0.336l0.056,0.427l0.355,0.422l0.655,0.441l0.701,0.346l0.368,0.098l-0.195,0.199
+		l-3.403,3.635l-0.679,1.653l-0.895,4.194l0.424,2.258l0.787,2.084l-0.013,1.958l-1.154,2.091l-5.293,5.488L135.875,88l-0.338,1.707
+		l0.408,1.309l1.953,2.656h0.21l0.003,0.541l0.178,0.288l0.249,0.213l0.201,0.32l0.191,0.7l0.048,0.426l-0.124,0.188l-0.096,0.204
+		l-0.019,1.302l1.087,10.54l0.618,0.837l0.137,0.314l0.038,0.157l0.245,2.347l-0.131,0.207l-0.29,0.163l-0.29,0.242l-0.131,0.44
+		l0.233,0.611l0.424,0.777l0.201,0.71l2.068,2.487l0.762,1.778l-0.351,4.823l0.424,2.091l1.166,1.757l8.999,5.911l4.012,0.716
+		l3.295,0.055l4.273,3.894l0.519,1.034l3.833,2.167l1.329,1.237l1.434,0.602l0.905-0.622l0.507-0.804l0.096-0.344l0.459-1.083
+		l1.013-1.261l1.848-1.207l1.523-0.321l0.749,0.078l0.848-0.803l1.297-0.857l1.421,0.234l0.981,0.992l1.224,0.762l1.571,0.351
+		l0.972,0.84l0.137,0.815l-0.405,0.577l1.224,3.57l-0.029,2.561l1.109,1.619l3.008,0.41l7.319-0.849l4.27,9.572l-0.752,0.238
+		l-0.911,0.555l-0.131,0.756l0.22,0.636l-0.162,0.599l-0.532,1.051l-1.303,1.511l-2.326,1.032l-3.495-0.308l-3.202-0.887
+		l-1.179-0.82l-0.526-0.583l-0.621-0.517l-0.433-0.582l-0.226-0.464l-0.363-0.303l-15.948,1.481l-7.753-1.111l-2.702,1.069
+		l-0.682,0.883l-0.045,1.846l-1.485,2.26l-5.012,1.616l-0.927,1.015l-0.36,0.614l-0.675,0.697l-0.427,1.861l-1.708,1.949
+		l-0.51,1.243l-1.208,1.213l-1.045,0.632l-0.016,0.02l-0.683-0.251l-0.806,0.014l-1.023,0.51l-0.548,0.154l-0.006,0.006
+		l-0.003,0.002h-0.008l-0.002,0.002l-0.609,0.419l-0.685,0.232l-0.663-0.092l-0.542-0.559l-0.006-0.002l-0.003-0.004v-0.006
+		l-0.201-0.614l0.182-0.786l0.379-0.784l0.379-0.605l0.127-0.765l-0.392-0.771l-0.956-1.247l-0.156-0.803l0.076-1.763l-0.143-0.733
+		l-0.449-0.446l-0.574-0.45l-0.175-0.46l0.746-0.484l-0.578-0.741l-0.214-0.666l-0.078-1.649l-0.15-0.886l-0.331-0.96l-0.542-0.687
+		l-0.781-0.057l-1.727,0.691l-0.899,0.071l-0.835-0.394l-0.354-0.406l-0.115-0.348l-0.051-0.378l-0.148-0.497l-0.247-0.368
+		l-0.265-0.256l-0.198-0.315l-0.029-0.543l-0.395-0.43l-0.488-0.421l-0.111-0.096l-0.448-0.577l0.062-0.611l0.137-0.093l0.382-0.151
+		l0.092-0.073l0.029-0.809l0.33-1.312l0.599-1.39l0.049-0.719l-0.328-0.828l-0.749-1.383l-0.456-0.62l-0.516-0.282l-0.401-0.012
+		l-0.36-0.115l-0.319-0.229l-0.284-0.34l-0.385-0.338l-0.446-0.076l-0.956,0.054l-0.803-0.183l-0.615-0.412l-0.242-0.671
+		l0.331-0.951l1.094-1.346l0.425-0.689l0.166-0.928l-0.146-0.865l-0.284-0.629l-0.175-0.683l0.172-1.029l0.338-0.427l0.051-0.419
+		l-0.204-0.347l-0.672-0.355l-0.35-0.383l-0.215-0.122l-0.298,0.014l-0.609,0.19l-0.287-0.062l-0.142-0.192l-0.156-0.589
+		l-0.119-0.251l-0.223-0.164l-0.231-0.072l-0.218-0.101l-0.182-0.259l-0.245-0.683l-0.005-0.38l0.419-1.113l0.191-0.748
+		l-0.191-0.654l-0.29-0.66l-0.099-0.779l0.215-0.693l0.384-0.327l0.425-0.249l0.362-0.472l0.096-1.254l-0.698-0.818l-1.775-1.143
+		l-0.258-0.524l-0.182-0.549l-0.28-0.353l-1.122,0.17l-0.29-0.325l-0.433-1.109l-0.475-0.361l-1.147-0.107l-0.414-0.238
+		l-0.191-0.636l0.411-1.157l-0.124-0.656v-0.006l-0.164-0.793l0.059-0.964l0.201-0.961l0.28-0.782l-0.121-0.665l-0.695-0.528
+		l-0.62-0.703l0.135-1.18l0.255-0.342l1.067-0.864l0.315-0.508l-0.07-0.365l-1.133-1.389l-0.77-0.67l-0.862-0.396l-0.84,0.097
+		l-0.392,0.224l-0.494,0.175l-0.433-0.045l-0.226-0.442l0.021-0.234l0.123-0.623l-0.022-0.196l-0.233-0.182l-0.201,0.042
+		l-0.212,0.077l-0.237-0.079l-0.344-0.443l-0.175-0.481l-0.115-0.452l-0.182-0.357l-0.333-0.238l-1.107-0.537l-0.37-0.113
+		l-1.998,0.235l-1.074-0.175l-0.54-0.854l0.09-0.297l0.042-0.139l0.319-0.401l0.271-0.419l-0.025-0.496l-0.155-0.551l0.056-0.498
+		l0.188-0.476l0.261-0.504l0.003-0.005l0.285-0.562l0.744-0.846l0.271-0.6l0.255-0.822l0.287-0.498l0.405-0.322l0.594-0.289
+		l0.171-0.245l-0.25-0.737l0.043-0.341l0.255-0.222l0.548-0.233l0.229-0.308l0.201-0.573l0.19-0.77l0.107-0.762l-0.132-1.882
+		l0.868-0.988l1.115-0.875l0.691-1.001l-0.013-0.626l-0.236-0.618l-0.379-0.531l-0.437-0.373l-0.481-0.187l-0.392,0.083
+		l-1.016,0.592l-1.541-0.284l-0.454-0.211l-0.282-0.199l-0.091-0.343l0.102-0.645l0.019-0.363l-0.096-0.998l0.003-0.464l0.39-1.587
+		l0.037-0.676l-0.284-2.004l0.143-1.561l0.006-0.817l-0.22-0.654l-0.226-0.257l-0.236-0.157l-0.558-0.18l-0.386-0.199l0.096-0.242
+		l0.268-0.271l0.135-0.288l-0.155-0.712l-0.153-0.472l-0.057-0.498l0.124-0.79l0.836-2.863l-0.148-1.162l-1.635-0.787l-0.5-0.484
+		l-0.421-0.598l-0.296-0.886l-0.134-0.3l-0.102-0.304l0.016-0.33l-0.022-0.36l-0.233-0.247l-0.28-0.217l-0.186-0.284l-0.129-0.612
+		l-0.096-0.268l-0.169-0.276v-0.007l0.437-0.738l0.499-0.416l0.296-0.472l-0.285-1.565l0.156-0.63l0.612-1.204l-0.252-0.978
+		l-1.189-0.847l-1.373-0.723l-0.797-0.614l-0.035-0.343l0.214-0.722l-0.026-0.352l-0.373-0.789l-0.105-0.34l-0.013-0.356
+		l0.076-0.263l0.006-0.296l-0.363-0.788l-0.182-0.846l-0.134-0.378l-0.006-0.016l-0.809-0.96l-0.188-0.482l0.344-0.482l0.628-0.394
+		l0.462-0.169l0.481-0.012l0.685,0.084l0.711-0.078l1.673-0.443l0.738,0.083l2.13,1.062l0.784,0.066l0.679-0.163l1.596-0.73
+		l0.593-0.435l0.519-0.794l0.013-0.722l-0.108-0.753l0.153-0.892l0.005-0.002l0.308-0.473l0.019-0.477l-0.105-0.514l-0.061-0.564
+		l0.061-0.657l0.14-0.537l1.021-2.062l0.183-0.515l0.019-0.152l0.06-0.479l-0.159-1.308l0.137-0.453l3.276-2.704L120.154,30
+		l0.475,0.336l0.832,1.264l0.422,0.485l1.843,0.862l0.599,0.509L126.831,35.275z" />
+
+                                    <path city-id="2" class="st0" d="M167.801,66.179l2.054-0.271l0.538-0.262l1.603-1.165l0.597-0.292l0.408-0.092l1.197-0.048l0.747-0.244
+		l0.328-0.043l0.421,0.093l3.212,1.437l0.554,0.155l0.556-0.033l0.668-0.27l0.497-0.313l0.478-0.395l0.427-0.475l0.354-0.567
+		l0.868-1.803l0.411-0.534l0.562-0.475l1.788-0.915l0.507-0.488l0.518-1.204l0.374-0.587l0.239-0.199l0.51-0.278l0.245-0.199
+		l0.175-0.243l0.792-1.38l0.419-0.487l0.468-0.393l0.007-0.003l0.512-0.237l0.484-0.013l0.86,0.385l0.462,0.125l0.374-0.07
+		l1.846-1.046l0.241,0.786l0.108,0.075l0.038,0.412l0.427,0.486l0.946,0.459l0.456,0.806l0.567,2.425l-0.115,0.789l-0.207,0.719
+		l-0.634,0.869l-2.677,1.847l-1.915,0.258l-1.236,0.718l-1.354,0.255l-1.428-1.167l-0.637,0.039l-0.08,0.603l-0.016,1.157
+		l-0.214,1.097l-0.421,0.373l-1.644-0.395l-1.144,0.126l-0.316,0.566l-0.825,0.483l-1.24,1.636l-0.494,2.464l0.879,2.162
+		l1.574,0.869l2.106-0.763l2.116-1.146l2.023-0.57l4.614,1.308l1.291-1.042l1.166-1.592l1.928-1.459l0.382-0.503l-0.459-0.174
+		l-0.424-0.642l3.537-6.169l2.32-1.57l1.256,0.111l2.077-1.253l1.988-1.783l1.22,0.459l-0.427,4.509l0.478,0.695l0.077,2.985
+		l1.784,4.462l-0.325,2.639l-1.141,1.537l0.026,1.103l1.619,0.921l0.583,1.932l-1.504,1.025l-2.208-0.353l-2.1,0.619l-1.294,1.402
+		l-2.463,1.808l-0.975,1.827l-0.784,1.023l-0.631,1.431l-0.147,2.019l0.37,1.221l1.482-0.588l1.966-0.24l0.975,0.951l0.427,0.316
+		l0.899,0.163l6.93-1.018l2.154,1.073l0.911,2.877l0.194,3.119l1.558,3.861l2.435,3.325l2.058,1.909l0.325,0.703l-0.316,1.079
+		l-0.695,1.486l-0.277,3.551l0.924,4.255l3.008,1.867l0.194-0.112l0.695,0.135l2.262,1.181l0.816,0.719l0.252,2.812l0.8,1.9
+		l1.893,1.252l0.657,0.674l1.399,1.146l-0.076,0.211l-0.153,0.581h0.229l0.274-0.338l0.465-0.162l1.051-0.052l0.443,0.238
+		l0.433,0.883l0.28-0.04l0.427,0.23l0.424,0.152l-0.357,0.21l-1.077,0.86l-2.301,0.904l-7.37-0.767l-2.004,0.335l-2.925-0.453
+		l-9.696,1.129l-1.093,0.459l-1.061,0.639l-1.686,1.829l-2.036,0.974l-0.918,0.671l-1.297,2.157l-4.671,4.76l-0.59,1.209l0.01,1.867
+		l0.182,1.247l-7.319,0.849l-3.008-0.41l-1.109-1.619l0.029-2.561l-1.224-3.57l0.405-0.577l-0.137-0.815l-0.972-0.84l-1.571-0.351
+		l-1.224-0.762l-0.981-0.992l-1.421-0.234l-1.297,0.857l-0.848,0.803l-0.749-0.078l-1.523,0.321l-1.848,1.207l-1.013,1.261
+		l-0.459,1.083l-0.096,0.344l-0.507,0.804l-0.905,0.622l-1.434-0.602l-1.329-1.237l-3.833-2.167l-0.519-1.034l-4.273-3.894
+		l-3.295-0.055l-4.012-0.716l-8.999-5.911l-1.166-1.757l-0.424-2.091l0.351-4.823l-0.762-1.778l-2.068-2.487l-0.201-0.71
+		l-0.424-0.777l-0.233-0.611l0.131-0.44l0.29-0.242l0.29-0.163l0.131-0.207l-0.245-2.347l-0.038-0.157l-0.137-0.314l-0.618-0.837
+		l-1.087-10.54l0.019-1.302l0.096-0.204l0.124-0.188l-0.048-0.426l-0.191-0.7l-0.201-0.32L138.29,94.5l-0.178-0.288l-0.003-0.541
+		h-0.21l-1.953-2.656l-0.408-1.309L135.875,88l1.734-2.944l5.293-5.488l1.154-2.091l0.013-1.958l-0.787-2.084l-0.424-2.258
+		l0.895-4.194l0.679-1.653l3.403-3.635l0.195-0.199l0.485,0.129l0.634,0.372l0.146,0.033l0.234,0.052l0.854,0.03l1.756,0.431
+		l2.747,0.029l1.578,0.62l0.71,0.279l6.497,1.372l2.039,0.925l1.791,0.453L167.801,66.179z" />
+                                    <path city-id="3" class="st0" d="M223.97,32.577l0.423,0.108l0.596,0.412l1.89,1.77l5.181,6.242l2.113,1.957l0.867,1.192l0.685,1.445
+		l-0.325,0.104l-0.8,0.257l-1.622,1.098l-1.931,0.389l-1.039,0.54l-0.892,0.855l-0.567,1.132l-0.057,1.367l0.414,1.066l0.752,1.068
+		l1.756,1.709l1.762,0.733l0.464,0.456l0.93,1.997l0.164,0.502l-0.016,0.553l-0.145,0.537l-0.005,0.019l-0.239,0.511l-0.279,0.42
+		h-0.005l-0.003,0.008l-1.27,0.79l-5.693,1.011l-0.105,0.256l0.006,0.299l-0.089,0.256l-1.616,1.003l-0.287,0.45l0.073,1.629
+		l0.612,1.129l2.004,1.607l4.082,2.024l0.389,0.328l0.082,0.327l0.144,0.576l-0.127,0.772l0.057,0.667l1.495,1.201l0.484,0.719
+		l0.558,0.529l0.948,0.022l1.563-0.731h0.725l0.354,0.854l0.215,1.045l0.398,0.535l0.494,0.452l0.507,0.795l0.519,0.569l0.459,0.651
+		l0.765,0.97l0.401,0.508l0.841,1.413l0.985,0.96l0.157,0.013l0.179,0.407l0.985,0.878l0.644,0.835l0.169,0.739l0.746,0.303
+		l1.163,0.264l0.478,0.511l-0.274,0.711l-6.966,8.298l-0.64,1.507l-0.268,2.075l-0.981,1.534l-0.07,2.138l2.836,7.86l5.117,8.067
+		l1.702,1.758l1.966,1.551l1.036,1.325l0.029,1.105l-0.134,1.695l0.258,2.032l0.338,0.952l-2.078-1.11l-1.083,0.33l-1.214,0.834
+		l-1.112-0.146l-0.88-0.494l-0.593,0.23l-0.373,0.667l-0.003,0.655l-0.414,0.69l-0.953,0.202l-2.301-2.458l-1.271-0.464
+		l-0.898,0.248l-0.424-0.152l-0.427-0.23l-0.28,0.04l-0.433-0.883l-0.443-0.238l-1.051,0.052l-0.465,0.162l-0.274,0.338h-0.229
+		l0.153-0.581l0.076-0.211l-1.399-1.146l-0.657-0.674l-1.893-1.252l-0.8-1.9l-0.252-2.812l-0.816-0.719l-2.262-1.181l-0.695-0.135
+		l-0.194,0.112l-3.008-1.867l-0.924-4.255l0.277-3.551l0.695-1.486l0.316-1.079l-0.325-0.703l-2.058-1.909l-2.435-3.325
+		l-1.558-3.861l-0.194-3.119l-0.911-2.877l-2.154-1.073l-6.93,1.018l-0.899-0.163l-0.427-0.316l-0.975-0.951l-1.966,0.24
+		l-1.482,0.588l-0.37-1.221l0.147-2.019l0.631-1.431l0.784-1.023l0.975-1.827l2.463-1.808l1.294-1.402l2.1-0.619l2.208,0.353
+		l1.504-1.025l-0.583-1.932l-1.619-0.921l-0.026-1.103l1.141-1.537l0.325-2.639l-1.784-4.462l-0.077-2.985l-0.478-0.695l0.427-4.509
+		l-1.22-0.459l-1.988,1.783l-2.077,1.253l-1.256-0.111l-2.32,1.57l-3.537,6.169l0.424,0.642l0.459,0.174l-0.382,0.503l-1.928,1.459
+		l-1.166,1.592l-1.291,1.042l-4.614-1.308l-2.023,0.57l-2.116,1.146l-2.106,0.763l-1.574-0.869l-0.879-2.162l0.494-2.464l1.24-1.636
+		l0.825-0.483l0.316-0.566l1.144-0.126l1.644,0.395l0.421-0.373l0.214-1.097l0.016-1.157l0.08-0.603l0.637-0.039l1.428,1.167
+		l1.354-0.255l1.236-0.718l1.915-0.258l2.677-1.847l0.634-0.869l0.207-0.719l0.115-0.789l-0.567-2.425l-0.456-0.806l-0.946-0.459
+		l-0.427-0.486l-0.038-0.412l-0.108-0.075l-0.241-0.786l0.211-0.119l0.322-0.383l0.159-0.295l0.519-1.51l1.115-1.788l0.105-0.397
+		l0.3-0.342l1.475-0.906l3.072-1.201l0.358-0.204l0.926-0.528l1.019-1.048l0.004-0.004l1.533-1.98l1.007-0.848l1.29-0.714
+		l2.157-0.739l0.691-0.078l0.398-0.273l1.632-1.663l0.555-0.313l3.709-2.095l1.324-1.356l0.48-0.492l0.596-0.416l0.733-0.199
+		l2.345,0.045l0.379-0.095l0.322-0.298l0.357-0.536L223.97,32.577z" />
+                                    <path city-id="4" class="st0" d="M244.172,84.651l1.423,0.118l0.742-0.211l0.835-0.358l0.781-0.49l0.609-0.616l0.69-0.377l0.986,0.007
+		l1.991,0.416l0.09,3.457l-0.349,1.151l0.216,0.838l0.06,2.074l0.582,1.45l0.432,4.795l1.275,4.564l-0.243,0.748l-0.03,0.889
+		l0.133,0.844l0.236,0.601l1.089,1.778l0.01,0.405l-0.095,0.348l-0.048,0.281l0.324,1.53l0.642,1.466l1.563,2.35l2.075,2.161
+		l2.253,1.621l4.973,2.595l2.308,0.781l11.853,1.604l1.272-0.194l1.051-0.433l0.993-0.183l1.102,0.572l-0.294,0.047l-0.341-0.095
+		l-0.178-0.027l-0.241,0.313l2.572,1.003l4.01,0.926l1.445,0.564l0.976,0.928l-0.123,1.4l0.271,0.54l0.401,1.4l0.281,0.56
+		l0.447,0.695l0.725,2.094l0.926,1.53l1.076,1.034l2.228,1.685l1.523,1.853l0.467,0.28l0.6,0.173l1.938,1.316l-0.02,0.13
+		l-0.296,0.981l-1.052,1.461l-1.609,0.861l-1.236,1.231l-0.676,3.193l-1.89,3.385l-1.6,1.042l-4.19-0.413l-2.562,0.566l-0.679,0.367
+		l-0.641,0.222l-5.793,3.145l-1.53,0.273l-2.845-0.569l-0.669-0.462l-0.94-0.158l-1.577,0.061l-4.235-1.266l-1.877-1.767
+		l-1.74-2.213l-0.392-1.222l-0.054-0.654l-2.919-1.404l-1.823-6.336l-1.31-2.122l-3.419-3.62l-4.649-2.969l-0.338-0.952
+		l-0.258-2.032l0.134-1.695l-0.029-1.105l-1.036-1.325l-1.966-1.551l-1.702-1.758l-5.117-8.067l-2.836-7.86l0.07-2.138l0.981-1.534
+		l0.268-2.075l0.64-1.507l6.966-8.298l0.274-0.711l-0.478-0.511l-1.163-0.264l-0.746-0.303l-0.169-0.739l-0.644-0.835l-0.985-0.878
+		L244.172,84.651z" />
+                                    <path city-id="5" class="st0" d="M167.475,204.516l0.065-0.154l-0.223-1.113l-0.736-0.855l-1.705-1.528l-1.972-3.169l-0.401-1.092l-0.013-0.35
+		l0.077-0.305l0.163-0.249l0.244-0.188l0.123-0.151l0.041-0.155l-0.045-0.161l-0.119-0.159l-0.346-0.721l-0.268-0.766l0.14-0.039
+		h0.148l0.942,0.288l0.086-0.523l-0.299-1.458l0.002-0.625l0.108-0.665l0.244-0.602l0.392-0.436l0.634-0.222l2.157,0.067
+		l0.634-0.147l1.545-0.824l1.211,0.069l0.644-0.075l0.481-0.463l0.421-0.622l0.937-0.599l0.489-0.442l0.36-0.621l0.062-0.595
+		l-0.229-0.509l-0.513-0.367l-0.666-0.067l-0.551,0.273l-0.527,0.369l-0.585,0.216l-1.31,0.287l-0.661,0.025l-0.621-0.267
+		l-0.252-0.208l-0.188-0.21l-0.132-0.263l-0.153-0.776l-0.148-0.136l-0.225-0.037l-0.95-0.364l-0.51-0.01l-0.497,0.189l-0.596,0.342
+		l-0.618,0.203l-1.963-0.09l-0.991,0.344l-0.319-0.033l-0.317-0.102l-0.314-0.014l-0.747,0.643l-0.596,0.297l-0.634,0.045
+		l-0.502-0.344l-0.344-0.071l-1.163,0.352l-0.554-0.157l-0.379-0.501l-0.787-1.962l-1.429-2.03l-0.919-0.846l-0.838-0.159
+		l-0.398-0.252l-1.139-1.057l-1.189-0.437l0.016-0.02l1.045-0.632l1.208-1.213l0.51-1.243l1.708-1.949l0.427-1.861l0.675-0.697
+		l0.36-0.614l0.927-1.015l5.012-1.616l1.485-2.26l0.045-1.846l0.682-0.883l2.702-1.069l7.753,1.111l15.948-1.481l0.363,0.303
+		l0.226,0.464l0.433,0.582l0.621,0.517l0.526,0.583l1.179,0.82l3.202,0.887l3.495,0.308l2.326-1.032l1.303-1.511l0.532-1.051
+		l0.162-0.599l-0.22-0.636l0.131-0.756l0.911-0.555l0.752-0.238l0.892,0.902l15.534,3.096l0.105,0.17l0.972,1.085l0.214,0.404
+		l0.121,0.74l0.293,0.854l0.347,0.751l0.29,0.421l-0.319,0.302l-0.064,0.339l0.191,0.926l-0.041,0.263l-0.127,0.244l-0.099,0.251
+		l0.038,0.285l0.128,0.047l0.535,0.069l0.58,2.157l-0.003,3.882l-0.679,2.791l-1.214,1.275l-0.507,1.374l0.424,1.011l8.486,5.173
+		l0.567,0.527l0.609,1.041l0.271,0.813l-4.537-2.486L226.587,187l0.548,1.519l0.905,1.183l0.366,0.81l-0.006,0.959l-2.195,0.744
+		l-0.886,0.869l-1.01,0.449l-0.956-0.258l-1.456-3.036l-0.707,0.074l-1.619,1.808l-0.478,0.96l2.148,3.189l3.323,7.44l1.51,1.844
+		l1.262,0.79l1.762,1.75l0.848,3.487l-0.612,2.815l-1.087,1.74l-1.023,0.903l-0.669-0.359l-0.988-2.444l-0.574,0.145l-0.35,1.057
+		l-1.122,0.611l-1.89,0.54l-0.937,0.508l-0.953,0.032l-1.332-0.194l-4.738-5.354l-3.527-1.607l-1.217-1.043l-0.895-0.076
+		l-0.331,0.719l0.558,1.121l-0.102,1.281l-1.058,0.969l-4.413,0.296l-0.322,0.728l-0.185,2.441l-0.624,0.364l-1.211-0.087
+		l-1.915,0.188l-1.861,1.945l-1.294,0.439l-0.395,0.825l-0.006,1.084l-0.656,0.749l-1.004,0.169l-0.609,0.812l-0.137,1.236
+		l-1.185,0.626l-2.09,0.305l-2.779-0.331l-1.848,0.204l-1.02-1.125l-0.041-1.478l0.245-1.103l-0.127-0.791l-0.704,0.049
+		l-1.319-0.917l-7.412-10.144l-5.857-4.626L167.475,204.516z" />
+                                    <path city-id="6" class="st0" d="M157.329,218.908l0.365,0.195l0.832,0.29l0.468-0.626l0.236-0.921l0.261-0.686l0.081-0.708l-0.285-0.974
+		v-0.006l-0.089-0.514l0.006-0.498l0.15-0.434l0.327-0.325l0.202-0.068l0.433-0.043l0.185-0.095l0.064-0.177l-0.086-0.463
+		l0.032-0.177l0.425-0.705l0.215-0.088l0.456,0.158l0.65,0.423l0.319,0.132l0.397-0.031l0.924,0.401l0.489-0.126l0.452-0.424
+		l0.827-0.5l0.311-0.033l0.551,0.146l0.784-0.261l0.382-0.076l0.331-0.179l0.245-0.456l-0.637-0.746l0.414-1.064l0.667-1.144
+		l0.116-0.992l-0.465-0.392l-1.195,0.012l-0.43-0.3l-0.083-0.595l0.274-0.48l0.382-0.458l0.161-0.381l0.854,0.287l5.857,4.626
+		l7.412,10.144l1.319,0.917l0.704-0.049l0.127,0.791l-0.245,1.103l0.041,1.478l1.02,1.125l1.848-0.204l2.779,0.331l2.09-0.305
+		l1.185-0.626l0.137-1.236l0.609-0.812l1.004-0.169l0.656-0.749l0.006-1.084l0.395-0.825l1.294-0.439l1.861-1.945l1.915-0.188
+		l1.211,0.087l0.624-0.364l0.185-2.441l0.322-0.728l4.413-0.296l1.058-0.969l0.102-1.281l-0.558-1.121l0.331-0.719l0.895,0.076
+		l1.217,1.043l3.527,1.607l4.738,5.354l1.332,0.194l0.953-0.032l0.016,0.571l-0.166,1.05l-1.016,1.175l-1.224,2.75l-1.447,2.141
+		l-3.088,0.355l-0.981,0.388l-0.443,0.586l0.299,1.491l1.565,1.271l2.266,1.241l1.013,0.201l0.835,0.441l0.456,1.548l0.784,1.201
+		l2.632-2.754l1.421-0.624l0.711-0.155l0.589,0.896l0.312,1.525l-0.341,2.471l0.08,1.738l-0.94,0.78l-3.46-0.741l-3.056,0.22
+		l-1.137,1.725l-0.535,1.052l-2.119-0.288l-0.895,0.242l-0.593,0.395l-0.092,0.833l0.28,2.016l-0.175,2.088l-1.494,0.775
+		l-2.205,0.113l-1.778,0.877l-0.188,0.53l0.08,0.362l0.185,0.245l0.21,0.226l0.156,0.3l0.054,0.43l-0.086,0.694l0.032,0.401
+		l0.115,0.283l-0.44,0.72l-0.535,0.383l-0.51-0.158l-1.048-0.089l-4.949,1.146v1.137l0.848,1.269l0.456,0.936l-0.43,2.402
+		l-0.647,1.268l-4.828-0.221l-5.248,1.341l-3.604-0.294l-7.737-2.499l-2.269-1.974l-2.071-1.273l-2.489-0.572l-2.485-0.178
+		l-4.62-1.899l-4.78,0.604l-1.813-0.054l-0.57,0.667l0.43,1.42l-0.338,2.389l-1.173,3.701l-0.653,5.37l-0.699,0.586l-0.108-0.286
+		l-1.453-1.047l-0.468-0.469l-0.421-0.601l-0.309-0.602l-0.214-0.655l-0.132-0.75l-0.221-0.616l-0.405-0.447l-0.475-0.4
+		l-0.414-0.461l-2.743-5.003l-0.057-0.052l-0.067-0.031l-0.076-0.012l-0.911,0.141l-0.801-0.052l-0.699-0.397l-0.637-0.896l0.66-0.3
+		l0.299-0.206l0.255-0.264h0.006v-0.004l0.47-1.033l0.26-0.95l0.347-0.826l0.752-0.662l0.452-0.486l1.246-1.025l0.314-0.421v-0.415
+		l-0.177-0.321l-0.226-0.323l-0.148-0.425l0.062-0.345l0.433-0.705l0.153-0.336l0.411-1.794l0.062-0.921l-0.169-0.847l-0.473-0.733
+		l-0.637-0.407l-0.688,0.004l-0.615,0.495l-0.57-0.423l-0.395-0.808l-0.953-3.074l0.299-0.492l1.619-0.364l0.223-0.205l0.201-0.235
+		l0.175-0.271l0.147-0.297l0.043-1.108l-0.257-1.514l0.127-1.028l1.201,0.354l1.058,0.559l0.953,0.23l2.119,0.168l0.679,0.24
+		l0.183-0.039l0.126-0.242l0.083-0.399l0.008-0.4l-0.091-0.244l-0.344-0.486l-0.099-0.635l-0.014-0.705l-0.097-0.709l-0.127-0.261
+		l-0.158-0.184l-0.151-0.227l-0.096-0.399l-0.108-0.306l-0.226-0.271l-0.277-0.217l-0.255-0.145l-0.459-0.523l0.236-0.605
+		l0.857-0.987l0.096-0.431l-0.072-0.758l0.097-0.45l0.303-0.427l0.39-0.163l0.878-0.093l0.854-0.596l0.156-0.916l-0.061-0.954
+		l0.204-0.723l0.714-0.035L157.329,218.908z" />
+                                    <path city-id="7" class="st0" d="M162.517,271.362l-0.037-0.022l-0.158-0.03l-0.155,0.03l-0.153,0.086l-0.57,0.545l-0.934,0.118l-0.915-0.215
+		l-0.529-0.453l0.481-0.636l1.463-0.896l0.379-0.557l-0.217-0.818l-0.653-0.45l-0.545-0.557l0.121-1.137l-0.666,0.167l-1.498,0.023
+		l-0.562,0.24l-0.897,0.867l-0.507,0.339l-0.538,0.135l-0.21-0.258l0.008-1.316l-0.104-0.274l0.699-0.586l0.653-5.37l1.173-3.701
+		l0.338-2.389l-0.43-1.42l0.57-0.667l1.813,0.054l4.78-0.604l4.62,1.899l2.485,0.178l2.489,0.572l2.071,1.273l2.269,1.974
+		l7.737,2.499l3.604,0.294l5.248-1.341l4.828,0.221l0.647-1.268l0.43-2.402l-0.456-0.936l-0.848-1.269v-1.137l4.949-1.146
+		l1.048,0.089l0.51,0.158l0.424,0.579l0.704,1.637l0.274,1.821l-0.159,1.181l-0.414,0.833l-0.733,0.78l-1.721,1.155l-0.609,0.867
+		l-10.796,3.045l-1.912,1.819l-0.679,1.681l-0.538,0.06l-0.529,0.231l-0.086,0.557l-0.478,1.43l0.038,0.287l0.481,0.279l0.695,1.231
+		l0.969,0.512l0.806,1.028l0.647,0.232l1.683,1.032l0.319,0.134l0.118,0.316l-0.045,0.373l-0.354,0.645l0.086,0.311l0.405,0.49
+		l0.405,0.357l0.555,0.26l1.163,0.368l0.054,0.097l0.045,0.18l0.102,0.172l0.22,0.078l0.166-0.04l0.156-0.173l0.207-0.04
+		l0.239,0.054l0.172,0.137l0.147,0.172l1.526,1.171l0.545,0.253l-0.003,0.486l0.564,0.576l0.787,0.477l1.31,0.324l3.792,1.904
+		l0.325,0.386l0.172,0.459l0.402,0.128l0.456,0.027l0.341,0.152l0.736,0.868l0.605,1.158l0.398,0.447l0.583,0.178l0.456,0.228
+		l1.007,1.118l3.629,4.783l4.964,10.464l0.605,0.889l0.379,0.356l-2.836,6.616l-2.253,3.122l0.051,1.856l0.366,2.329l-1.103,1.803
+		l-3.221,2.118l-0.827,0.33l-0.067-0.097l-0.596-0.248l-0.465-0.058l-0.274-0.312l-0.249-0.372l-0.397-0.252l-0.483-0.139
+		l-0.21-0.164l-0.029-0.288l0.064-0.508l0.121-0.395l0.183-0.32l0.164-0.354l0.048-0.508l-0.161-0.472l-0.601-0.46l-0.166-0.463
+		l-0.3-0.148l-0.197-0.208l-0.545-0.758l-0.116-0.203l-0.145-0.201l-0.919-0.879l-0.142-0.209l-0.205-0.493l0.005-0.181l0.124-0.139
+		l0.271-0.677l0.172-0.202l0.112-0.24l-0.048-0.422l-0.172-0.267l-0.824-0.631l-0.518-0.664l-0.346-0.564l-0.394-0.457l-0.66-0.348
+		l-1.746-0.602l-0.433-0.028l-1.412,0.783l-0.545,0.207l-1.086,0.117l-0.972-0.214l-0.938-0.494l-0.985-0.725l-0.002-0.003h-0.006
+		l-9.282-8.115l-1.278-1.459l-2.02-1.223l-1.416-1.149l-0.118-0.067l-2.876-1.67l-0.863-0.873l-3.073-1.468l-3.274-1.019
+		l-3.634,0.409l-1.805-0.219l-0.656-1.471v-0.006l0.379-0.449l0.513-0.417l0.457-0.476l0.206-0.624l-0.177-0.504l-0.445-0.398
+		l-0.58-0.247l-1.354-0.156l-0.43-0.37l0.03-0.448l0.62-0.347l0.679-0.061l0.516,0.04l0.5-0.1l0.65-0.493l0.832-0.828l0.424-0.519
+		l0.22-0.473l-0.019-0.333l-0.357-0.227l-0.137-0.343l0.021-0.302l0.186-0.707l-0.006-0.379l-0.274-0.622l-0.43-0.438l-0.981-0.797
+		l-1.227-1.74l-1.032-1l-0.159-0.538l-0.018-0.616l-0.094-0.75l-0.249-0.698l-0.35-0.638l-1.036-1.299l-0.094-0.073l-0.097-0.055
+		L162.517,271.362z" />
+                                    <path city-id="8" class="st0" d="M241.646,399.522l-0.217-0.099l-0.954-0.272l-0.459-0.28l-0.427-0.338l-0.201-0.204l-0.143-0.234l-0.274-0.694
+		l-0.064-0.464l-0.562-1.771l-0.084-0.061l-0.175-0.366l-0.615-0.698l-0.386-0.827l-0.061-0.247l0.067-0.396l0.242-0.297
+		l0.296-0.267l0.225-0.308l0.08-0.38l-0.059-0.385l-0.158-0.363l-0.202-0.302l-1.198-1.099l-0.991-1.131l-0.626-1.048l-0.288-0.247
+		l-0.373-0.127l-0.389-0.018l-1.128,0.19l-0.373,0.015l-0.363-0.055l-0.342-0.153l-0.247-0.262l-0.135-0.341l-0.253-1.573
+		l-0.277-0.78l-0.395-0.702l-0.516-0.558l-0.319-0.2l-0.344-0.118l-3.263-0.468l-0.048-1.098l0.105-17.277l-0.099-0.461l-0.33-0.201
+		l-10.131-0.002l0.108-8.708l0.077-6.184l4.698-12.811l0.183-0.821l-0.086-0.771l-0.422-0.649l-1.216-0.917l-0.495-0.553
+		l-0.11-0.274l-0.159-0.636l-0.172-0.328l-0.236-0.22l-0.558-0.366l-0.21-0.291l-1.103-1.983l-0.145-0.641v-0.006l-0.304-0.644
+		l-1.077-0.528l-0.473-0.543l-0.703-1.585l-0.455-0.657l0.827-0.33l3.221-2.118l1.103-1.803l-0.366-2.329l-0.051-1.856l2.253-3.122
+		l2.836-6.616l1.686-2.473l4.213-11.092l1.666-1.274l7.609-0.509l2.164-0.672l3.276-0.242l3.199,0.954l1.584,1.541l1.921,0.589
+		l6.829,0.69l7.182,4.956l4.334,0.413l2.262-0.478l1.491,3.702l1.663,0.894l2.683-0.18l3.091,1.177l1.278,1.737l-0.663,1.018
+		l-0.822,2.728l0.118,1.077l0.503,2.209l4.646,7.367l0.969,2.451l0.749,0.98l0.768,0.556l0.446,0.514l1.456,0.472l0.51,0.511
+		l0.414,0.963l0.835,3.035l0.927,2.181l0.946,1.505l1.533,1.397l0.599,1.052l2.619,2.83l0.899,2.01l-0.086,1.682l-1.679,2.108
+		l-1.096,2.125l-2.055,2.755l-3.693,3.312l-2.377,1.004l-1.048,0.798l-0.777,1.041l-0.51,1.169l0.026,2.109l1.405,5.086l0.092,1.454
+		l-0.156,0.542l-0.137,1.076l-0.309,1.172l0.207,0.879l5.258-0.696l1.246,1.598l2.409,2.395l2.938,1.569l1.74,1.266l0.529,1.891
+		l-1.781,4.199l0.217,1.858l0.985,1.117l0.577,2.373l0.529,5.612l-4.757-0.248l-1.778-0.865l-3.174,0.534l-1.983,0.987l-0.817-0.317
+		l-1.104-0.131l-1.149,0.174l-1.124,0.396l-9.675,6.196l-1.119,0.472l-0.994-0.217l-0.868-1.272l-0.075-0.578l-0.013-1.609
+		l-0.241-0.619l-0.223-0.319l-0.078-0.193l-0.118-0.152l-0.331-0.2l-0.301-0.125l-0.291-0.071l-0.667-0.048l-0.326,0.038
+		l-0.667,0.167l-0.371,0.039l-0.344-0.074l-0.444-0.335l-0.261-0.075l-0.637,0.107l-1.154,0.49l-0.635,0.131l-0.805-0.058
+		l-0.291-0.308l0.043-1.472l-0.093-0.109l-0.427-0.303l-0.13-0.209l-0.015-0.193l0.015-0.536l0.048-0.27l0.128-0.229l-0.015-0.227
+		l-0.371-0.247l-0.178,0.607l-0.324,0.597l-0.444,0.423l-0.527,0.076l-0.557-0.349l-0.263-0.456l-0.331-0.36l-0.534-0.049
+		l-0.715-0.251l-2.04-1.194l-0.422-0.397l-0.203-1.151l-0.542-0.72l-0.808-0.42l-0.991-0.259l0.329-0.586l0.517-0.14l1.26,0.217
+		l0.657-0.034l1.016-0.348l0.564-0.087l0.627,0.154l1.264,0.669l0.434,0.154l0.685,0.068l0.517,0.218l0.417,0.377l0.399,0.557
+		l0.181-0.481l0.585-1.041l0.908-1.167l0.176-0.383l0.03-0.611l-0.637,0.13l-0.459-0.3l-0.286-0.55l-0.241-1.307l-0.364,0.169
+		l-0.479,0.521l-0.482,0.36l0.045-0.456l0.045-0.121l0.12-0.156l-0.256-0.405l-0.263,0.064l-0.316,0.236l-0.429,0.105l-0.183-0.131
+		l-0.344-0.492l-0.211-0.111l-0.196,0.041l-0.289,0.166l-0.156,0.038l-0.617-0.096l-0.557-0.163l-0.522-0.032l-0.524,0.291
+		l-1.107-0.16l-0.878,0.552l-0.226,0.732l0.833,0.367l0.978,0.195l0.773,0.492l0.241,0.634l-0.615,0.629l-0.519-0.009l-1.666-0.228
+		l-0.359,0.105l-1.686,1.575l-0.123,0.16l-0.271,0.429l-0.156,0.446l0.351,0.32l-0.125,0.256l-0.203,0.285l-0.105,0.189l0.228,0.767
+		l0.539,0.549l0.625,0.477l0.504,0.556l0.258,0.635l0.201,0.804l0.173,1.605l-0.06,0.448l-0.273,0.732l-0.088,0.403l0.018,0.378
+		l0.176,0.679l0.018,0.402l-0.193,0.703l-0.409,0.635l-0.557,0.453l-0.632,0.177l-2.093-0.248l-0.539,0.248l-0.597-0.281
+		l-2.158,0.016l-1.31-0.723l-0.499-0.113l-0.083,0.617l0.15,0.426l0.414,0.671l0.083,0.491l-0.09,0.351l-0.226,0.307l-0.279,0.251
+		l-0.263,0.175l-0.708,0.214l-2.263-0.214v-0.243l-0.166,0.216L241.646,399.522z" />
+                                    <path city-id="9" class="st0" d="M507.004,89.89l0.268-0.292l0.535-0.262l0.338-0.043l0.338,0.043l0.66,0.225l0.341,0.222l0.086,0.255
+		l0.013,0.292l0.131,0.345l0.711,1.211l0.558,1.358l0.36,0.547l1.01,1.095l0.357,1.172l0.66,0.942l0.153,0.685l-0.076,0.652
+		l-0.609,2.067l0.781,1.04l4.436,1.768l0.487-0.069l0.481-0.147l0.523-0.084l0.516,0.069l1.571,0.454l1.504-0.032l0.462-0.119
+		l0.465,0.008l0.414,0.257l0.386,0.337l0.395,0.251l0.151,0.014l-3.738,2.31l-1.166,1.189l0.003,1.701l-0.347,1.447l-0.503,1.351
+		l1.176,0.842l13.829,0.66l0.58,0.728l0.392,1.324l0.711,1.622l2.791,2.623l0.851,1.735l0.191,1.562l-0.682,1.245l-0.813,1.003
+		l-0.284,0.673l-0.025,0.768l-0.309,1.152l-1.109,1.555l-1.851,5.475l-1.252,1.552l0.147,1.348l1.507,1.051l0.854,0.94l0.555,1.087
+		l0.822-0.128l0.449-1.168l0.401-0.178l0.264,0.991l0.615,0.945l1.023,0.496l0.112,0.893l-1.829,1.972l-0.201,1.075l0.405,0.607
+		l1.099,0.657l0.255,1.203l-1.026,3.005l-1.154,1.091l-2.339,0.575l-8.54-1.31l-20.412-11.355l-4.923-0.239l-7.424,6.037
+		l-1.778,2.374l-0.245,1.753l0.236,1.364l-0.096,1.045l-4.697,0.799l-1.536-0.595l-2.935-0.503l-1.737-0.578l-3.499-3.016
+		l-3.652-4.112l-0.577-1.215l0.111-0.773l0.58-2.307l0.156-2.616l-0.153-1.026l-0.194-0.411l-0.201-0.309l0.191-0.567l0.793-0.635
+		l1.8-0.538l0.325-0.89l-1.504-0.627l-1.214,0.213l-2.192-1.552l-4.662-6.219l0.934-0.906l2.256-4.003l2.24-0.934l0.937-0.86
+		l0.931-0.425l0.825-0.128l3.61-1.256l1.698-2.361l-0.574-2.377l-1.262-0.965l-1.45-0.722l-1.048-1.246l-0.07-1.77l0.631-2.52
+		l0.026-0.925l-0.366-1.646l-0.083-1.419l0.201-1.108l-0.207-2.744l0.959,0.397l0.5,0.071l2.642-0.446l0.484-0.361l0.309-0.618
+		l0.108-0.727l-0.147-0.681l-0.838-0.966l0.194-0.535l1.944-1.809l1.039-0.73l1.122-0.43l2.826-0.091l0.526,0.13l0.43,0.264
+		l0.389,0.309l0.414,0.194l0.497-0.09l2.473-1.09l1.475-0.253l0.296,0.057l1.208,0.986l1.055,0.609l0.478,0.157l4.639,0.872
+		l1.224,0.507l0.628,0.099l0.558-0.312l0.43-0.385l0.997-0.665l0.366-0.396l0.621-1.084L507.004,89.89z" />
+                                    <path city-id="10" class="st0" d="M407.6,125.774l8.412,0.737l0.612-0.033l0.558-0.238l0.57-0.551l0.57-0.383l0.672-0.032l0.71,0.094
+		l0.682-0.002l1.099-0.365l5.216-3.033l0.698-0.108l1.877,0.411l0.682-0.01l0.462-0.219l0.758-0.819l0.609-0.245l0.386-0.365
+		l1.466-0.966l0.781-0.657l0.143-0.279l0.096-0.595l0.421-0.977l0.096-0.554l0.038-0.936l-0.038-0.273l-0.14-0.256l-0.363-0.328
+		l-0.108-0.212l-0.032-0.82l0.507-1.21l0.137-0.775l0.169-0.616l0.401-0.649l0.924-1.008l4.63-3.198l1.44-1.614l0.242-0.408
+		l0.163-0.531l0.373-0.206l0.433-0.072l0.331-0.127l0.223-0.3l0.338-0.713l0.265-0.297l0.596-0.202l1.781-0.34l0.379-0.15
+		l0.28-0.618l0.669-0.376l1.405-0.475l0.35-0.049l0.637-0.522l0.637-0.328l2.291-1.777l0.749-0.305l1.96-0.085l6.096-1.286
+		l0.918,0.002l1.909,0.423l1.204,0.701l0.453,0.154l1.571,0.016l0.519,0.162l0.838,0.445l0.43,0.14l0.475,0.024l4.41-0.806
+		l1.246,0.16l0.15,0.062l0.207,2.744l-0.201,1.108l0.083,1.419l0.366,1.646l-0.026,0.925l-0.631,2.52l0.07,1.77l1.048,1.246
+		l1.45,0.722l1.262,0.965l0.574,2.377l-1.698,2.361l-3.61,1.256l-0.825,0.128l-0.931,0.425l-0.937,0.86l-2.24,0.934l-2.256,4.003
+		l-0.934,0.906l-1.275,1.052l-5.736,8.854l-2.552,5.679l-0.605,4.22l-1.026,2.662l-1.565,0.731l-11.019-1.511l-2.622,0.309
+		l-5.392,3.106l-5.229,4.099l-1.902,2.077l-4.353,2.052l-2.148,0.486l-2.406-0.387l-6.042,0.106l-1.255-1.918l-3.263-3.377
+		l-6.806-4.122l-1.077-1.864l-0.344-0.954l-0.042-0.505l4.658,0.416l0.482,0.273l0.527,0.185l3.859-1.059l0.366-0.307l0.211-0.643
+		l0.015-3.985l-0.168-0.659l-0.454-0.265l-0.585-0.234l0.088-0.562l0.702-1.313l-0.733-1.143l-0.492-1.42l-0.687-3.267l-0.933-2.527
+		l-0.141-0.55L407.6,125.774z" />
+                                    <path city-id="11" class="st0" d="M525.407,104.15l0.111,0.011l0.503-0.118l0.255,0.064l0.217,0.215l0.28,0.59l0.182,0.242l0.462,0.193
+		l0.507-0.039l0.519-0.121l0.5-0.038l1.068,0.289l4.834,2.328l2.033,0.479l1.039,0.09l0.497,0.115l0.519,0.256l0.236,0.264
+		l0.003,0.27l-0.067,0.279l0.026,0.301l0.487,0.913l0.108,0.29l0.08,0.711l0.003,0.54l0.15,0.443l0.526,0.439l0.526,0.2l2.403,0.361
+		l0.389,0.185l0.813,0.584l0.43,0.115l2.791-0.278l0.535-0.257l0.414-0.645l0.284-0.651l0.37-0.549l0.478-0.347l0.602-0.046
+		l0.503,0.262l1.549,1.377l1.332,0.549l0.698,0.105l0.695-0.074l0.268-0.163l0.194-0.232l0.22-0.179l0.351-0.001l0.656,0.127
+		l0.315-0.025l0.325-0.111l0.411-0.514l0.076-0.58l0.169-0.27l1.848,1.035l2.393,0.551l1.217,0.561l0.433,0.314l0.411,0.134
+		l0.895,0.136l0.341,0.191l1.007,1.046l4.114,2.972l0.66,0.062l1.73-0.796l0.711,0.188l0.618,0.592l0.596,0.827l0.143,0.513
+		l-0.096,0.862l0.185,0.424l0.086,0.322l-0.128,0.347l-0.191,0.382l-0.102,0.432l0.073,0.812l0.605,2.674l0.36,0.533l1.931,1.608
+		l0.58,0.649l0.182,0.261l-0.038,0.188l-0.112,0.131l-0.045,0.106l-0.038,0.26l-0.092,0.319l0.089,0.277l0.507,0.134l0.201,0.208
+		l0.249,0.2l0.261,0.131l0.255,0.015l0.978-0.388l0.456,0.08l0.516,0.557l0.22,0.603l0.147,0.732l0.214,0.64l0.414,0.327
+		l0.293-0.062l0.217-0.233l0.36-0.571l0.29-0.154l0.328,0.022l4.439,1.449l2.023,1.716l1.131,0.667l2.53,0.453l1.16,0.503
+		l0.914,1.227l1.157,2.469l1.424,2.183l3.266,3.992l0.65,1.052l0.895,2.359l0.634,1.118l1.02,0.57l4.901-0.089l4.311-0.077
+		l6.577-0.121l3.655-0.066l3.161-0.056l1.533,0.27l1.252,0.171l0.252,1.306l0.255,0.591l0.115,0.355l0.051,0.482l-0.045,0.472
+		l-0.121,0.428l-0.166,0.369l-0.191,0.292l-0.134,0.406l0.051,0.462l0.185,0.575l-0.663,3.086l-0.178,1.878l0.44,1.096l-0.099,0.152
+		l-0.048,0.107l-0.083,0.265l0.296,0.128l0.245,0.198l0.191,0.231l0.128,0.225l0.124,0.401l0.054,0.399l0.013,0.887l0.102,0.371
+		l0.449,0.747l0.462,2.375l0.08,1.15l0.051,0.195l-0.061,0.235l-0.325,0.426l-0.153,0.262l-0.096,0.341l-0.054,0.375l-0.013,0.349
+		l-0.118,0.412l-0.261,0.191l-0.29,0.114l-0.194,0.181l-0.089,0.461l0.108,0.766l-0.019,0.356l-0.376,0.402l-0.628,0.518
+		l-0.357,0.451l0.424,0.191l0.755,0.12l0.624,0.335l0.539,0.498l0.494,0.608l0.319,0.527l0.274,0.639l0.194,0.673l0.14,1.362
+		l0.112,0.572l0.019,0.617l-0.198,0.853l0.198,0.279l0.006,0.375l-0.204,0.901l-0.022,0.212l0.022,0.673l-0.092,0.265l-0.421,0.414
+		l-0.121,0.228l0.08,1.014l0.421,0.857l0.749,1.168l0.226,0.353l0.325,1.552l0.077,0.766l-0.191,0.787l-0.411,0.714l-0.723,0.885
+		l-0.341,0.728l-0.268,1.187l-0.169,0.387l-0.647,0.874l-0.178,0.418l-0.143,0.776l0.143,1.945l-0.245,0.67l-0.593,0.34
+		l-0.736,0.125l-0.656,0.016l-0.443,0.367l-0.182,0.804l-0.025,0.806l0.022,0.367l0.172,0.164l0.15,0.363l-0.013,0.363l-0.309,0.164
+		l-0.185,0.17l0.159,0.376l1.096,1.483l0.086,0.16l-0.06,0.429l-0.083,0.335l0.048,0.31l0.325,0.343l-0.746,1.051l-0.223,0.539
+		l-0.185,1.557l-0.449,1.412l-0.102,0.735l-0.096,0.36l-0.437,0.707l-0.099,0.472l0.032,0.385l0.137,0.699l0.022,0.326l-0.134,1.328
+		l-0.245,1.238l-0.946,0.318l-0.175,0.621l-0.599,1.078l-0.975,0.764l-0.558,0.653l-0.038,0.886l0.102,0.969l-0.124,0.912
+		l-0.322,0.428l-0.36,0.087l-0.401-0.033l-0.43,0.07l-0.414,0.238l-0.201,0.25l-0.156,0.298l-1.399,1.603l-0.602,0.412l-0.768,0.217
+		l-1.689,0.228l-0.768,0.396l-0.453,0.787l0.328,0.047l0.264,0.149l0.198,0.257l0.265,0.892l0.274,0.261l0.755,0.348l0.373,0.339
+		l0.3,0.434l0.487,0.972l2.288,2.982l0.35,0.699l-2.297,0.136l-3.132,0.192l-2.18,0.13l0.214,0.795l-0.481,0.527l-1.466,0.782
+		l-1.08,1.126l-0.972,1.265l-0.867,1.755l-0.185,1.666l0.052,0.497l-0.014,0.002l-2.403,0.404l-19.182,0.056l-4.044-1.437
+		l-3.024-4.947l-1.657-1.421l-3.215,1.197l-2.858,1.649l-9.155,1.36l-0.883,0.982l-0.838,0.61l-3.164-0.972l-4.907-0.62
+		l-1.654,0.635l-0.453,1.063l0.172,0.976l1.208,1.945l-0.293,2.464l-0.647,2.738l0.325,1.637l-0.115,1.472l-0.793,1.905
+		l-0.462,2.105l0.143,1.579l0.86,0.844l0.727,0.524l0.319,0.871l0.258,1.064l4.678,3.416l-0.921,1.703l-0.185,1.059l-1.536,2.467
+		l-1.373,1.401l-9.687,6.437l-4.283,6.497l-1.02,4.35l-1.319,2.269l-0.774,0.926l-0.809-0.579l-2.492-3.914l-2.619-1.641
+		l-1.995-0.898l-0.736-0.58l-2.616-1.499l-2.011-4.595l-2.304-15.585l-1.22-2.356l-1.319-1.686l-7.877,1.833l-6.124-0.735
+		l-1.447-2.284l-1.918-10.697l0.252-6.292l3.884-11.709l2.1-3.795l12.217-8.662l2.986-2.932l0.417-2.411l-1.058-2.368l-8.992-6.91
+		l-3.429-0.905l-7.762,2l-12.252,5.824l-12.603,3.296l4.958-6.14l3.98-3.645l3.499-2.087l6.513-2.456l0.94-0.737l1.306-3.051
+		l5.366-9.236l0.468-2.654l-2.017-2.323l-7.313-5.989l-0.841-2.131l-0.997-4.613l-0.58-7.164l0.456-4.169l1.246-2.383l0.828-3.579
+		l-0.755-3.021l-1.252-0.751l-0.981-0.034l-0.605,0.17l0.096-1.045l-0.236-1.364l0.245-1.753l1.778-2.374l7.424-6.037l4.923,0.239
+		l20.412,11.355l8.54,1.31l2.339-0.575l1.154-1.091l1.026-3.005l-0.255-1.203l-1.099-0.657l-0.405-0.607l0.201-1.075l1.829-1.972
+		l-0.112-0.893l-1.023-0.496l-0.615-0.945l-0.264-0.991l-0.401,0.178l-0.449,1.168l-0.822,0.128l-0.555-1.087l-0.854-0.94
+		l-1.507-1.051l-0.147-1.348l1.252-1.552l1.851-5.475l1.109-1.555l0.309-1.152l0.025-0.768l0.284-0.673l0.813-1.003l0.682-1.245
+		l-0.191-1.562l-0.851-1.735l-2.791-2.623l-0.711-1.622l-0.392-1.324l-0.58-0.728l-13.829-0.66l-1.176-0.842l0.503-1.351
+		l0.347-1.447l-0.003-1.701l1.166-1.189L525.407,104.15z" />
+                                    <path city-id="12" class="st0" d="M610.304,249.662l0.337,3.225l0.883,5.677l-0.067,1.458l-0.953,2.152l-0.248,1.214l0.768,2.704l1.944,1.873
+		l2.489,1.033l2.415,0.186l2.266-0.122l1.192,0.088l1.036,0.262l0.478,0.28l0.519,0.469l0.274,0.53l-0.033,0.057l-0.238,0.408
+		l-0.456,0.166l-1.463,0.098l-0.545,0.365l-0.089,0.531l0.108,0.616l0.057,0.636l-0.172,0.738l-0.322,0.421l-1.01,0.632
+		l-0.889,0.792l-1.173,1.598l-1.501,2.04l-1.676,2.268l-1.491,2.022l-0.188,0.515l0.045,2.909l0.449,2.351l0.883,3.012l1.045,3.555
+		l1.074,3.663l1.134,3.856l1.252,4.233l1.357,5.065l1.048,3.904l-0.064,2.968l-0.414,2.897l-0.185,0.607l-0.806,1.042l-0.239,0.558
+		l0.105,0.224l0.258,0.15l0.182,0.205l-0.265,0.8l0.064,0.374l0.153,0.357l0.121,0.389l0.054,0.789l-0.229,2.245l0.067,1.757
+		l0.427,3.357l-0.392,2.678l0.073,0.848l0.462,1.749l0.363,3.389l1.026,0.432l3.113,0.458l5.165,0.758l0.05,0.007l0.559,2.1
+		l-0.427,4.348l-1.976,4.754l-1.459,5.281l-0.644,9.385l0.128,2.732l1.568,6.952l-0.054,1.116l-0.481,0.741l-1.045,0.415
+		l-4.193,0.147l-2.524-2.169l-4.856-6.928l-3.798-2.802l-2.855-0.787l-0.701-0.562l-1.09-1.153l-1.679-0.301l-23.13,6.569
+		l-0.972,0.466L568,358.542l-4.423-3.305l-35.089-15.874l0.437-0.712l1.612-4.154l3.167-4.923l1.134-3.173l4.107-5.513l0.507-1.703
+		l0.277-1.786l0.704-2.033l0.067-2.006l-1.24-2.049l-0.934-2.042l-0.051-1.108l-0.905-1.027l-0.472-0.845l-0.223-0.807l0.526-1.312
+		l0.832-1.354l0.252-1.131l-0.15-2.811l0.774-0.926l1.319-2.269l1.02-4.35l4.283-6.497l9.687-6.437l1.373-1.401l1.536-2.467
+		l0.185-1.059l0.921-1.703l-4.678-3.416l-0.258-1.064l-0.319-0.871l-0.727-0.524l-0.86-0.844l-0.143-1.579l0.462-2.105l0.793-1.905
+		l0.115-1.472l-0.325-1.637l0.647-2.738l0.293-2.464l-1.208-1.945l-0.172-0.976l0.453-1.063l1.654-0.635l4.907,0.62l3.164,0.972
+		l0.838-0.61l0.883-0.982l9.155-1.36l2.858-1.649l3.215-1.197l1.657,1.421l3.024,4.947l4.044,1.437l19.182-0.056l2.403-0.404
+		L610.304,249.662z" />
+                                    <path city-id="13" class="st0" d="M644.766,348.352l1.693,0.247l0.793,0.315l0.605,0.481l1.102,1.407l0.214,0.668l-0.214,1.549l0.013,0.718
+		l0.299,0.736l0.825,1.371l0.261,0.81l0.051,1.055l0.076,0.374l0.539,1.144l0.376,1.176l0.15,0.716l0.003,0.706l-0.22,0.757
+		l-0.589,1.169l0.134,0.42l0.118,2.455l-0.185,0.104l-0.077,0.252l-0.045,0.648l0.041,0.039l0.076,0.191l-0.526,0.562l-2.546,3.082
+		l-3.897,4.718l-3.531,4.274l-2.508,3.012l-3.336,4.001l-1.743,2.092l-2.546,3.047l-4.767,5.696l-0.01,0.009l-2.342,2.749
+		l-1.781,2.088l2.489,2.956l1.631,1.931l2.014,2.42l2.323,2.782l2.412,2.895l2.536,3.033l0.602,0.495l0.65,0.257l0.542,0.389
+		l0.284,0.896l-0.057,0.691l-0.367,1.239v0.692l0.293,0.721l0.981,1.084l0.395,0.608l0.096,0.396l0.083,0.881l0.159,0.402
+		l0.328,0.371l0.28,0.102l0.284,0.036l0.335,0.177l0.315,0.502l0.162,0.601l0.236,0.512l0.529,0.226l0.299,0.241l0.089,0.305
+		l-0.105,0.321l-0.284,0.303l-0.223,0.228l-0.086,0.216l0.07,0.206l0.239,0.185l0.398,0.182l0.344,0.274l0.271,0.364l1.303,3.004
+		l0.179,0.684l0.073,0.591l0.159,0.527l0.889,0.996l0.883,1.937l0.895,1.102l3.18,2.896l1.281,1.665l1.957,1.819l0.975,1.129
+		l0.57,0.311l1.845,0.518l1.471,0.852l0.934,0.294l2.049,0.174l0.985,0.214l2.565,1.151l4.072,0.826l0.856,0.448l0.358,0.421
+		l0.264,0.47l0.316,0.426l0.5,0.284l0.513,0.167l0.322,0.206l0.214,0.355l0.201,0.609l0.449,0.757l1.947,2.114l0.623,0.395
+		l5.046-1.026l0.685,0.416l0.15,1.223l-0.452,3.593l-0.494,3.974l0.57,2.414l0.805,3.352l0.188,2.072l0.256,2.814l0.155,1.748
+		l0.296,3.208l0.166,1.811l-0.188,1.446l-1.62,3.655l0.605,0.735l0.153,0.377l-0.057,0.563l-0.143,0.497l-0.186,0.387l-0.304,0.231
+		l-0.489,0.03l1.333,1.19l0.464,0.254l0.244-0.007l0.424-0.247l0.217-0.039l0.249,0.082l0.723,0.403l0.973,0.213l0.838-0.048
+		l1.796-0.357l0.8-0.125l1.616-0.5l0.819-0.041l0.515,0.054l0.397-0.013l1.686-0.538l0.312,0.009l0.384,0.138l0.798,0.737
+		l0.351,0.217l0.762,0.278l0.28,0.179l0.328,0.36l0.441,0.65l1.05,2.333l-0.531-0.209l-0.674,0.005l-0.605,0.263l-0.338,0.557
+		l-0.115,0.349L695,500.785l-0.131,0.347l-0.045,0.408l0.156,3.907l0.277,0.647l0.385,0.563l0.258,0.557l-0.099,0.632l-0.462,0.421
+		l-1.252,0.202l-0.508,0.266l-0.225,0.545l-0.245,5.014l-0.325,1.378l-0.691,0.679l-0.311-0.014l-0.241-0.125l-0.223-0.159
+		l-0.266-0.123l-0.295-0.027l-0.899,0.201l-1.217-0.034l-1.201-0.185l-2.788-0.07l-2.415-0.059l-2.1-0.054l-0.335,0.098
+		l-0.236,0.314l-0.319,0.59l-0.207,0.159l-0.229,0.125l-0.266,0.1l-0.953,0.217l-0.263-0.02l-0.344-0.169l-0.331-0.068l-0.264,0.164
+		l-0.244,0.257l-0.257,0.201l-0.631,0.221l-5.159,0.549l-0.293,0.086l-0.242,0.189l-0.252,0.449l-0.178,0.164l-0.319,0.084
+		l-0.65-0.03l-0.29,0.03l-0.255,0.114l-0.398,0.292l-0.252,0.144l-0.602,0.24l-0.268,0.169l-0.194,0.26l-0.057,0.303l0.092,0.226
+		l0.118,0.194l0.029,0.214l-0.319,0.6l-0.969,0.954l-0.22,0.427l0.169,0.79l0.301,0.633l0.027,0.489l-0.669,0.356l-1.157-0.162
+		l-1.37-0.487l-1.16-0.155l-0.523,0.836l-0.112,0.846l-0.28,0.354l-1.276,0.215l-0.633,0.195l-0.574,0.284l-1.107,0.737
+		l-3.719,1.059l-0.746,0.584l-0.449,0.925l-0.261,1.065l-0.284,2.089l-0.245,1.847l-0.293,2.135l-0.389,2.853l-0.325,2.392
+		l-0.172,0.604l-0.468,0.572l-0.535,0.124l-0.596-0.014l-0.653,0.157l-0.65,0.901l0.153,1.259l0.341,1.355l-0.089,1.181
+		l-0.194,0.267l-0.453,0.451l-0.182,0.329l-0.105,0.491l-0.127,1.996l-0.185,2.925l-0.217,3.398l-0.185,2.875l-0.981,2.843
+		l-0.196-0.498l-0.065-0.571l-0.537-0.387l-0.095-0.209l-0.148-0.107l-0.301,0.198l-0.088,0.194l-0.045,0.548l-0.095,0.209
+		l0.171,0.161l0.306,0.36l0.173,0.155l-0.66-0.075l-0.499-0.202l-0.509-0.006l-0.667,0.516l0.728,0.233l0.301,0.169l0.253,0.297
+		l-0.166,0.328l-0.482,0.622l-0.143,0.36v0.18l-0.035,0.134l-0.243,0.233l-0.444,0.237l-1.681,0.503l0.447,0.312l-0.72,0.964
+		l-5.185-1.786l-1.802-0.387l0.012-0.557l-0.469-0.846l-4.306-1.545l-5.053-0.846l-4.285-1.015l-2.905-0.361l-0.509-0.28l0.474-0.44
+		l-0.745-1.074l-0.098-0.459l-0.008-1.915l-0.098-0.3l-1.121-1.115l-0.479-0.283l-0.542-0.068l-0.552,0.054l-2.113,0.654
+		l-0.529,0.292l-0.294,0.465l-0.482,0.585l-0.248,0.375l-0.008,0.224l0.095,0.217l0.12,0.693l0.151,0.093l0.211,0.022l0.341,0.168
+		l0.266-0.004l0.13,0.088l0.123,0.216l0.325,0.348l-0.338-0.048l-0.005,0.075l0.893,0.461l-0.087,0.437l-0.358-0.086l-0.99-0.415
+		l-1.255-0.522l-0.625-0.351l-1.336,0.024l-0.892-0.732l0.289-0.544l0.133-0.133l-0.449-0.206l-0.56-0.082l-1.117,0.054
+		l-0.853,0.167l-0.181,0.067l-0.276,0.312v0.2l0.078,0.168l0.644,0.442l-0.209,0.634l-0.84-0.007l-0.62-0.412l-0.339-0.112
+		l-1.054-0.156l-0.241-0.18l-0.339-0.444l-0.489-0.266l-1.132,0.071l-1.569,0.239l-1.653,0.066l-1.141,0.854l-1.298-0.45
+		l-1.29-1.233l-1.387-0.364l-3.568,0.222l-1.392-0.014L581,558.4l-1.466-1.492l-1.127-0.619l-1.745,0.333l-3.643,0.585l-0.866,0.136
+		l-0.133-0.812l0.809-0.353l0.019-0.513l0.08-0.55l-0.57-0.285l-0.255-0.335l-1.09-1.866l-0.51-0.508l-0.424-0.544l-0.207-0.702
+		l-0.504-0.621l-0.93-0.359l-0.679-0.693l-0.162-1.237l-0.997-1.635l-5.841-5.173l-1.099-0.696l-0.421-0.179l-0.124-0.621
+		l0.15-1.098l0.558-0.848l0.37-0.204l0.609-1.5l0.185-1.274l-0.019-2.117l0.376-0.895l0.417-0.553l-0.054-1.122l0.58-0.707
+		l0.494-1.326l-0.264-1.32l-1.064-1.262l-0.577-2.006l0.768-1.583l0.988-1.181l-0.029-1.18l-0.985-0.898l-0.503-0.793l0.867-1.484
+		l0.873-2.622l-1.625-3.303l-2.345-2.707l-0.641-2.352l0.099-2.228l-0.118-1.291l-0.739-2.908l-0.01-3.435l3.55-13.941l0.408-3.986
+		l-0.207-12.088l3.556-4.65l0.956-3.168l-1.096-1.777l-2.533-1.926l-1.147-1.774l1.784-0.954l3.505-1.191l7.173-4.181l1.392-1.096
+		l0.905-0.984l0.051-1.301l-0.322-1.366l-0.905-1.896l-0.041-2.888l-0.443-2.342l0.443-2.274l2.584-3.95l0.946-3.497l0.086-3.084
+		l-1.064-7.48l-1.23-3.112l-1.392-0.921l-0.73-0.771l0.277-2.951l6.322-29.431l0.972-0.466l23.13-6.569l1.679,0.301l1.09,1.153
+		l0.701,0.562l2.855,0.787l3.798,2.802l4.856,6.928l2.524,2.169l4.193-0.147l1.045-0.415l0.481-0.741l0.054-1.116l-1.568-6.952
+		l-0.128-2.732l0.644-9.385l1.459-5.281l1.976-4.754l0.427-4.348l-0.559-2.1l5.23,0.768l6.045,0.887L644.766,348.352z" />
+                                    <path city-id="14" class="st0" d="M369.526,492.241l-2.389-1.061l-0.635-0.671l-0.05-0.712l0.291-0.442l0.514-0.228l0.645-0.064l0.577,0.02
+		l0.667-0.071l0.384-0.345l-0.273-0.811l-0.492-0.426l-1.252-0.479l-0.467-0.388l-0.243-0.414l-0.494-1.141l-0.211-0.352
+		l-2.316-2.39l-1.014-0.807l-1.127-0.487l-5.495-1.21l-1.162-0.586l-3.638-3.385l-1.129-0.766l-1.275-0.535l-1.465-0.2l-2.14,0.264
+		l-0.489-0.156l-0.58-0.367l-1.103,0.08l-1.189,0.284l-1.927,0.36l-1.213-0.191l-2.667-0.561l-0.364-0.092l-0.156-0.226
+		l-0.038-0.332l-0.103-0.261l-0.161-0.169l-0.961-0.139l-1.317-0.398l-0.657-0.713l-0.71-1.188l-0.737-0.476l-0.239,0.975
+		l-0.633,0.052l-0.604-2.084l-0.606-0.872l-0.474-1.267l-1.162-1.903l-0.529-0.503l-0.635-0.662l-0.152-0.703l0.68-1.88
+		l-0.048-0.931l-0.632-1.034l-1.074-0.979l-0.381-0.456l-1.086-1.693l-1.016-1.078l-0.233-0.359l-1.884-4.669l-0.253-1.1
+		l-0.03-4.476l-0.391-1.519l-0.693-1.288l-0.785-0.936l-0.994-0.616l-1.3-0.306l-1.25-0.07l-0.612-0.165l-0.261-0.375l-0.236-0.696
+		l-1.45-1.84l-0.251-0.665l-0.186-0.971l0.115-0.87l0.637-0.382l0.602,0.211l0.607,0.512l0.507,0.639l0.301,0.585l0.326-0.284
+		l-0.04-0.257l-0.141-0.293l0.045-0.391l0.221-0.255l0.622-0.558l0.208-0.369l0.105-0.769l-0.075-0.816l-0.301-0.508l-0.57,0.146
+		l-0.258-1.023l-0.208-0.359l-0.376-0.324l-0.186,0.043l-0.284,0.149l-0.256,0.083l-0.113-0.158l-0.038-0.597l-0.06-0.294
+		l-0.113-0.191l-0.738-0.126l-2.409,0.145l-0.557,0.102l-0.818,0.486l-0.858-0.105l-0.68-0.602l-0.273-0.984l-0.058-0.853
+		l0.083-0.431l0.279-0.427l0.218-0.479l0.201-0.587l0.281-0.259l0.467,0.502l0.135-1.442l0.075-0.246l-0.296-0.099l-0.193-0.212
+		l-0.374-0.678l0.221-0.868l-0.013-1.378l-0.158-1.404l-0.241-0.962l-0.406-0.732l-0.597-0.824l-0.472-0.228l-0.015,1.058
+		l-0.181-0.391l-0.873-1.323l-1.626-1.345l-0.266-0.459l-0.211-0.609l-0.487-0.684l-1.009-1.019l-1.822-0.732l-0.281-0.368
+		l-0.193-0.706l-0.449-0.677l-0.833-0.93l-0.823-1.196l-1.4-2.572l-0.743-1.083l-0.577-0.509l-1.272-0.781l-1.202-1.242
+		l-0.108-0.161l-0.09-0.43l-0.028-0.652l-0.11-0.376l0.484-0.058l0.113-0.209l-0.181-0.256l-0.417-0.207l0.334-1.206l-0.707-2.018
+		l0.181-0.931l-0.434-0.344l-0.484-0.648l-0.406-0.727l-0.166-0.583l-0.183-0.374l-0.449-0.315l-0.255-0.099l1.983-0.987
+		l3.174-0.534l1.778,0.865l4.757,0.248l3.604,1.299l1.153,0.835l0.535,0.505v1.83l0.825,2.574l1.552,1.547l1.88,3.837l1.759,0.674
+		l6.813,0.511l4.232,1.369l2.065,2.303l1.657,3.811l2.176,3.448l1.985,2.09l2.46,0.911l2.728,2.513l13.839,26.099l0.717,3.163
+		l4.515,12.79l0.771,1.273l1.367,0.541l1.026,0.613l2.323,2.717l4.181,9.375l4.069,5.021l3.948,3.729l6.163,4.444l-1.332,0.773
+		l-0.417,0.147l-1.437-0.06l-1.526-0.39l-0.507-0.024l-2.008,0.208l-0.338-0.022l-0.628,0.269l-0.134-0.01l-0.178,0.205
+		L369.526,492.241z M296.364,423.995l0.556,0.251l0.333,0.195l-0.14,0.611l0.09,0.613L297,426.197l-0.305,0.048l-0.305-0.278
+		l-0.305-0.778l-0.194-0.695l-0.222-0.417l0.362-0.222L296.364,423.995z" />
+                                    <path city-id="15" class="st0" d="M572.154,557.343l-1.719,0.267l-1.756,0.833l-0.652,0.147l-0.261-0.051l-0.228-0.224l-0.223-0.142
+		l-0.266,0.061l-0.286,0.133l-0.286,0.075l-0.708-0.037l-0.61-0.124l-0.519-0.222l-0.401-0.337l-1.425-2.284l-0.758-0.917
+		l-1.204-0.55l-1.074,0.024l-0.286-0.14l-0.191-0.324l-0.11-0.339l-0.166-0.275l-0.354-0.111h-2.642l-5.6-1.026l-1.919,0.307
+		l-1.653-0.113l-0.577-0.275l0.221-0.547l-0.903,0.058l-0.989,0.196l-0.417,0.22l-0.71,0.593l-0.467,0.12l-0.213-0.086l-0.105-0.139
+		l-0.151,0.005l-0.361,0.337l-0.246,0.178l-0.316,0.1l-0.271-0.038l-0.113-0.241l-0.181,0.083l-1.084,0.756l-1.137,0.178
+		l-1.004-0.195l-0.976-0.312l-1.021-0.161l-0.828-0.387l-0.68-0.921l-0.921-1.959l-0.958-1.164l-1.169-0.279l-1.272,0.331
+		l-1.25,0.643l-1.051,0.857l-0.677,0.422l-0.484-0.004l0.128-1.509l0.12-0.393l0.083-0.17l0.017-0.125l-0.048-0.267l-0.316-0.783
+		l-0.482-0.42l-0.645-0.17l-0.77-0.028l-0.695,0.072l-1.706,0.393l-0.376-0.071l-0.642-0.322l-0.359-0.072l-0.354,0.035l-0.612,0.16
+		l-0.316,0.036l-0.768-0.061l-2.103-0.662l0.231-0.21l-4.125-0.273l-0.452-0.244l-0.221-0.535l-0.176-1.677l-0.748-1.737
+		l-0.384-1.388l-0.258-0.654l-0.306-0.276l-0.05-0.133l-0.688-0.828l-0.135-0.028l-0.391,0.067l-0.125-0.039l-0.055-0.142
+		l-0.083-0.405l-0.419-1.231l-0.123-0.573l-0.301-0.668l-0.068-0.409l0.196-0.711l0.958-1.051l0.336-0.688l-0.421-1.097l-2.04-2.253
+		l0.166-0.918l-0.228-0.213l-0.178-1.556l-0.218-0.773l-0.341-0.617l-0.592-0.576l-0.146-0.258l-0.088-0.305l-0.113-0.787
+		l-0.01-0.318l0.527-4.298l-0.105-1.606l-2.007-8.015l-0.422-0.619l-1.046-0.914l-0.374-0.546l0.04-0.557l-0.948-0.633l-0.314-0.332
+		l0.449,0.03l0.336-0.134l0.311-0.197l0.376-0.172l-0.261-0.236l-0.04-0.325l0.108-0.338l0.193-0.283l-0.948,0.411l-0.314,0.062
+		l-0.286-0.072l-0.181-0.162l-0.128-0.163l-0.15-0.076l-0.158-0.118l-0.163-0.228l-0.213-0.139l-0.602,0.297l-0.181-0.118
+		l-0.078-0.284l0.015-0.352l-0.396,0.09l-0.211-0.182l0.01-0.254l0.291-0.128l0.151-0.121l0.542-0.587l0.266-0.216v-0.258
+		l-0.903-0.125l-0.738-0.5l-0.499-0.723l-0.196-0.781l-0.359,0.354l-0.394,0.139l-0.836,0.003l-0.462-0.151l-0.286-0.334
+		l-0.231-0.333l-0.294-0.149l-3.199-0.038l-0.698-0.221l-0.211,0.259l-0.748-0.417l-0.926-0.192l-1.924-0.102l-0.913-0.181
+		l-1.616-0.646l-0.958-0.142l-1.907,0.109l-0.974,0.251l-0.71,0.491l-0.66,0.319l-2.005,0.087l-0.815,0.164l-0.251,0.169
+		l-0.514,0.51l-0.103,0.169l-0.063,0.367l-0.166,0.115l-0.238,0.051l-0.266,0.178l-0.532,0.451l-2.072,1.255l-0.745,0.634
+		l-0.012,0.142l-0.161,0.11l-0.562,0.487l-0.336,0.113l-1.375,0.162l-1.275,0.311l-0.329,0.035l-1.031-0.035l-0.341,0.07
+		l-0.457,0.327l-0.271,0.073h-1.152l-0.971-0.228l-0.309-0.008l-0.585,0.262l-1.034,0.966l-0.391,0.212l-0.341,0.266l-1.668,1.86
+		l0.444-0.146l0.191-0.105l0.226-0.221l0.125,0.847l-0.186,1.035l-0.366,0.979l-0.434,0.7l-1.009,0.897l-1.162,0.589l-1.29,0.263
+		l-1.385-0.077l-2.484-0.861l-1.415-0.188l-1.169,0.556l-0.366,0.658l-0.168,0.618l-0.299,0.452l-0.748,0.18l-0.602,0.07
+		l-1.355,0.399l-0.459,0.216l-2.015,1.808l-0.341,0.216l-2.966,2.413l-3.35,1.96l-0.211,0.184l-0.193,0.227l-0.228,0.194
+		l-0.324,0.083l-0.386-0.07l-0.522-0.308l-0.366-0.073l-2.647,0.238l-1.352-0.214l-0.527-0.784l-0.379-0.999l-0.903-0.851
+		l-1.377-0.271l-2.805,0.109l-1.116-0.544l-0.555-0.887l-0.457-1.103l-0.582-1.056l-0.913-0.744l-0.655-0.126l-0.617,0.1
+		l-0.595,0.17l-2.349,0.163l-0.647-0.072l-2.118-0.619l-0.532-0.084l-0.331-0.105l-0.592-0.472l-0.256-0.131l-0.321-0.013
+		l-0.637,0.133l-2.027,0.952l-1.415,0.195l-1.255,0.354l-0.677,0.027l-1.378-0.447l-0.753-0.062l-0.723,0.391l-0.376-0.132
+		l-1.611-1.399l-2.318-1.37l-2.993-2.265l-0.442-0.546l-0.178-0.675l-0.073-1.645l-0.246-0.688l-0.524-0.642l-0.986-0.62
+		l-10.485-3.576l-0.675-0.059l-0.662-0.19l-0.411-0.459l-0.326-0.551l-0.386-0.475l-1.837-0.464l-0.286-0.343l-0.266-0.753
+		l-0.63-0.385l-1.418-0.423l-2.484-2.235l-1.096-0.75l-1.646-0.73l0.499-0.974l0.178-0.205l0.134,0.01l0.628-0.269l0.338,0.022
+		l2.008-0.208l0.507,0.024l1.526,0.39l1.437,0.06l0.417-0.147l1.332-0.773l0.844,1.632l2.259,2.15l6.876,0.613l1.141,0.457
+		l2.603,2.134l0.516,0.253l0.542,0.078l2.24-0.579l0.8,0.003l9.432,1.676l3.209-1.71l0.838-1.353l-0.35-1.018l0.003-0.382
+		l0.653-1.901l0.452-2.754l1.364-1.672l3.19-1.106l8.224-0.756l1.874,0.241l1.459,0.515l1.529-0.661l2.814-0.648l8.221,1.162
+		l3.849-1.178l1.784-1.698l1.013-3.086l1.198-1.912l4.209-2.266l2.826-0.735l1.778,0.106l0.927-0.411l0.707-0.504l0.529-0.853
+		l0.185-1.975l-1.472-2.409l-2.607-2.138l-0.147-1.126l0.15-1.459l1.555-5.701l0.366-3.935l-0.819-2.209l-9.273-8.997l-0.159-1.663
+		l1.01-0.735l-0.01-0.99l-1.778-5.362l2.619,0.193l5.57,1.584l2.759,2.164l1.345,1.763l1.351,0.945l1.383,0.691l1.577-0.414
+		l6.169-4.682l3.626-1.698l0.921-0.118l0.873,1.284l0.583,13.385l-0.762,2.599l0.644,3.426l2.756,3.557l2.645,2.438l3.171,1.919
+		l3.668,0.564l1.972-0.354l3.629-1.794l3.336-3.174l0.943-1.158l1.418-1.118l1.673,0.062l3.218,1.578l0.245,0.563l-0.277,3.579
+		l1.125,5.431l0.446,0.74l0.612,0.518l0.95,0.125l1.603,0.873l1.227,1.599l0.727,1.384l1.402,1.534l1.392,2.127l0.207,1.749
+		l-0.854,0.718l-0.545,1.072l0.701,1.016l0.832,0.419l0.835,1.71l0.937,2.723l0.965,12.983l0.625,2.005l9.527,5.065l2.087,1.542
+		l0.934,0.284l1.45-1.364l0.742-1.031l1.262-0.859l2.03,0.05l2.122,1.279l2.307,1.939l1.81,2.098l0.883,1.914l-0.261,0.661
+		l-1.934-1.181l-0.666-0.033l-0.032,0.692l0.746,2.209l0.041,0.877l-0.172,0.577l-0.561,0.69l-0.427,1.065l-0.717,6.724l0.175,0.997
+		L536.68,527l-0.363,1.921l-0.631,0.773l0.051,0.7l4.091-0.288l2.53,0.451l1.667-0.154l1.068-0.503l1.083,0.253l1.182,0.534
+		l1.925,0.3l0.577,0.368l-0.045,0.372l-0.293,0.632l0.073,0.666l0.315,0.762l0.086,1.074l0.523,0.919l1.271,0.291l1.53,0.051
+		l1.322-0.163l0.908-0.96l0.902-0.223l1.195,0.469l0.841-0.005l0.446,0.371l1.259,1.899l-0.37,0.204l-0.558,0.848l-0.15,1.098
+		l0.124,0.621l0.421,0.179l1.099,0.696l5.841,5.173l0.997,1.635l0.162,1.237l0.679,0.693l0.93,0.359l0.504,0.621l0.207,0.702
+		l0.424,0.544l0.51,0.508l1.09,1.866l0.255,0.335l0.57,0.285l-0.08,0.55l-0.019,0.513l-0.809,0.353L572.154,557.343z
+		 M426.488,527.227l0.211,0.098l0.176,0.14l0.148,0.185l0.113,0.238l-0.647,1.323l-0.166,0.034l-0.361-0.112l-0.361-0.189
+		l-0.166-0.201l-0.04-0.452l-0.073-0.344l-0.013-0.322l0.125-0.398l0.191-0.266l0.261-0.133l0.296,0.063L426.488,527.227z
+		 M411.396,521.073l-2.276-0.129l-0.236-0.014l-0.996-0.481l-0.625-1.022l0.309-0.482l0.454-0.342l0.552-0.171l0.597,0.034
+		l0.519,0.18l1.144,0.115l0.439,0.175l0.058,0.15l0.028,0.073v0.004l-0.013,0.311l0.005,0.039l0.028,0.24l0.005,0.003l0.218,0.121
+		l0.13,0.118l0.078,0.069l0.028,0.198l0.033,0.215l-0.07,0.206l-0.065,0.206L411.396,521.073z M389.206,510.326l-0.557,0.32
+		l-0.595,0.001l-1.756-0.306l-0.542-0.23l-0.065-0.042l-0.411-0.267l-0.966-0.808l-0.279-0.322l0.121-0.149l0.221-0.052l0.246-0.091
+		l0.296-0.018l2.602,0.803l2.311,0.172l0.718,0.283l0.404,0.37l0.253,0.23l-0.447,0.121l-1.184-0.101L389.206,510.326z
+		 M481.857,509.137l0.141-0.921l0.442-0.631l0.783-0.361l1.159-0.113l0.156,1.065l-0.926,0.814l-1.177,0.382L481.857,509.137z
+		 M478.47,503.308l0.607,0.146l0.788,0.348l0.492,0.379l0.181,0.137l0.246,0.646l-0.497,0.283l-0.497,0.283l-1.902,0.492
+		l-0.682,0.613l-0.7,1.549l-0.354,0.599l-1.275,1.306l-0.201,0.461l-0.263,0.283l-1.172,0.594l-0.266,0.315l-0.264,0.17
+		l-1.518,1.468l-0.906,0.528l-0.71-0.302l-0.672-0.684l-0.788-0.624l-2.06,1.065l-0.572,0.489l-0.572,0.329l-0.66-0.006
+		l-1.402-0.206l-0.625,0.139l-0.657,0.309l-1.661,1.195l-1.724,0.734l-1.046,0.772l-0.542,0.289l-1.904,0.216l-1.352,0.372
+		l-0.572,0.363l-0.284,0.109h-0.003l-0.09-0.017l-0.168-0.035l-0.349-0.116h-0.314l-0.133,0.295l-0.141,0.236l-0.336,0.184
+		l-0.376,0.116l-0.284,0.043h-0.003l-0.13-0.091l-0.11-0.076l-0.158-0.396l-0.148-0.851l0.208-0.608l0.058-0.39l-0.161-0.18
+		l-0.316-1.069l0.336-0.359l1.455,0.514l0.336-0.154l0.191,0.055l0.09,0.027l0.003-0.001l1.628-0.915l4.12-1.344l0.6-0.07
+		l0.389-0.152l0.11-0.044l0.005-0.001l1.425-0.877l0.615-0.5l2.017-0.784l0.316-0.022l0.64,0.052l0.309-0.03l0.226-0.097l0.319-0.27
+		l0.299-0.105l-0.093-0.232l-0.135-0.237l0.472-0.54l0.11-0.649l-0.143-1.544l-0.241-0.591l-0.527-0.505l-0.514-0.401l-0.211-0.276
+		l0.783-0.454l4.308,1.634l1.167-0.276l3.252-2.105l4.075-0.924L478.47,503.308z M486.504,499.741l0.326,0.217l0.356,0.138
+		l0.293,0.237l0.015,0.068l0.103,0.437l-0.116,0.439l-0.291,0.324l-0.221,0.11l-0.196,0.097l-0.482,0.083l-0.973-0.378l0.07-0.872
+		l0.572-0.788L486.504,499.741z M427.11,540.383l0.156,0.301l0.05,0.612l-0.309,0.233l-0.419-0.1l-0.492-0.229l-0.121-0.381
+		l0.402-0.218L427.11,540.383z M468.662,514.488l0.238,0.365l0.06,0.814l-0.442,0.741l-0.627,0.37l-0.497-0.276l0.07-0.796
+		l0.396-0.771l0.499-0.387L468.662,514.488z M399.142,514.165l0.364,0.171l0.246,0.517l-0.399,0.403l-0.542-0.074l-0.539-0.275
+		l-0.306-0.424l0.246-0.376l0.615-0.021L399.142,514.165z M442.591,541.779l0.038,0.332l0.138,0.393l-0.243,0.213l-0.253,0.022
+		l-0.173,0.106l-0.296-0.282l-0.143,0.112l0.018-0.211l-0.103-0.209l-0.11-0.335l0.444-0.244l0.532-0.142L442.591,541.779z" />
+                                    <path city-id="16" class="st0" d="M304.704,139.454l1.472,0.999l0.64,0.149l0.429,0.196l0.911,0.989l0.459,0.395l4.862,2.655l4.436,3.154
+		l2.587,1.179l8.608,1.709l5.495,1.6l5.701,1.026l5.49,1.596l5.706-0.761l5.071-1.86l5.302-1.314l5.492-1.048l5.261-1.077
+		l5.279-1.575l5.093-1.576l10.232-2.298l1.38-0.231l12.134-0.692l2.215-0.532l1.503-1.273l-0.07,1.466l-1.746,0.612l-2.193,0.273
+		l-1.41,0.439l-0.386,0.195l-0.442-0.069l-0.826-0.259l-0.464,0.074l-0.853,0.331l-0.474,0.099l-1.806-0.24h-1.581l0.241,0.433
+		l0.434,0.143l1.011-0.049l-0.615,0.208l-0.243,0.031l0.745,0.994l1.259,0.563l0.134,0.012l0.042,0.505l0.344,0.954l1.077,1.864
+		l6.806,4.122l3.263,3.377l1.255,1.918l-3.107,0.932l-2.565,1.511l-2.313,2.326l-1.093,2.126l-0.682,2.312l-0.491,3.077
+		l-1.217,1.406l-3.158,2.821l-0.717,1.046l-0.379,0.961l-0.727,1.022l-1.338,1.193l-2.183,1.176l-2.358,0.768l-1.546,0.213
+		l-0.994-0.56l-1.603,0.549l-1.956,1.13l-1.463,0.407l-3.123,0.344l-0.452,0.201l-2.772-1.92l-1.338-0.31l-0.991,0.595l-1.632,0.221
+		l-2.345-0.486l-3.527-1.916l-2.772-0.516l-2.195-0.926l-2.043-0.267l-2.826,2.24l-4.002,4.847l-2.122,0.866l-2.434-0.142
+		l-1.514-0.543l-0.921-0.555l-1.102-1.274l-1.788-3.357l-3.148-3.406l-4.197-1.642l-4.725-0.406l-3.333-1.968l-2.001-2.361
+		l-5.057-1.121l-1.294-0.566l-1.173-1.085l-0.558-0.809l-1.963-0.781l-5.095-1.012l-0.029-0.765l-0.36-1.038l-4.993-3.815
+		l-1.705-0.925l-8.218-6.94l1.6-1.042l1.89-3.385l0.676-3.193l1.236-1.231l1.609-0.861l1.052-1.461l0.296-0.981L304.704,139.454z" />
+                                    <path city-id="17" class="st0" d="M380.499,183.82l0.452-0.201l3.123-0.344l1.463-0.407l1.956-1.13l1.603-0.549l0.994,0.56l1.546-0.213
+		l2.358-0.768l2.183-1.176l1.338-1.193l0.727-1.022l0.379-0.961l0.717-1.046l3.158-2.821l1.217-1.406l0.491-3.077l0.682-2.312
+		l1.093-2.126l2.313-2.326l2.565-1.511l3.107-0.932l6.042-0.106l2.406,0.387l2.148-0.486l4.353-2.052l1.902-2.077l5.229-4.099
+		l5.392-3.106l2.622-0.309l11.019,1.511l1.565-0.731l1.026-2.662l0.605-4.22l2.552-5.679l5.736-8.854l1.275-1.052l4.662,6.219
+		l2.192,1.552l1.214-0.213l1.504,0.627l-0.325,0.89l-1.8,0.538l-0.793,0.635l-0.191,0.567l0.201,0.309l0.194,0.411l0.153,1.026
+		l-0.156,2.616l-0.58,2.307l-0.111,0.773l0.577,1.215l3.652,4.112l3.499,3.016l1.737,0.578l2.935,0.503l1.536,0.595l4.697-0.799
+		l0.605-0.17l0.981,0.034l1.252,0.751l0.755,3.021l-0.828,3.579l-1.246,2.383l-0.456,4.169l0.58,7.164l0.997,4.613l0.841,2.131
+		l7.313,5.989l2.017,2.323l-0.468,2.654l-5.366,9.236l-1.306,3.051l-0.94,0.737l-6.513,2.456l-3.499,2.087l-3.98,3.645l-4.958,6.14
+		l-11.086,18.696l-3.384,1.753l-7.906-0.18l-2.833,0.53l-0.542,0.247l-0.003,0.092l-0.28-0.37l-0.755-0.649l-1.692-0.557
+		l-73.582,2.209l-1.606-0.254l-13.125-4.331l-2.1-0.331l-8.447,0.541l-3.018-0.498l-5.962-3.238l1.023-1.469l1.357-3.194
+		l0.835-3.283l0.083-3.06l-0.417-1.503l0.121-1.611l0.943-3.018l1.577-2.453l0.389-2.318l-1.396-2.54l-3.48-4.631l-0.236-1.609
+		l0.191-1.724l0.58-2.276l0.417-3.48l0.516-0.545l0.57,0.261l0.373,0.374l0.669,0.236l1.839,0.096l1.702,1.487l5.624,3.439
+		l2.253,0.779l2.348,0.054l6.943,2.022l2.492,0.096l3.515-1.159l3.062-1.639l4.901-4.474l0.991-3.402l-0.405-3.824L380.499,183.82z" />
+                                    <path city-id="18" class="st0" d="M252.483,131.196l4.649,2.969l3.419,3.62l1.31,2.122l1.823,6.336l-2.511,0.865l-3.355,2.235l-1.255,2.913
+		l0.644,2.434l1.654,2.064l0.994,2.495l1.026,1.556l1.53,0.768l0.934,0.059l0.599,0.327l0.58,0.635l0.803,0.453l0.574,1.045
+		l0.503,1.892l0.972,1.606l0.707,1.579l0.487,4.053l-0.711,1.041l-5.621,1.521l-3.113,1.761l-1.886,2.144l-0.166,1.505l0.045,0.427
+		l-2.814-1.305l-2.02-0.137l-2.795,0.777l-1.721,1.267l-1.122,0.234l-1.316,0.047l-0.965,0.212l-0.644,0.432l0.089,1.183l3.91,3.527
+		l2.298,3.378l0.022,0.671l-1.131,1.542l-2.333,0.819l-2.591-0.639l-2.705-1.473l-6.621-0.226l-1.383-0.862l-1.042-1.898
+		l-0.271-0.813l-0.609-1.041l-0.567-0.527l-8.486-5.173l-0.424-1.011l0.507-1.374l1.214-1.275l0.679-2.791l0.003-3.882l-0.58-2.157
+		l-0.535-0.069l-0.128-0.047l-0.038-0.285l0.099-0.251l0.127-0.244l0.041-0.263l-0.191-0.926l0.064-0.339l0.319-0.302l-0.29-0.421
+		l-0.347-0.751l-0.293-0.854l-0.121-0.74l-0.214-0.404l-0.972-1.085l-0.105-0.17l-15.534-3.096l-0.892-0.902l-4.27-9.572
+		l-0.182-1.247l-0.01-1.867l0.59-1.209l4.671-4.76l1.297-2.157l0.918-0.671l2.036-0.974l1.686-1.829l1.061-0.639l1.093-0.459
+		l9.696-1.129l2.925,0.453l2.004-0.335l7.37,0.767l2.301-0.904l1.077-0.86l0.357-0.21l0.898-0.248l1.271,0.464l2.301,2.458
+		l0.953-0.202l0.414-0.69l0.003-0.655l0.373-0.667l0.593-0.23l0.88,0.494l1.112,0.146l1.214-0.834l1.083-0.33L252.483,131.196z" />
+                                    <path city-id="19" class="st0" d="M263.684,146.243l2.919,1.404l0.054,0.654l0.392,1.222l1.74,2.213l1.877,1.767l4.235,1.266l1.577-0.061
+		l0.94,0.158l0.669,0.462l2.845,0.569l1.53-0.273l5.793-3.145l0.641-0.222l0.679-0.367l2.562-0.566l4.19,0.413l8.218,6.94
+		l1.705,0.925l4.993,3.815l0.36,1.038l0.029,0.765l-7.332-0.785l-3.499,0.287l-0.889,1.351l1.574,2.17l1.134,0.979l2.189,0.651
+		l1.424,1.232l-0.972,3.298l-1.479,3.079l-0.366,1.402l-1.058,1.011l-6.242,3.056l-1.695,1.64l-0.386,1.479l0.258,1.174l0.777,1.75
+		l0.669,1.097l-0.921-0.134l-1.835,0.108l-5.532,2.412l-1.421,0.083l-1.695,0.489l-1.596,0.798l-5.427,1.658l-1.294,0.958
+		l-0.924,2.134l-5.408,0.149l-0.762-0.532l-4.378-1.114l-0.867,0.232l-3.945-0.671l-2.106-1.616l0.937-1.426l-1.169-1.477
+		l-2.572-1.475l-3.371-0.059l-1.437,0.63l-2.298-3.378l-3.91-3.527l-0.089-1.183l0.644-0.432l0.965-0.212l1.316-0.047l1.122-0.234
+		l1.721-1.267l2.795-0.777l2.02,0.137l2.814,1.305l-0.045-0.427l0.166-1.505l1.886-2.144l3.113-1.761l5.621-1.521l0.711-1.041
+		l-0.487-4.053l-0.707-1.579l-0.972-1.606l-0.503-1.892l-0.574-1.045l-0.803-0.453l-0.58-0.635l-0.599-0.327l-0.934-0.059
+		l-1.53-0.768l-1.026-1.556l-0.994-2.495l-1.654-2.064l-0.644-2.434l1.255-2.913l3.355-2.235L263.684,146.243z" />
+                                    <path city-id="20" class="st0" d="M318.784,248.736l-0.366,2.217l-2.944,7.135l-0.822,1.462l-1.765,0.01l-1.94,0.619l-1.734,1.462l-1.925,1.198
+		l-12.854,3.384l-4.891,2.914l-2.559,2.126l-0.271-0.295l-1.969-1.066l-0.22-1.056l0.048-1.081l-0.666-0.691l-0.994-0.771
+		l-0.491-0.878l-0.688-0.417l-1.08,0.772l-0.605,1.201l-0.201,0.958l-0.723,0.485l-0.956-0.751l-1.055-1.121l-2.317-1.17
+		l-1.007-0.859l-0.293-0.868l0.331-1.098l0.494-1.063l-0.035-0.985l-0.838-1.442l-1.354-1.639l-1.692-0.54l-1.549,0.887
+		l-1.702,0.577l-1.367,0.787l-1.051,3.238l-0.586,0.615l-2.463,1.564l-0.851-0.316l-3.48-0.303l-2.039-0.751l-1.568-0.916
+		l-0.402-0.776l0.163-0.891l0.255-0.82l1.233-2.853l-0.108-0.85l-0.382-1.001l0.223-1.208l0.484-0.789l3.212-2.895l0.542-0.752
+		l0.096-0.872l-0.567-2.406l-0.175-2.035l-0.484-2.036l-2.189-4.312l-0.249-3.939l-0.526-2.362l-1.555-0.618l-0.446-1.051
+		l1.077-0.431l3.177,0.33l1.424,0.684l0.691-0.159l-0.526-2.897l0.112-2.627l0.819-1.345l0.366-1.325l-0.347-2.186l0.771-1.174
+		l5.611-0.3l2.664,0.465l0.742,1.083l-0.653,1.396l0.468,1.706l1.214,1.447l1.001,0.919l1.348,0.133l0.755-1.522l-0.669-4.044
+		l-0.774-1.869l-1.482-1.756l-1.581-0.761l-3.307-0.909l-1.386-0.709l-0.707-0.693l-0.083-0.539l0.555-0.631l0.934-0.099
+		l1.775-0.551l1.491-1.745l-0.389-1.733l-1.373-2.292l-0.583-2.537l0.969-1.225l0.835-0.068l0.07,0.709l-0.032,0.955l0.599,0.867
+		l1.055,0.193l1.039-1.152l0.118-1.456l-0.73-0.958l-0.261-1.348l0.022-0.9l5.408-0.149l0.924-2.134l1.294-0.958l5.427-1.658
+		l1.596-0.798l1.695-0.489l1.421-0.083l5.532-2.412l1.835-0.108l0.921,0.134l1.329,0.315l3.11,0.196l3.027,0.889l1.772,1.602
+		l0.777,0.456l0.319-0.562v-0.633l-1.195-1.658l0.395-1.024l1.733,0.022l1.195,1.413l-0.013,2.098l0.22,1.265l0.876-0.175
+		l0.857-1.75l1.418-0.13l1.427,1.787l0.797,1.539l0.013,2.644l-2.667,8.646l-0.873,1.23l-1.029,2.938l-0.539,5.782l-0.366,1.443
+		l-0.57,0.336l-3.196,1.086l-3.82,0.604l-1.832,1.207l-2.683,0.771l-2.775-0.376l-1.762,1.422l-0.041,2.453l0.641,0.903
+		l-0.328,0.752l-2.877,1.621l-0.29,1.936l1.667,1.952l1.364,1.228l1.115,0.516l1.236-0.112l0.911,0.557l0.902,1.065l0.472,1.1
+		l-0.131,1.534l0.749,1.851l1.428,1.775l2.039,1.698l7.957,0.742l3.174,1.752L318.784,248.736z" />
+                                    <path city-id="21" class="st0" d="M286.983,271.263l2.559-2.126l4.891-2.914l12.854-3.384l1.925-1.198l1.734-1.462l1.94-0.619l1.765-0.01
+		l0.822-1.462l2.944-7.135l0.366-2.217l-0.873-0.469l-0.647-1.61l0.927-7.322l0.363-1.088l1.157-1.166l2.938-1.282l6.656-0.766
+		l2.387,0.123l10.397-2.703l5.962,3.238l3.018,0.498l8.447-0.541l2.1,0.331l13.125,4.331l1.606,0.254l73.582-2.209l1.692,0.557
+		l0.755,0.649l0.28,0.37l0.347,25.157l-0.819,2.622l-2.629,4.586l-1.768,1.233l-2.399,0.255l-3.062,1.65l-1.657,2.057l-1.402,6.168
+		l-1.007,2.741l-1.182,2.24l-1.702,2.079l-3.257,1.86l-32.629,11.264l-9.763-2.243l-2.25,0.078l-2.973,1.16l-1.854,1.184
+		l-1.361,1.145l-1.998,1.135l-2.221,0.654l-1.227,0.826l-0.233,1.213l0.886,11.216l-0.28,2.338l-1.29,5.113l-0.59,4.399
+		l-0.331,0.901l0.092,2.518l1.345,5.324h-0.054l-10.522,3.049l-2.291,0.011l-6.867-1.525l-1.434-1.294l-0.29-3.344l-0.472-0.983
+		l-0.532-0.082l-4.203,2.31l-0.596,0.812l-0.879,0.391l-4.152,2.816l-2.313,0.331l-2.992-0.716l-0.115,1.071l0.727,1.699
+		l0.943,0.971l1.214,0.462l1.354,0.257l1.778,1.357l0.892,2.433l-0.746,2.46l-0.628,3.682l-2.61,6.514l-0.242,3.139l0.315,2.125
+		l0.016,1.154l-0.867,0.284l-2.345,0.358l-0.625-0.615l-4.315-3.111l-3.32-3.541l-1.711-4.415l-0.214-2.407l0.309-1.239l0.083-2.805
+		l-2.814-9.338l-0.688-4.118l0.182-1.944l1.051-0.747l1.303-0.571l-0.07-1.104l-0.931-1.186l-0.609-1.116l0.131-1.12l1.233-0.855
+		l0.975-1.921l-0.57-3.78l-1.606-2.934l-3.582-2.711l-1.625-1.646l-3.919-3.046l-0.309-2.86l0.178-2.652l-0.672-1.062l-0.264-1.063
+		l-0.469-0.527l-0.809-0.209l-0.306-0.892l-0.303-1.664l-1.208-1.048l-1.329,0.233l-0.682,0.74l-1.271,0.435l-4.053,0.125
+		l-1.208,0.219l-3.438,2.242l-1.402,0.306l-0.946-0.325l-1.517,0.339l-2.007-0.246l-1.877-1.566l-1.89-1.037l-1.373,0.289
+		l-0.962,0.49l-1.109,0.19l-2.103-0.272l-6.073,3.281l0.822-2.728l0.663-1.018l-1.278-1.737l-3.091-1.177l-2.683,0.18l-1.663-0.894
+		l-1.491-3.702l-0.022-0.36l0.191-0.878l0.414-0.743l0.704-0.458l2.463-0.819l1.408-1.064l0.555-4.358l1.772-2.089l4.582-1.291
+		l0.742-0.445l0.061-0.682l0.175-0.863l3.116-6.278l-0.076-1.593l0.128-2.005L286.983,271.263z" />
+                                    <path city-id="22" class="st0" d="M278.8,307.744l6.073-3.281l2.103,0.272l1.109-0.19l0.962-0.49l1.373-0.289l1.89,1.037l1.877,1.566
+		l2.007,0.246l1.517-0.339l0.946,0.325l1.402-0.306l3.438-2.242l1.208-0.219l4.053-0.125l1.271-0.435l0.682-0.74l1.329-0.233
+		l1.208,1.048l0.303,1.664l0.306,0.892l0.809,0.209l0.469,0.527l0.264,1.063l0.672,1.062l-0.178,2.652l0.309,2.86l3.919,3.046
+		l1.625,1.646l3.582,2.711l1.606,2.934l0.57,3.78l-0.975,1.921l-1.233,0.855l-0.131,1.12l0.609,1.116l0.931,1.186l0.07,1.104
+		l-1.303,0.571l-1.051,0.747l-0.182,1.944l0.688,4.118l2.814,9.338l-0.083,2.805l-0.309,1.239l-1.055-0.075l-1.998,0.38l-1.53,1.35
+		l-1.67,0.873l-3.54-0.47l-1.052,0.018l-11.468-10.215l-0.95-0.123l-1.622,0.093l-5.407-2.179l-2.183-1.341l1.096-2.125l1.679-2.108
+		l0.086-1.682l-0.899-2.01l-2.619-2.83l-0.599-1.052l-1.533-1.397l-0.946-1.505l-0.927-2.181l-0.835-3.035l-0.414-0.963l-0.51-0.511
+		l-1.456-0.472l-0.446-0.514l-0.768-0.556l-0.749-0.98l-0.969-2.451l-4.646-7.367l-0.503-2.209L278.8,307.744z" />
+                                    <path city-id="23" class="st0" d="M327.349,356.458l0.214,2.407l1.711,4.415l3.32,3.541l4.315,3.111l0.625,0.615l0.918,4.48l0.009,1.709
+		l-0.166,0.355l-0.79,0.786l-1.517,0.896l-1.708,0.471l-3.272-0.854l-1.15-0.697l-0.685-0.878l-0.787-0.168l-3.534-1.727
+		l-2.511-0.627l-0.459,0.539l0.51,3.016l0.966,2.727l0.064,0.814l-0.424,0.764l0.226,0.782l0.755,1.264l-0.035,1.849l-0.653,1.377
+		l-8.231,4.815l-1.31,0.207l-5.172-0.311l-3.1,0.764l0.003,0.086l-0.535-0.505l-1.153-0.835l-3.604-1.299l-0.529-5.612l-0.577-2.373
+		l-0.985-1.117l-0.217-1.858l1.781-4.199l-0.529-1.891l-1.74-1.266l-2.938-1.569l-2.409-2.395l-1.246-1.598l-5.258,0.696
+		l-0.207-0.879l0.309-1.172l0.137-1.076l0.156-0.542l-0.092-1.454l-1.405-5.086l-0.026-2.109l0.51-1.169l0.777-1.041l1.048-0.798
+		l2.377-1.004l3.693-3.312l2.055-2.755l2.183,1.341l5.407,2.179l1.622-0.093l0.95,0.123l11.468,10.215l1.052-0.018l3.54,0.47
+		l1.67-0.873l1.53-1.35l1.998-0.38L327.349,356.458z" />
+                                    <path city-id="24" class="st0" d="M337.533,370.547l2.345-0.358l0.867-0.284l-0.016-1.154l-0.315-2.125l0.242-3.139l2.61-6.514l0.628-3.682
+		l0.746-2.46l-0.892-2.433l-1.778-1.357l-1.354-0.257l-1.214-0.462l-0.943-0.971l-0.727-1.699l0.115-1.071l2.992,0.716l2.313-0.331
+		l4.152-2.816l0.879-0.391l0.596-0.812l4.203-2.31l0.532,0.082l0.472,0.983l0.29,3.344l1.434,1.294l6.867,1.525l2.291-0.011
+		l10.522-3.049h0.054l7.845,3.021l4.665,4.296l3.961,4.821l7.198,18.214l5.124,9.175l4.917,6.045l1.342,2.385l1.096,7.81
+		l0.883,2.132l4.792,3.607l6.258,3.187l-0.006,0.701l0.841,2.807l2.508,5.205l0.347,1.359l0.672,1.191l0.733,0.747l1.383,0.88
+		l7.061,0.653l1.794,0.764l6.233,15.499l1.778,5.362l0.01,0.99l-1.01,0.735l0.159,1.663l9.273,8.997l0.819,2.209l-0.366,3.935
+		l-1.555,5.701l-0.15,1.459l0.147,1.126l2.607,2.138l1.472,2.409l-0.185,1.975l-0.529,0.853l-0.707,0.504l-0.927,0.411l-1.778-0.106
+		l-2.826,0.735l-4.209,2.266l-1.198,1.912l-1.013,3.086l-1.784,1.698l-3.849,1.178l-8.221-1.162l-2.814,0.648l-1.529,0.661
+		l-1.459-0.515l-1.874-0.241l-8.224,0.756l-3.19,1.106l-1.364,1.672l-0.452,2.754l-0.653,1.901l-0.003,0.382l0.35,1.018
+		l-0.838,1.353l-3.209,1.71l-9.432-1.676l-0.8-0.003l-2.24,0.579l-0.542-0.078l-0.516-0.253l-2.603-2.134l-1.141-0.457l-6.876-0.613
+		l-2.259-2.15l-0.844-1.632l-6.163-4.444l-3.948-3.729l-4.069-5.021l-4.181-9.375l-2.323-2.717l-1.026-0.613l-1.367-0.541
+		l-0.771-1.273l-4.515-12.79l-0.717-3.163l-13.839-26.099l-2.728-2.513l-2.46-0.911l-1.985-2.09l-2.176-3.448l-1.657-3.811
+		l-2.065-2.303l-4.232-1.369l-6.813-0.511l-1.759-0.674l-1.88-3.837l-1.552-1.547l-0.825-2.574v-1.83l-0.003-0.086l3.1-0.764
+		l5.172,0.311l1.31-0.207l8.231-4.815l0.653-1.377l0.035-1.849l-0.755-1.264l-0.226-0.782l0.424-0.764l-0.064-0.814l-0.966-2.727
+		l-0.51-3.016l0.459-0.539l2.511,0.627l3.534,1.727l0.787,0.168l0.685,0.878l1.15,0.697l3.272,0.854l1.708-0.471l1.517-0.896
+		l0.79-0.786l0.166-0.355l-0.009-1.709L337.533,370.547z" />
+                                    <path city-id="25" class="st0" d="M445.088,435.306l-6.233-15.499l-1.794-0.764L430,418.39l-1.383-0.88l-0.733-0.747l-0.672-1.191l-0.347-1.359
+		l-2.508-5.205l-0.841-2.807l0.006-0.701l1.358-0.604l0.312-0.264l3.11-0.38l0.972-0.697l-0.035-1.008l-0.424-1.417l-0.328-2.026
+		l0.389-11.559l-0.994-0.685l-0.991-1.216l-0.736-3.571l-1.823-4.796l-1.721-3.261l-0.08-1.779l0.685-2.613l1.424-2.709l2.712-3.034
+		l17.328-3.074l3.945,0.15l2.527,0.515l5.815-0.792l5.226-2.309l0.462-2.504l0.395-11.362l1.373-2.933l16.369-8.654l2.18-2.321
+		l6.411-3.629l1.421-1.54l0.666-1.014l3.932,0.694l33.085,14.255l35.089,15.874l4.423,3.305l12.303,17.941l-6.322,29.431
+		l-0.277,2.951l0.73,0.771l1.392,0.921l1.23,3.112l1.064,7.48l-0.086,3.084l-0.946,3.497l-2.584,3.95l-0.443,2.274l0.443,2.342
+		l0.041,2.888l0.905,1.896l0.322,1.366l-0.051,1.301l-0.905,0.984l-1.392,1.096l-7.173,4.181l-3.505,1.191l-1.784,0.954l1.147,1.774
+		l2.533,1.926l1.096,1.777l-0.956,3.168l-3.556,4.65l0.207,12.088l-0.408,3.986l-3.55,13.941l0.01,3.435l0.739,2.908l0.118,1.291
+		l-0.099,2.228l0.641,2.352l2.345,2.707l1.625,3.303l-0.873,2.622l-0.867,1.484l0.503,0.793l0.985,0.898l0.029,1.18l-0.988,1.181
+		l-0.768,1.583l0.577,2.006l1.064,1.262l0.264,1.32l-0.494,1.326l-0.58,0.707l0.054,1.122l-0.417,0.553l-0.376,0.895l0.019,2.117
+		l-0.185,1.274l-0.609,1.5l-1.259-1.899l-0.446-0.371l-0.841,0.005l-1.195-0.469L555.55,535l-0.908,0.96l-1.322,0.163l-1.53-0.051
+		l-1.271-0.291l-0.523-0.919l-0.086-1.074l-0.315-0.762l-0.073-0.666l0.293-0.632l0.045-0.372l-0.577-0.368l-1.925-0.3l-1.182-0.534
+		l-1.083-0.253l-1.068,0.503l-1.667,0.154l-2.53-0.451l-4.091,0.288l-0.051-0.7l0.631-0.773L536.68,527l-0.003-0.991l-0.175-0.997
+		l0.717-6.724l0.427-1.065l0.561-0.69l0.172-0.577l-0.041-0.877l-0.746-2.209l0.032-0.692l0.666,0.033l1.934,1.181l0.261-0.661
+		l-0.883-1.914l-1.81-2.098l-2.307-1.939l-2.122-1.279l-2.03-0.05l-1.262,0.859l-0.742,1.031l-1.45,1.364l-0.934-0.284l-2.087-1.542
+		l-9.527-5.065l-0.625-2.005l-0.965-12.983l-0.937-2.723l-0.835-1.71l-0.832-0.419l-0.701-1.016l0.545-1.072l0.854-0.718
+		l-0.207-1.749l-1.392-2.127l-1.402-1.534l-0.727-1.384l-1.227-1.599l-1.603-0.873l-0.95-0.125l-0.612-0.518l-0.446-0.74
+		l-1.125-5.431l0.277-3.579l-0.245-0.563l-3.218-1.578l-1.673-0.062l-1.418,1.118l-0.943,1.158l-3.336,3.174l-3.629,1.794
+		l-1.972,0.354l-3.668-0.564l-3.171-1.919l-2.645-2.438l-2.756-3.557l-0.644-3.426l0.762-2.599l-0.583-13.385l-0.873-1.284
+		l-0.921,0.118l-3.626,1.698l-6.169,4.682l-1.577,0.414l-1.383-0.691l-1.351-0.945l-1.345-1.763l-2.759-2.164l-5.57-1.584
+		L445.088,435.306z" />
+                                    <path city-id="26" class="st0" d="M269.687,198.746l-0.022,0.9l0.261,1.348l0.73,0.958l-0.118,1.456l-1.039,1.152l-1.055-0.193l-0.599-0.867
+		l0.032-0.955l-0.07-0.709l-0.835,0.068l-0.969,1.225l0.583,2.537l1.373,2.292l0.389,1.733l-1.491,1.745l-1.775,0.551l-0.934,0.099
+		l-0.555,0.631l0.083,0.539l0.707,0.693l1.386,0.709l3.307,0.909l1.581,0.761l1.482,1.756l0.774,1.869l0.669,4.044l-0.755,1.522
+		l-1.348-0.133l-1.001-0.919l-1.214-1.447l-0.468-1.706l0.653-1.396l-0.742-1.083l-2.664-0.465l-5.611,0.3l-0.771,1.174l0.347,2.186
+		l-0.366,1.325l-0.819,1.345l-0.112,2.627l0.526,2.897l-0.691,0.159l-1.424-0.684l-3.177-0.33l-1.077,0.431l0.446,1.051l1.555,0.618
+		l0.526,2.362l0.249,3.939l2.189,4.312l0.484,2.036l0.175,2.035l0.567,2.406l-0.096,0.872l-0.542,0.752l-3.212,2.895l-8.415-3.601
+		l-2.023,0.227l-1.638-0.096l-0.803,0.219l-1.622,1.671l-0.911,0.241l-1.144-0.432l-6.845-0.822l-13.24-8.717l-0.634-0.925
+		l-1.322-0.855l-0.774-0.348l0.535-1.052l1.137-1.725l3.056-0.22l3.46,0.741l0.94-0.78l-0.08-1.738l0.341-2.471l-0.312-1.525
+		l-0.589-0.896l-0.711,0.155l-1.421,0.624l-2.632,2.754l-0.784-1.201l-0.456-1.548l-0.835-0.441l-1.013-0.201l-2.266-1.241
+		l-1.565-1.271l-0.299-1.491l0.443-0.586l0.981-0.388l3.088-0.355l1.447-2.141l1.224-2.75l1.016-1.175l0.166-1.05l-0.016-0.571
+		l0.937-0.508l1.89-0.54l1.122-0.611l0.35-1.057l0.574-0.145l0.988,2.444l0.669,0.359l1.023-0.903l1.087-1.74l0.612-2.815
+		l-0.848-3.487l-1.762-1.75l-1.262-0.79l-1.51-1.844l-3.323-7.44l-2.148-3.189l0.478-0.96l1.619-1.808l0.707-0.074l1.456,3.036
+		l0.956,0.258l1.01-0.449l0.886-0.869l2.195-0.744l0.006-0.959l-0.366-0.81l-0.905-1.183L226.587,187l1.109-0.314l4.537,2.486
+		l1.042,1.898l1.383,0.862l6.621,0.226l2.705,1.473l2.591,0.639l2.333-0.819l1.131-1.542l-0.022-0.671l1.437-0.63l3.371,0.059
+		l2.572,1.475l1.169,1.477l-0.937,1.426l2.106,1.616l3.945,0.671l0.867-0.232l4.378,1.114L269.687,198.746z" />
+                                    <path city-id="27" class="st0" d="M286.983,271.263l-0.691,1.478l-0.128,2.005l0.076,1.593l-3.116,6.278l-0.175,0.863l-0.061,0.682l-0.742,0.445
+		l-4.582,1.291l-1.772,2.089l-0.555,4.358l-1.408,1.064l-2.463,0.819l-0.704,0.458l-0.414,0.743l-0.191,0.878l0.022,0.36
+		l-2.262,0.478l-4.334-0.413l-7.182-4.956l-6.829-0.69l-1.921-0.589l-1.584-1.541l-3.199-0.954l-3.276,0.242l-2.164,0.672
+		l-7.609,0.509l-1.666,1.274l-4.213,11.092l-1.686,2.473l-0.379-0.356l-0.605-0.889l-4.964-10.464l-3.629-4.783l-1.007-1.118
+		l-0.456-0.228l-0.583-0.178l-0.398-0.447l-0.605-1.158l-0.736-0.868l-0.341-0.152l-0.456-0.027l-0.402-0.128l-0.172-0.459
+		l-0.325-0.386l-3.792-1.904l-1.31-0.324l-0.787-0.477l-0.564-0.576l0.003-0.486l-0.545-0.253l-1.526-1.171l-0.147-0.172
+		l-0.172-0.137l-0.239-0.054l-0.207,0.04l-0.156,0.173l-0.166,0.04l-0.22-0.078l-0.102-0.172l-0.045-0.18l-0.054-0.097l-1.163-0.368
+		l-0.555-0.26l-0.405-0.357l-0.405-0.49l-0.086-0.311l0.354-0.645l0.045-0.373l-0.118-0.316l-0.319-0.134l-1.683-1.032l-0.647-0.232
+		l-0.806-1.028l-0.969-0.512l-0.695-1.231l-0.481-0.279l-0.038-0.287l0.478-1.43l0.086-0.557l0.529-0.231l0.538-0.06l0.679-1.681
+		l1.912-1.819l10.796-3.045l0.609-0.867l1.721-1.155l0.733-0.78l0.414-0.833l0.159-1.181l-0.274-1.821l-0.704-1.637l-0.424-0.579
+		l0.535-0.383l0.44-0.72l-0.115-0.283l-0.032-0.401l0.086-0.694l-0.054-0.43l-0.156-0.3l-0.21-0.226l-0.185-0.245l-0.08-0.362
+		l0.188-0.53l1.778-0.877l2.205-0.113l1.494-0.775l0.175-2.088l-0.28-2.016l0.092-0.833l0.593-0.395l0.895-0.242l2.119,0.288
+		l0.774,0.348l1.322,0.855l0.634,0.925l13.24,8.717l6.845,0.822l1.144,0.432l0.911-0.241l1.622-1.671l0.803-0.219l1.638,0.096
+		l2.023-0.227l8.415,3.601l-0.484,0.789l-0.223,1.208l0.382,1.001l0.108,0.85l-1.233,2.853l-0.255,0.82l-0.163,0.891l0.402,0.776
+		l1.568,0.916l2.039,0.751l3.48,0.303l0.851,0.316l2.463-1.564l0.586-0.615l1.051-3.238l1.367-0.787l1.702-0.577l1.549-0.887
+		l1.692,0.54l1.354,1.639l0.838,1.442l0.035,0.985l-0.494,1.063l-0.331,1.098l0.293,0.868l1.007,0.859l2.317,1.17l1.055,1.121
+		l0.956,0.751l0.723-0.485l0.201-0.958l0.605-1.201l1.08-0.772l0.688,0.417l0.491,0.878l0.994,0.771l0.666,0.691l-0.048,1.081
+		l0.22,1.056l1.969,1.066L286.983,271.263z" />
+                                    <path city-id="28" class="st0" d="M375.442,340.806l-1.345-5.324l-0.092-2.518l0.331-0.901l0.59-4.399l1.29-5.113l0.28-2.338l-0.886-11.216
+		l0.233-1.213l1.227-0.826l2.221-0.654l1.998-1.135l1.361-1.145l1.854-1.184l2.973-1.16l2.25-0.078l9.763,2.243l32.629-11.264
+		l3.257-1.86l1.702-2.079l1.182-2.24l1.007-2.741l1.402-6.168l1.657-2.057l3.062-1.65l2.399-0.255l1.768-1.233l2.629-4.586
+		l0.819-2.622l-0.347-25.157l0.003-0.092l0.542-0.247l2.833-0.53l7.906,0.18l3.384-1.753l11.086-18.696l12.603-3.296l12.252-5.824
+		l7.762-2l3.429,0.905l8.992,6.91l1.058,2.368l-0.417,2.411l-2.986,2.932l-12.217,8.662l-2.1,3.795l-3.884,11.709l-0.252,6.292
+		l1.918,10.697l1.447,2.284l6.124,0.735l7.877-1.833l1.319,1.686l1.22,2.356l2.304,15.585l2.011,4.595l2.616,1.499l0.736,0.58
+		l1.995,0.898l2.619,1.641l2.492,3.914l0.809,0.579l0.15,2.811l-0.252,1.131l-0.832,1.354l-0.526,1.312l0.223,0.807l0.472,0.845
+		l0.905,1.027l0.051,1.108l0.934,2.042l1.24,2.049l-0.067,2.006l-0.704,2.033l-0.277,1.786l-0.507,1.703l-4.107,5.513l-1.134,3.173
+		l-3.167,4.923l-1.612,4.154l-0.437,0.712l-33.085-14.255l-3.932-0.694l-0.666,1.014l-1.421,1.54l-6.411,3.629l-2.18,2.321
+		l-16.369,8.654l-1.373,2.933l-0.395,11.362l-0.462,2.504l-5.226,2.309l-5.815,0.792l-2.527-0.515l-3.945-0.15l-17.328,3.074
+		l-2.712,3.034l-1.424,2.709l-0.685,2.613l0.08,1.779l1.721,3.261l1.823,4.796l0.736,3.571l0.991,1.216l0.994,0.685l-0.389,11.559
+		l0.328,2.026l0.424,1.417l0.035,1.008l-0.972,0.697l-3.11,0.38l-0.312,0.264l-1.358,0.604l-6.258-3.187l-4.792-3.607l-0.883-2.132
+		l-1.096-7.81l-1.342-2.385l-4.917-6.045l-5.124-9.175l-7.198-18.214l-3.961-4.821l-4.665-4.296L375.442,340.806z" />
+                                    <path city-id="29" class="st0" d="M342.089,232.453l-10.397,2.703l-2.387-0.123l-6.656,0.766l-2.938,1.282l-1.157,1.166l-0.363,1.088
+		l-0.927,7.322l0.647,1.61l0.873,0.469l-7.115-1.94l-3.174-1.752l-7.957-0.742l-2.039-1.698l-1.428-1.775l-0.749-1.851l0.131-1.534
+		l-0.472-1.1l-0.902-1.065l-0.911-0.557l-1.236,0.112l-1.115-0.516l-1.364-1.228l-1.667-1.952l0.29-1.936l2.877-1.621l0.328-0.752
+		l-0.641-0.903l0.041-2.453l1.762-1.422l2.775,0.376l2.683-0.771l1.832-1.207l3.82-0.604l3.196-1.086l0.57-0.336l0.366-1.443
+		l0.539-5.782l1.029-2.938l0.873-1.23l0.003,0.095l8.858,0.1l7.405,2.237l17.573,10.482l0.417,1.503l-0.083,3.06l-0.835,3.283
+		l-1.357,3.194L342.089,232.453z" />
+                                    <path city-id="30" class="st0" d="M311.13,207.03l2.667-8.646l-0.013-2.644l-0.797-1.539l-1.427-1.787l0.814-1.884l1.99-1.225l1.617-1.991
+		l0.871-2.299l2.736-0.153l0.373-1.841l0.124-2.456l1.866-2.151l2.487-0.922l2.487,0.307l1.741-1.076v-2.153l0.103-1.613
+		l3.333,1.968l4.725,0.406l4.197,1.642l3.148,3.406l1.788,3.357l1.102,1.274l0.921,0.555l1.514,0.543l2.434,0.142l2.122-0.866
+		l4.002-4.847l2.826-2.24l2.043,0.267l2.195,0.926l2.772,0.516l3.527,1.916l2.345,0.486l1.632-0.221l0.991-0.595l1.338,0.31
+		l2.772,1.92l0.972,4.263l0.405,3.824l-0.991,3.402l-4.901,4.474l-3.062,1.639l-3.515,1.159l-2.492-0.096l-6.943-2.022l-2.348-0.054
+		l-2.253-0.779l-5.624-3.439l-1.702-1.487l-1.839-0.096l-0.669-0.236L345.164,194l-0.57-0.261l-0.516,0.545l-0.417,3.48l-0.58,2.276
+		l-0.191,1.724l0.236,1.609l3.48,4.631l1.396,2.54l-0.389,2.318l-1.577,2.453l-0.943,3.018l-0.121,1.611l-17.573-10.482
+		l-7.405-2.237l-8.858-0.1L311.13,207.03z" />
+                                    <path city-id="31" class="st0" d="M311.56,192.414l-1.418,0.13l-0.857,1.75l-0.876,0.175l-0.22-1.265l0.013-2.098l-1.195-1.413l-1.733-0.022
+		l-0.395,1.024l1.195,1.658v0.633l-0.319,0.562l-0.777-0.456l-1.772-1.602l-3.027-0.889l-3.11-0.196l-1.329-0.315l-0.669-1.097
+		l-0.777-1.75l-0.258-1.174l0.386-1.479l1.695-1.64l6.242-3.056l1.058-1.011l0.366-1.402l1.479-3.079l0.972-3.298l-1.424-1.232
+		l-2.189-0.651l-1.134-0.979l-1.574-2.17l0.889-1.351l3.499-0.287l7.332,0.785l5.095,1.012l1.963,0.781l0.558,0.809l1.173,1.085
+		l1.294,0.566l5.057,1.121l2.001,2.361l-0.103,1.613v2.153l-1.741,1.076l-2.487-0.307l-2.487,0.922l-1.866,2.151l-0.124,2.456
+		l-0.373,1.841l-2.736,0.153l-0.871,2.299l-1.617,1.991l-1.99,1.225L311.56,192.414z" />
+                                        </g>
+
+                                    </svg>
+                                </div>
+                            </div>
+                            <!-- /.box-body-->
+                            <div class="box-footer no-border">
+                                <div class="row">
+                                    <div class="col-xs-4 text-center" style="border-left: 1px solid #f4f4f4">
+                                        <div id="sparkline-1"></div>
+                                        <div class="knob-label">
+                                            <div> بازدید ها :</div> <div class="CityInformation">  </div>
+                                        </div>
+                                    </div>
+                                    <!-- ./col -->
+                                    <div class="col-xs-4 text-center" style="border-left: 1px solid #f4f4f4">
+                                        <div id="sparkline-2"></div>
+                                        <div class="knob-label">
+                                            <div>  آنلاین :</div> <div class="CityInformation">  </div>
+                                        </div>
+                                    </div>
+                                    <!-- ./col -->
+                                    <div class="col-xs-4 text-center">
+                                        <div id="sparkline-3"></div>
+                                        <div class="knob-label">
+                                            <div>  سفارش فعال :</div> <div class="CityInformation">  </div>
+                                        </div>
+                                    </div>
+                                    <!-- ./col -->
+                                </div>
+                                <!-- /.row -->
+                            </div>
+                        </div>
+                        <!-- /.box -->
+                        <!-- solid sales graph -->
+                        <div class="box box-solid bg-teal-gradient">
+                            <div class="box-header">
+                                <i class="fa fa-th"></i>
+
+                                <h3 class="box-title">نمودار فروش</h3>
+
+                                <div class="box-tools pull-left">
+                                    <button type="button" class="btn bg-teal btn-sm" data-widget="collapse">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn bg-teal btn-sm" data-widget="remove">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="box-body border-radius-none">
+                                <div class="chart" id="line-chart" style="height: 250px;"></div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer no-border">
+                                <div class="row">
+                                    <div class="col-xs-4 text-center" style="border-left: 1px solid #f4f4f4">
+                                        <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60"
+                                               data-fgColor="#39CCCC">
+
+                                        <div class="knob-label">سفارش ایمیلی</div>
+                                    </div>
+                                    <!-- ./col -->
+                                    <div class="col-xs-4 text-center" style="border-left: 1px solid #f4f4f4">
+                                        <input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60"
+                                               data-fgColor="#39CCCC">
+
+                                        <div class="knob-label">سفارش آنلاین</div>
+                                    </div>
+                                    <!-- ./col -->
+                                    <div class="col-xs-4 text-center">
+                                        <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60"
+                                               data-fgColor="#39CCCC">
+
+                                        <div class="knob-label">سفارش فیزیکی</div>
+                                    </div>
+                                    <!-- ./col -->
+                                </div>
+                                <!-- /.row -->
+                            </div>
+                            <!-- /.box-footer -->
+                        </div>
+                        <!-- /.box -->
+                        <!-- Calendar -->
+                        <div class="box box-solid bg-green-gradient">
+                            <div class="box-header">
+                                <i class="fa fa-calendar"></i>
+
+                                <h3 class="box-title">تقویم</h3>
+                                <!-- tools box -->
+                                <div class="pull-left box-tools">
+                                    <!-- button with a dropdown -->
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
+                                            <i class="fa fa-bars"></i>
+                                        </button>
+                                        <ul class="dropdown-menu pull-left" role="menu">
+                                            <li><a href="#">رویداد تازه</a></li>
+                                            <li><a href="#">حذف رویدادها</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#">نمایش تقویم</a></li>
+                                        </ul>
+                                    </div>
+                                    <button type="button" class="btn btn-success btn-sm" data-widget="collapse">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-success btn-sm" data-widget="remove">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </div>
+                                <!-- /. tools -->
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body no-padding">
+                                <!--The calendar -->
+                                <div id="calendar" style="width: 100%"></div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer text-black">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <!-- Progress bars -->
+                                        <div class="clearfix">
+                                            <span class="pull-right">نمایشگاه</span>
+                                            <small class="pull-left">90%</small>
+                                        </div>
+                                        <div class="progress xs">
+                                            <div class="progress-bar progress-bar-green" style="width: 90%;"></div>
+                                        </div>
+
+                                        <div class="clearfix">
+                                            <span class="pull-right">کمپین ۳۰ درصد</span>
+                                            <small class="pull-left">70%</small>
+                                        </div>
+                                        <div class="progress xs">
+                                            <div class="progress-bar progress-bar-green" style="width: 70%;"></div>
+                                        </div>
+                                    </div>
+                                    <!-- /.col -->
+                                    <div class="col-sm-6">
+                                        <div class="clearfix">
+                                            <span class="pull-right">کمپین ایمیل</span>
+                                            <small class="pull-left">60%</small>
+                                        </div>
+                                        <div class="progress xs">
+                                            <div class="progress-bar progress-bar-green" style="width: 60%;"></div>
+                                        </div>
+
+                                        <div class="clearfix">
+                                            <span class="pull-right">کمپین تجارت الکترونیک</span>
+                                            <small class="pull-left">40%</small>
+                                        </div>
+                                        <div class="progress xs">
+                                            <div class="progress-bar progress-bar-green" style="width: 40%;"></div>
+                                        </div>
+                                    </div>
+                                    <!-- /.col -->
+                                </div>
+                                <!-- /.row -->
+                            </div>
+                        </div>
+                        <!-- /.box -->
+
+                    </section>
+                    <!-- left col -->
+                </div>
+                <!-- /.row (main row) -->
+
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <footer class="main-footer text-left">
+            <strong>Copyleft &copy; 2014-2017 <a href="https://adminlte.io">Almsaeed Studio</a> & <a href="https://netparadis.com">NetParadis</a></strong>
+        </footer>
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Create the tabs -->
+            <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+                <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+                <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <!-- Home tab content -->
+                <div class="tab-pane" id="control-sidebar-home-tab">
+                    <h3 class="control-sidebar-heading">فعالیت ها</h3>
+                    <ul class="control-sidebar-menu">
+                        <li>
+                            <a href="javascript:void(0)">
+                                <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">تولد غلوم</h4>
+
+                                    <p>۲۴ مرداد</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <i class="menu-icon fa fa-user bg-yellow"></i>
+
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">آپدیت پروفایل سجاد</h4>
+
+                                    <p>تلفن جدید (800)555-1234</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">نورا به خبرنامه پیوست</h4>
+
+                                    <p>nora@example.com</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <i class="menu-icon fa fa-file-code-o bg-green"></i>
+
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">کرون جابز اجرا شد</h4>
+
+                                    <p>۵ ثانیه پیش</p>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.control-sidebar-menu -->
+
+                    <h3 class="control-sidebar-heading">پیشرفت کارها</h3>
+                    <ul class="control-sidebar-menu">
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h4 class="control-sidebar-subheading">
+                                    ساخت پوستر های تبلیغاتی
+                                    <span class="label label-danger pull-left">70%</span>
+                                </h4>
+
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h4 class="control-sidebar-subheading">
+                                    آپدیت رزومه
+                                    <span class="label label-success pull-left">95%</span>
+                                </h4>
+
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-success" style="width: 95%"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h4 class="control-sidebar-subheading">
+                                    آپدیت لاراول
+                                    <span class="label label-warning pull-left">50%</span>
+                                </h4>
+
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <h4 class="control-sidebar-subheading">
+                                    بخش پشتیبانی سایت
+                                    <span class="label label-primary pull-left">68%</span>
+                                </h4>
+
+                                <div class="progress progress-xxs">
+                                    <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.control-sidebar-menu -->
+
+                </div>
+                <!-- /.tab-pane -->
+                <!-- Stats tab content -->
+                <div class="tab-pane" id="control-sidebar-stats-tab">وضعیت</div>
+                <!-- /.tab-pane -->
+                <!-- Settings tab content -->
+                <div class="tab-pane" id="control-sidebar-settings-tab">
+                    <form method="post">
+                        <h3 class="control-sidebar-heading">تنظیمات عمومی</h3>
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                                گزارش کنترلر پنل
+                                <input type="checkbox" class="pull-left" checked>
+                            </label>
+
+                            <p>
+                                ثبت تمامی فعالیت های مدیران
+                            </p>
+                        </div>
+                        <!-- /.form-group -->
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                                ایمیل مارکتینگ
+                                <input type="checkbox" class="pull-left" checked>
+                            </label>
+
+                            <p>
+                                اجازه به کاربران برای ارسال ایمیل
+                            </p>
+                        </div>
+                        <!-- /.form-group -->
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                                در دست تعمیرات
+                                <input type="checkbox" class="pull-left" checked>
+                            </label>
+
+                            <p>
+                                قرار دادن سایت در حالت در دست تعمیرات
+                            </p>
+                        </div>
+
+
+                        <h3 class="control-sidebar-heading">تنظیمات گفتگوها</h3>
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                                آنلاین بودن من را نشان نده
+                                <input type="checkbox" class="pull-left" checked>
+                            </label>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                                اعلان ها
+                                <input type="checkbox" class="pull-left">
+                            </label>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                                حذف تاریخته گفتگوهای من
+                                <a href="javascript:void(0)" class="text-red pull-left"><i class="fa fa-trash-o"></i></a>
+                            </label>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </aside>
+
+        <div class="control-sidebar-bg"></div>
+    </div>
+
+    <!-- jQuery 3 -->
+    <script src="~/bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="~/bower_components/jquery-ui/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+        $.widget.bridge('uibutton', $.ui.button);
+    </script>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="~/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Morris.js charts -->
+    <script src="~/bower_components/raphael/raphael.min.js"></script>
+    <script src="~/bower_components/morris.js/morris.min.js"></script>
+    <!-- Sparkline -->
+    <script src="~/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
+    <!-- jvectormap -->
+    <script src="~/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="~/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+    <!-- jQuery Knob Chart -->
+    <script src="~/bower_components/jquery-knob/dist/jquery.knob.min.js"></script>
+    <!-- daterangepicker -->
+    <script src="~/bower_components/moment/min/moment.min.js"></script>
+    <script src="~/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- datepicker -->
+    <script src="~/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <!-- Bootstrap WYSIHTML5 -->
+    <script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+    <!-- Slimscroll -->
+    <script src="~/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="~/bower_components/fastclick/lib/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/dist/js/adminlte.min.js"></script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script src="~/dist/js/pages/dashboard.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="~/dist/js/demo.js"></script>
+</body>
+</html>
+
+
+
+<!-- Modal -->
+<div id="modal" class="modal" tabindex="-1">
+    <div class="modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span id="BtnCloseModal" class="btn-close"></span>
+            </div>
+            <div id="modal-body" class="modal-body ">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal2" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="btn-close"></span>
+            </div>
+            <div id="modal-body2" class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>

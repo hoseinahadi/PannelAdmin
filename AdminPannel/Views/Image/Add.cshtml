@@ -1,0 +1,46 @@
+﻿@model DomainModel.DTO.Image.ImageAddOrEditModel
+@{
+    var product = ViewBag.product;
+    var user = ViewBag.user;
+}
+
+
+
+<div class="row">
+    <div class="col-md-8">
+        <form method="post" asp-action="Add" asp-controller="Image" id="Addform" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="form-group">
+                <div>
+                    <select asp-for="UserId" asp-items="@user" placeholder="select product" class="form-control w-100 dropdown">
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+                    <select asp-for="ProductId" asp-items="@product" placeholder="select product" class="form-control w-100 dropdown">
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="ImageName" class="control-label"></label>
+                <input asp-for="ImageName" class="form-control" />
+                <span asp-validation-for="ImageName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Picture" class="control-label"></label>
+                <input id="PictureInputId" asp-for="Picture" class="form-control" multiple/>
+                <span asp-validation-for="Picture" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-success" value="Upload" />
+                <span id="AddFormBtn" class="btn btn-success"> افزودن </span>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+

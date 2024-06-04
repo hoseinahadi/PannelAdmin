@@ -1,0 +1,32 @@
+﻿@model DomainModel.DTO.Message.MessageAddEditModel
+
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form id="UpdateFormUser">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                
+                <input type="hidden" asp-for="MessageId" class="form-control" />
+                
+            </div>
+            <div class="form-group">
+                <label asp-for="MessageBody" class="control-label"></label>
+                <input asp-for="MessageBody" class="form-control" />
+                <span asp-validation-for="MessageBody" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MessageHeader" class="control-label"></label>
+                <input asp-for="MessageHeader" class="form-control" />
+                <span asp-validation-for="MessageHeader" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span id="BtnUpdateNewMessage" class="btn btn-success"> اپدیت  </span>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,77 @@
+﻿@model IEnumerable<DomainModel.Models.User>
+
+@{
+    ViewData["Title"] = "GetAllUser";
+}
+<style>
+    .SideBarGetMessageContainer {
+        width: 230px;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .xxxxx {
+        display: flex;
+    }
+
+    .GetAllUserContainrt {
+        height: 1050px;
+    }
+
+    .GetAllUserLeftContainer {
+        display: flex;
+        height: 100%;
+    }
+
+    .MainGetAllUserContainrt {
+        width: 88%;
+        margin-top: 70px;
+    }
+
+    .modal-dialog-scrollable {
+        width: 60%;
+        margin: auto auto;
+    }
+    
+</style>
+
+
+<div class="GetAllUserContainrt">
+    <div class="HeaderBarContainer">
+        @await Component.InvokeAsync("HeaderBar")
+    </div>
+    <div class="GetAllUserLeftContainer">
+        <div class="SideBarGetMessageContainer">
+            @await Component.InvokeAsync("BaseView")
+        </div>
+        <div class="MainGetAllUserContainrt">
+            @await Component.InvokeAsync("GetAllUser")
+        </div>
+    </div>
+</div>
+
+
+<div id="modal" class="modal" tabindex="-1">
+    <div class="modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span id="BtnCloseModal" class="btn-close"></span>
+            </div>
+            <div id="modal-body" class="modal-body ">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal2" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span id="BtnCloseModal2" class="btn-close"></span>
+            </div>
+            <div id="modal-body2" class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+            

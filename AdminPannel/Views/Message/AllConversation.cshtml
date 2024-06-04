@@ -1,0 +1,77 @@
+﻿@model IEnumerable<DomainModel.Models.Conversation>
+
+
+
+
+<style>
+    .GetMessageContainer {
+        display: flex;
+        height: 1080px
+    }
+
+    .SideBarGetMessageContainer {
+        width: 230px;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .LeftAllConversationContainer {
+        width: 75%;
+        display: flex;
+        flex-direction: row-reverse;
+        margin: 0 auto;
+        height: 400px;
+        flex-wrap: wrap;
+    }
+
+    .HeaderBarGetMessageContainer {
+        width: 100%;
+        height: auto;
+    }
+    .direct-chat-messages {
+        -webkit-transform: translate(0, 0);
+        -ms-transform: translate(0, 0);
+        -o-transform: translate(0, 0);
+        transform: translate(0, 0);
+        padding: 10px;
+        height: 400px;
+        overflow: auto;
+    }
+
+    #ConversationBoxInAllConversation {
+        display: flex;
+        width: 30%;
+        height: 300px;
+        margin: 0 37px 50px 0;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .direct-chat .box-body {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        position: relative;
+        overflow-x: hidden;
+        padding: 0;
+        height: 65%;
+    }
+</style>
+
+
+
+
+
+<div class="GetMessageContainer">
+    <div class="SideBarGetMessageContainer">
+        @await Component.InvokeAsync("BaseView")
+    </div>
+    <div class="LeftAllConversationContainer">
+    @foreach (var item in Model) {
+            @await Component.InvokeAsync("Chat",item.ConversationId)
+    }
+
+        
+    </div>
+</div>
+
+           
+

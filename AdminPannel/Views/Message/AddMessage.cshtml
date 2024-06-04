@@ -1,0 +1,33 @@
+﻿@model DomainModel.DTO.Message.MessageAddEditModel
+@{
+    var role = ViewBag.role;
+}
+
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form id="AddNewUserForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MessageHeader" class="control-label"></label>
+                <input asp-for="MessageHeader" class="form-control" />
+                <span asp-validation-for="MessageHeader" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MessageBody" class="control-label"></label>
+                <input asp-for="MessageBody" class="form-control" />
+                <span asp-validation-for="MessageBody" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <select multiple asp-for="Target" asp-items="@role" placeholder=" گیرنده پیام را وارد کنید " class="form-control w-200 dropdown">
+                </select>
+            </div>
+            <div class="form-group">
+                <span id="BtnAddNewMessage" class="btn btn-success"> افزودن  </span>
+            </div>
+        </form>
+    </div>
+</div>
+
+

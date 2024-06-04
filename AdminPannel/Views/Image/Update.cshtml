@@ -1,0 +1,56 @@
+﻿@model DomainModel.DTO.Image.ImageAddOrEditModel
+
+@{
+    var product = ViewBag.product;
+    var user = ViewBag.user;
+}
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form id="UpdateForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="hidden" asp-for="ImageId" class="form-control" />
+            </div>
+            <div class="form-group">
+                <div>
+                    <select asp-for="UserId" asp-items="@product" placeholder="select product" class="form-control w-100 dropdown">
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+                    <select asp-for="ProductId" asp-items="@user" placeholder="select product" class="form-control w-100 dropdown">
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageUrl" class="control-label"></label>
+                <input asp-for="ImageUrl" class="form-control" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageName" class="control-label"></label>
+                <input asp-for="ImageName" class="form-control" />
+                <span asp-validation-for="ImageName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageCode" class="control-label"></label>
+                <input asp-for="ImageCode" class="form-control" />
+                <span asp-validation-for="ImageCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Picture" class="control-label"></label>
+                <input asp-for="Picture" class="form-control" />
+                <span asp-validation-for="Picture" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <span id="UpdateFormBtn" class="btn btn-success"> آپدیت </span>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+

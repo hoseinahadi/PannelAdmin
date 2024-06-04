@@ -1,0 +1,245 @@
+﻿
+<style>
+    .SideBarContainer {
+        width: 230px;
+        height: 100%;
+        overflow: hidden;
+    }
+
+        .SideBarContainer > div {
+            width: 108%;
+        }
+
+    .xxxxx {
+        display: flex;
+    }
+
+    .indexContainrt {
+        height: 1050px;
+    }
+
+    .mainContainer {
+        display: flex;
+        height: 100%;
+    }
+
+    .leftContainrt {
+        width: 88%;
+        margin-top: 70px;
+    }
+
+    .modal-dialog-scrollable {
+        width: 60%;
+        margin: auto auto;
+    }
+</style>
+<script>
+    $(document).on("click", "#Delete", function () {
+
+        var Url = '@Url.Action("Delete", "Product")';
+        var data = "orderId=" + $(this).attr("data");
+        $.ajax({
+            url: Url,
+            data: data,
+            type: "Delete",
+            success: function (result) {
+                if (result.success == false) {
+                    $("#modal-body2").html(result.message);
+                    $("#modal2").show();
+                }
+                if (result.success == true) {
+                    $("#modal-body2").html(result.message);
+                    $("#modal2").show();
+                }
+                else {
+                    $("#modal-body2").html(result);
+                    $("#modal2").show();
+                }
+            },
+            error: function (result) {
+
+            }
+        });
+
+    });
+    $(document).on("click", "#Update", function () {
+
+        var Url = '@Url.Action("Update", "Product")';
+        var data = "id=" + $(this).attr("data");
+        $.ajax({
+            url: Url,
+            data: data,
+            type: "GET",
+            success: function (result) {
+                $("#modal").show();
+                $("#modal-body").html(result);
+            },
+            error: function (result) {
+
+            }
+        });
+    });
+
+    $(document).on("click", "#AddNewPageBtn", function () {
+
+        var Url = '@Url.Action("Add", "Product")';
+        $.ajax({
+            url: Url,
+            type: "GET",
+            success: function (result) {
+                $("#modal").show();
+                $("#modal-body").html(result);
+            },
+            error: function (result) {
+
+            }
+        });
+    });
+    $(document).on("click", "#UpdateFormBtn", function () {
+
+        var Url = '@Url.Action("Update", "Product")';
+        var data = $("#UpdateForm").serialize();
+        $.ajax({
+            url: Url,
+            data: data,
+            type: "POST",
+            success: function (result) {
+                var refreshUrl = '@Url.Action("ViewComponents", "Product")';
+                $.ajax({
+                    url: refreshUrl,
+                    type: "GET",
+                    success: function (result) {
+                        $('.leftContainrt').html(result);
+                    }
+                });
+                if (result.success == false) {
+                    $("#modal-body2").html(result);
+                    $("#modal2").show();
+                }
+                if (result.success == true) {
+                    $("#modal-body2").html(result);
+                    $("#modal2").show();
+                }
+                else {
+                    $("#modal-body2").html(result);
+                    $("#modal2").show();
+                }
+                
+            },
+            error: function (result) {
+
+            }
+        });
+
+
+    });
+    $(document).on("click", "#AddFormBtn", function () {
+
+        var Url = '@Url.Action("Add", "Product")';
+        var data = $("#Addform").serialize();
+        $.ajax({
+            url: Url,
+            data: data,
+            type: "POST",
+            success: function (result) {
+
+                if (result.success == false) {
+                    $("#modal-body2").html(result.message);
+                    $("#modal2").show();
+                }
+                if (result.success == true) {
+                    $("#modal-body2").html(result.message);
+                    $("#modal2").show();
+                }
+                else {
+                    $("#modal-body2").html(result.message);
+                    $("#modal2").show();
+                }
+                var refreshUrl = '@Url.Action("ViewComponents", "Product")';
+                $.ajax({
+                    url: refreshUrl,
+                    type: "GET",
+                    success: function (result) {
+                        $('.leftContainrt').html(result);
+                    }
+                });
+
+
+            },
+            error: function (result) {
+
+            }
+        });
+
+
+    });
+    $(document).on("click", "#Details", function () {
+        var Url = '@Url.Action("Details", "Product")';
+        var id = $(this).attr("data");
+
+        var data = "orderId=" + id;
+        $.ajax({
+            url: Url,
+            data: data,
+            type: "GET",
+            success: function (result) {
+                $(".MainGetAllOrderContainrt").html(result);
+            },
+            error: function (result) {
+
+            }
+        });
+
+
+    });
+    $(document).on("click", "#BtnCloseModal", function () {
+        $("#modal").hide();
+
+    });
+    $(document).on("click", "#BtnCloseModal2", function () {
+
+        $("#modal2").hide();
+    });
+</script>
+
+<div class="indexContainrt">
+    <div class="HeaderBarContainer">
+        @await Component.InvokeAsync("HeaderBar")
+    </div>
+    <div class="mainContainer">
+        <div class="SideBarContainer">
+            @await Component.InvokeAsync("BaseView")
+        </div>
+        <div class="leftContainrt">
+            @await Component.InvokeAsync("Product")
+        </div>
+    </div>
+</div>
+
+
+
+
+<div id="modal" class="modal" tabindex="-1">
+    <div class="modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span id="BtnCloseModal" class="btn-close"></span>
+            </div>
+            <div id="modal-body" class="modal-body ">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal2" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span id="BtnCloseModal2" class="btn-close"></span>
+            </div>
+            <div id="modal-body2" class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+

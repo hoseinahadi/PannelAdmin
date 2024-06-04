@@ -1,0 +1,113 @@
+﻿@model DomainModel.DTO.Order.OrderAddEditModel
+@{
+    var productOrder = ViewBag.ShowMembers;
+    var x = 10;
+}
+<script>
+    $(document).on("click", "#ProductOrder", function () {
+        
+        var Url = '@Url.Action("GetAllInOrder", "Product")';
+
+        $.ajax({
+            url: Url,
+            type: "GET",
+            success: function (result) {
+                $("#ProductOrder").empty();
+                $('#modal3').show();
+                $('#modal-body3').html(result);
+            },
+            error: function (result) {
+                $(".ResponseMessageLogIn").html(result.message);
+                
+            }
+        });
+
+    });
+    $(document).on("click", "#BtnCloseModal3", function () {
+        console.log(productOrder);
+        $("#modal3").hide();
+
+    });
+</script>
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form id="AddNewOrderForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CurrencyName" class="control-label"></label>
+                <input asp-for="CurrencyName" class="form-control" />
+                <span asp-validation-for="CurrencyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OrderData" class="control-label"></label>
+                <input asp-for="OrderData" class="form-control" />
+                <span asp-validation-for="OrderData" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="ShoppingPhone" class="control-label"></label>
+                <input asp-for="ShoppingPhone" class="form-control" />
+                <span asp-validation-for="ShoppingPhone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address.City" class="control-label"></label>
+                <input asp-for="Address.City" class="form-control" />
+                <span asp-validation-for="Address.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address.Country" class="control-label"></label>
+                <input asp-for="Address.Country" class="form-control" />
+                <span asp-validation-for="Address.Country" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address.MobileNumber" class="control-label"></label>
+                <input asp-for="Address.MobileNumber" class="form-control" />
+                <span asp-validation-for="Address.MobileNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address.Note" class="control-label"></label>
+                <input asp-for="Address.Note" class="form-control" />
+                <span asp-validation-for="Address.Note" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address.plaq" class="control-label"></label>
+                <input asp-for="Address.plaq" class="form-control" />
+                <span asp-validation-for="Address.plaq" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div>
+                    <select multiple asp-for="productId" asp-items="@productOrder" placeholder="select product" class="form-control w-50 dropdown">
+                    </select>
+                </div>
+            </div>
+            
+            
+            <div class="form-group">
+                <span id="BtnAddNewOrder" class="btn btn-success"> افزودن سفارش </span>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+<div id="modal3" class="modal" tabindex="-1">
+    <div class="modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span id="BtnCloseModal3" class="btn-close"></span>
+            </div>
+            <div id="modal-body3" class="modal-body ">
+            </div>
+        </div>
+    </div>
+</div>
+

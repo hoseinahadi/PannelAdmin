@@ -1,0 +1,15 @@
+D:\Project\Back\ASp\AdminPannel\BusinessServices\bin\Debug\net8.0\BusinessServices.deps.json
+D:\Project\Back\ASp\AdminPannel\BusinessServices\bin\Debug\net8.0\BusinessServices.dll
+D:\Project\Back\ASp\AdminPannel\BusinessServices\bin\Debug\net8.0\BusinessServices.pdb
+D:\Project\Back\ASp\AdminPannel\BusinessServices\bin\Debug\net8.0\DomainModel.dll
+D:\Project\Back\ASp\AdminPannel\BusinessServices\bin\Debug\net8.0\DomainModel.pdb
+D:\Project\Back\ASp\AdminPannel\BusinessServices\obj\Debug\net8.0\BusinessServices.csproj.AssemblyReference.cache
+D:\Project\Back\ASp\AdminPannel\BusinessServices\obj\Debug\net8.0\BusinessServices.GeneratedMSBuildEditorConfig.editorconfig
+D:\Project\Back\ASp\AdminPannel\BusinessServices\obj\Debug\net8.0\BusinessServices.AssemblyInfoInputs.cache
+D:\Project\Back\ASp\AdminPannel\BusinessServices\obj\Debug\net8.0\BusinessServices.AssemblyInfo.cs
+D:\Project\Back\ASp\AdminPannel\BusinessServices\obj\Debug\net8.0\BusinessServices.csproj.CoreCompileInputs.cache
+D:\Project\Back\ASp\AdminPannel\BusinessServices\obj\Debug\net8.0\Business.77F375BB.Up2Date
+D:\Project\Back\ASp\AdminPannel\BusinessServices\obj\Debug\net8.0\BusinessServices.dll
+D:\Project\Back\ASp\AdminPannel\BusinessServices\obj\Debug\net8.0\refint\BusinessServices.dll
+D:\Project\Back\ASp\AdminPannel\BusinessServices\obj\Debug\net8.0\BusinessServices.pdb
+D:\Project\Back\ASp\AdminPannel\BusinessServices\obj\Debug\net8.0\ref\BusinessServices.dll

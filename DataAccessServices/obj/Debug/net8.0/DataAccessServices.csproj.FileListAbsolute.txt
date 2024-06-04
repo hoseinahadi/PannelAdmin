@@ -1,0 +1,15 @@
+D:\Project\Back\ASp\AdminPannel\DataAccessServices\bin\Debug\net8.0\DataAccessServices.deps.json
+D:\Project\Back\ASp\AdminPannel\DataAccessServices\bin\Debug\net8.0\DataAccessServices.dll
+D:\Project\Back\ASp\AdminPannel\DataAccessServices\bin\Debug\net8.0\DataAccessServices.pdb
+D:\Project\Back\ASp\AdminPannel\DataAccessServices\bin\Debug\net8.0\DomainModel.dll
+D:\Project\Back\ASp\AdminPannel\DataAccessServices\bin\Debug\net8.0\DomainModel.pdb
+D:\Project\Back\ASp\AdminPannel\DataAccessServices\obj\Debug\net8.0\DataAccessServices.csproj.AssemblyReference.cache
+D:\Project\Back\ASp\AdminPannel\DataAccessServices\obj\Debug\net8.0\DataAccessServices.GeneratedMSBuildEditorConfig.editorconfig
+D:\Project\Back\ASp\AdminPannel\DataAccessServices\obj\Debug\net8.0\DataAccessServices.AssemblyInfoInputs.cache
+D:\Project\Back\ASp\AdminPannel\DataAccessServices\obj\Debug\net8.0\DataAccessServices.AssemblyInfo.cs
+D:\Project\Back\ASp\AdminPannel\DataAccessServices\obj\Debug\net8.0\DataAccessServices.csproj.CoreCompileInputs.cache
+D:\Project\Back\ASp\AdminPannel\DataAccessServices\obj\Debug\net8.0\DataAcce.2B56C15A.Up2Date
+D:\Project\Back\ASp\AdminPannel\DataAccessServices\obj\Debug\net8.0\DataAccessServices.dll
+D:\Project\Back\ASp\AdminPannel\DataAccessServices\obj\Debug\net8.0\refint\DataAccessServices.dll
+D:\Project\Back\ASp\AdminPannel\DataAccessServices\obj\Debug\net8.0\DataAccessServices.pdb
+D:\Project\Back\ASp\AdminPannel\DataAccessServices\obj\Debug\net8.0\ref\DataAccessServices.dll

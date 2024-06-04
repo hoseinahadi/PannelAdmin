@@ -1,0 +1,125 @@
+﻿@model IEnumerable<DomainModel.DTO.Message.MessageNotRead>
+
+<style>
+    .GetMessageContainer {
+        display: flex;
+        height: 1080px
+    }
+
+    .SideBarGetMessageContainer {
+        width: 230px;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .LeftGetMessageContainer {
+        width: 75%;
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+        height: 50%;
+    }
+
+    .HeaderBarGetMessageContainer {
+        width: 100%;
+        height: auto;
+    }
+
+    .direct-chat-messages {
+        -webkit-transform: translate(0, 0);
+        -ms-transform: translate(0, 0);
+        -o-transform: translate(0, 0);
+        transform: translate(0, 0);
+        padding: 10px;
+        height: 400px;
+        overflow: auto;
+    }
+</style>
+
+<div class="GetMessageContainer">
+    <div class="SideBarGetMessageContainer">
+        @await Component.InvokeAsync("BaseView")
+    </div>
+    <div class="LeftGetMessageContainer">
+
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">
+                        جدول پیام ها
+                    </h3>
+                    <div class="box-tools">
+                        <div class="input-group input-group-sm" style="width: 150px;">
+                            <input type="text" name="table_search" class="form-control pull-right" placeholder="جستجو">
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>
+                                شماره
+                            </th>
+                            <th>
+                                کاربر
+                            </th>
+                            <th>
+                                تاریخ
+                            </th>
+                            <th>
+                                وضعیت
+                            </th>
+                            <th>
+                                موضوع
+                            </th>
+                            <th>
+                                پیام
+                            </th>
+                        </tr>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td> @item.messageId </td>
+                                <td> @item.userName </td>
+                                <td>
+                                    @item.MessageTime
+                                </td>
+                                <td>
+                                    @if (item.Status == " خوانده نشده ")
+                                    {
+                                        <span class="label label-danger">
+                                            @item.Status
+                                        </span>
+                                    }
+                                    @if (item.Status == " خوانده شده ")
+                                    {
+                                        <span class="label label-success">
+                                            @item.Status
+                                        </span>
+                                    }
+                                </td>
+                                <td>
+                                    @item.messageHeader
+                                </td>
+                                <td>
+                                    @item.messageBody
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+

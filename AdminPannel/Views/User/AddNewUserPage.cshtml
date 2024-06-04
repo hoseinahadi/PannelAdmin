@@ -1,0 +1,193 @@
+﻿@model DomainModel.DTO.User.UserAddEditModel
+
+
+
+
+<div class="col-md-12">
+    <form id="AddNewUserForm">
+        <table class="table table-active table-bordered table-hover table-sm">
+            <div asp-vatddation-summary="ModelOnly" class="text-danger"></div>
+            <tr class="form-group">
+                <td>
+                    <label asp-for="RoleId" class="control-label"></label>
+
+                </td>
+                <td>
+                    <input asp-for="RoleId" class="form-control" />
+                </td>
+                <span asp-vatddation-for="RoleId" class="text-danger"></span>
+            </tr>
+            <tr class="form-group">
+                <td>
+                    <label asp-for="GenderId" class="control-label"></label>
+                </td>
+                <td>
+                    <input asp-for="GenderId" class="form-control" />
+                </td>
+                <span asp-vatddation-for="GenderId" class="text-danger"></span>
+            </tr>
+            <tr class="form-group">
+                <td>
+                    <label asp-for="UserName" class="control-label"></label>
+
+                </td>
+                <td>
+                    <input asp-for="UserName" class="form-control" />
+
+                </td>
+                <span asp-vatddation-for="UserName" class="text-danger"></span>
+            </tr>
+            <tr class="form-group">
+                <td>
+                    <label asp-for="FirstName" class="control-label"></label>
+
+                </td>
+                <td>
+                    <input asp-for="FirstName" class="form-control" />
+
+                </td>
+                <span asp-vatddation-for="FirstName" class="text-danger"></span>
+            </tr>
+            <tr class="form-group">
+                <td>
+                    <label asp-for="LastName" class="control-label"></label>
+
+                </td>
+                <td>
+                    <input asp-for="LastName" class="form-control" />
+
+                </td>
+                <span asp-vatddation-for="LastName" class="text-danger"></span>
+            </tr>
+            <tr class="form-group">
+                <td>
+                    <label asp-for="Email" class="control-label"></label>
+
+                </td>
+                <td>
+                    <input asp-for="Email" class="form-control" />
+
+                </td>
+                <span asp-vatddation-for="Email" class="text-danger"></span>
+            </tr>
+            <tr class="form-group">
+                <td>
+                    <label asp-for="Phone" class="control-label"></label>
+
+                </td>
+                <td>
+                    <input asp-for="Phone" class="form-control" />
+
+                </td>
+                <span asp-vatddation-for="Phone" class="text-danger"></span>
+            </tr>
+            <tr class="form-group">
+                <td>
+                    @Html.DisplayNameFor(model => model.Active)
+
+                </td>
+                <td>
+                    <input asp-for="Active" />
+
+                </td>
+
+            </tr>
+            <tr class="form-group">
+                <td>
+                    <label asp-for="AddDate" class="control-label"></label>
+
+                </td>
+                <td>
+                    <input asp-for="AddDate" class="form-control" />
+
+                </td>
+                <span asp-vatddation-for="AddDate" class="text-danger"></span>
+            </tr>
+            <tr class="form-group">
+                <td>
+                    <label asp-for="BirthDay" class="control-label"></label>
+
+                </td>
+                <td>
+                    <input asp-for="BirthDay" class="form-control" />
+
+                </td>
+                <span asp-vatddation-for="BirthDay" class="text-danger"></span>
+            </tr>
+            <tr class="form-group">
+                <td>
+                    <label asp-for="Address.City" class="control-label"></label>
+
+                </td>
+                <td>
+                    <input asp-for="Address.City" class="form-control" />
+
+                </td>
+                <span asp-vatddation-for="Address.City" class="text-danger"></span>
+            </tr>
+            <tr class="form-group">
+                <td>
+                    <label asp-for="Address.CountryId" class="control-label"></label>
+
+                </td>
+                <td>
+                    <input asp-for="Address.CountryId" class="form-control" />
+
+                </td>
+                <span asp-vatddation-for="Address.CountryId" class="text-danger"></span>
+            </tr>
+            <tr class="form-group">
+                <td>
+                    <label asp-for="Address.plaq" class="control-label"></label>
+
+                </td>
+                <td>
+                    <input asp-for="Address.plaq" class="form-control" />
+
+                </td>
+                <span asp-vatddation-for="Address.plaq" class="text-danger"></span>
+            </tr>
+            <tr class="form-group">
+                <td>
+                    <label asp-for="Address.State" class="control-label"></label>
+
+                </td>
+                <td>
+                    <input asp-for="Address.State" class="form-control" />
+
+                </td>
+                <span asp-vatddation-for="Address.State" class="text-danger"></span>
+            </tr>
+            <tr class="form-group">
+                <td>
+                    <label asp-for="Password" class="control-label"></label>
+
+                </td>
+                <td>
+                    <input asp-for="Password" class="form-control" />
+
+                </td>
+                <span asp-vatddation-for="Password" class="text-danger"></span>
+            </tr>
+            <tr class="form-group">
+                <td>
+                    <label asp-for="Address.Street" class="control-label"></label>
+
+                </td>
+                <td>
+                    <input asp-for="Address.Street" class="form-control" />
+
+                </td>
+                <span asp-vatddation-for="Address.Street" class="text-danger"></span>
+            </tr>
+            <tr class="form-group">
+                <td colspan="2">
+                    <span id="BtnAddNewUser" class="btn btn-success"> اضاقه کردن کاربر </span>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+
+

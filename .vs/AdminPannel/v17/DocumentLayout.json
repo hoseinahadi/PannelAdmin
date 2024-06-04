@@ -1,0 +1,169 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Project\\Back\\ASp\\AdminPannel\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C0DE7AE0-F351-4691-B93E-E65729393744}|AdminPannel\\AdminPannel.csproj|d:\\project\\back\\asp\\adminpannel\\adminpannel\\viewcomponents\\addressviewcomponents.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0DE7AE0-F351-4691-B93E-E65729393744}|AdminPannel\\AdminPannel.csproj|solutionrelative:adminpannel\\viewcomponents\\addressviewcomponents.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D359C758-1660-40AB-A3EF-E630D16D48FD}|DomainModel\\DomainModel.csproj|d:\\project\\back\\asp\\adminpannel\\domainmodel\\models\\context\\shikashopcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D359C758-1660-40AB-A3EF-E630D16D48FD}|DomainModel\\DomainModel.csproj|solutionrelative:domainmodel\\models\\context\\shikashopcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D359C758-1660-40AB-A3EF-E630D16D48FD}|DomainModel\\DomainModel.csproj|d:\\project\\back\\asp\\adminpannel\\domainmodel\\dto\\chatroom\\createchatroom.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D359C758-1660-40AB-A3EF-E630D16D48FD}|DomainModel\\DomainModel.csproj|solutionrelative:domainmodel\\dto\\chatroom\\createchatroom.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{62022065-CF19-46D1-B6BE-BA743FA57B6E}|DataAccessServices\\DataAccessServices.csproj|d:\\project\\back\\asp\\adminpannel\\dataaccessservices\\services\\iaccessrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{62022065-CF19-46D1-B6BE-BA743FA57B6E}|DataAccessServices\\DataAccessServices.csproj|solutionrelative:dataaccessservices\\services\\iaccessrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{62022065-CF19-46D1-B6BE-BA743FA57B6E}|DataAccessServices\\DataAccessServices.csproj|d:\\project\\back\\asp\\adminpannel\\dataaccessservices\\services\\icategoryrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{62022065-CF19-46D1-B6BE-BA743FA57B6E}|DataAccessServices\\DataAccessServices.csproj|solutionrelative:dataaccessservices\\services\\icategoryrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0DE7AE0-F351-4691-B93E-E65729393744}|AdminPannel\\AdminPannel.csproj|d:\\project\\back\\asp\\adminpannel\\adminpannel\\views\\home\\homepage.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C0DE7AE0-F351-4691-B93E-E65729393744}|AdminPannel\\AdminPannel.csproj|solutionrelative:adminpannel\\views\\home\\homepage.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0DE7AE0-F351-4691-B93E-E65729393744}|AdminPannel\\AdminPannel.csproj|d:\\project\\back\\asp\\adminpannel\\adminpannel\\views\\product\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C0DE7AE0-F351-4691-B93E-E65729393744}|AdminPannel\\AdminPannel.csproj|solutionrelative:adminpannel\\views\\product\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0DE7AE0-F351-4691-B93E-E65729393744}|AdminPannel\\AdminPannel.csproj|d:\\project\\back\\asp\\adminpannel\\adminpannel\\controllers\\tablecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0DE7AE0-F351-4691-B93E-E65729393744}|AdminPannel\\AdminPannel.csproj|solutionrelative:adminpannel\\controllers\\tablecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0DE7AE0-F351-4691-B93E-E65729393744}|AdminPannel\\AdminPannel.csproj|d:\\project\\back\\asp\\adminpannel\\adminpannel\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C0DE7AE0-F351-4691-B93E-E65729393744}|AdminPannel\\AdminPannel.csproj|solutionrelative:adminpannel\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AddressViewComponents.cs",
+              "DocumentMoniker": "D:\\Project\\Back\\ASp\\AdminPannel\\AdminPannel\\ViewComponents\\AddressViewComponents.cs",
+              "RelativeDocumentMoniker": "AdminPannel\\ViewComponents\\AddressViewComponents.cs",
+              "ToolTip": "D:\\Project\\Back\\ASp\\AdminPannel\\AdminPannel\\ViewComponents\\AddressViewComponents.cs",
+              "RelativeToolTip": "AdminPannel\\ViewComponents\\AddressViewComponents.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-01T11:27:51.188Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ShikaShopContext.cs",
+              "DocumentMoniker": "D:\\Project\\Back\\ASp\\AdminPannel\\DomainModel\\Models\\Context\\ShikaShopContext.cs",
+              "RelativeDocumentMoniker": "DomainModel\\Models\\Context\\ShikaShopContext.cs",
+              "ToolTip": "D:\\Project\\Back\\ASp\\AdminPannel\\DomainModel\\Models\\Context\\ShikaShopContext.cs",
+              "RelativeToolTip": "DomainModel\\Models\\Context\\ShikaShopContext.cs",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAAAAgAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-01T11:27:15.074Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CreateChatRoom.cs",
+              "DocumentMoniker": "D:\\Project\\Back\\ASp\\AdminPannel\\DomainModel\\DTO\\ChatRoom\\CreateChatRoom.cs",
+              "RelativeDocumentMoniker": "DomainModel\\DTO\\ChatRoom\\CreateChatRoom.cs",
+              "ToolTip": "D:\\Project\\Back\\ASp\\AdminPannel\\DomainModel\\DTO\\ChatRoom\\CreateChatRoom.cs",
+              "RelativeToolTip": "DomainModel\\DTO\\ChatRoom\\CreateChatRoom.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-01T11:26:39.729Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IAccessRepository.cs",
+              "DocumentMoniker": "D:\\Project\\Back\\ASp\\AdminPannel\\DataAccessServices\\Services\\IAccessRepository.cs",
+              "RelativeDocumentMoniker": "DataAccessServices\\Services\\IAccessRepository.cs",
+              "ToolTip": "D:\\Project\\Back\\ASp\\AdminPannel\\DataAccessServices\\Services\\IAccessRepository.cs",
+              "RelativeToolTip": "DataAccessServices\\Services\\IAccessRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-01T11:26:19.587Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ICategoryRepository.cs",
+              "DocumentMoniker": "D:\\Project\\Back\\ASp\\AdminPannel\\DataAccessServices\\Services\\ICategoryRepository.cs",
+              "RelativeDocumentMoniker": "DataAccessServices\\Services\\ICategoryRepository.cs",
+              "ToolTip": "D:\\Project\\Back\\ASp\\AdminPannel\\DataAccessServices\\Services\\ICategoryRepository.cs",
+              "RelativeToolTip": "DataAccessServices\\Services\\ICategoryRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAA4AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-01T11:24:59.219Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Project\\Back\\ASp\\AdminPannel\\AdminPannel\\Views\\Product\\Index.cshtml",
+              "RelativeDocumentMoniker": "AdminPannel\\Views\\Product\\Index.cshtml",
+              "ToolTip": "D:\\Project\\Back\\ASp\\AdminPannel\\AdminPannel\\Views\\Product\\Index.cshtml",
+              "RelativeToolTip": "AdminPannel\\Views\\Product\\Index.cshtml",
+              "ViewState": "AQIAABsAAAAAAAAAAAAAACcAAAAsAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-05-18T10:53:59.013Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\Project\\Back\\ASp\\AdminPannel\\AdminPannel\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "AdminPannel\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\Project\\Back\\ASp\\AdminPannel\\AdminPannel\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "AdminPannel\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AQIAAD8AAAAAAAAAAAAAAEQAAAC2AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-05-18T05:20:28.285Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "HomePage.cshtml",
+              "DocumentMoniker": "D:\\Project\\Back\\ASp\\AdminPannel\\AdminPannel\\Views\\Home\\HomePage.cshtml",
+              "RelativeDocumentMoniker": "AdminPannel\\Views\\Home\\HomePage.cshtml",
+              "ToolTip": "D:\\Project\\Back\\ASp\\AdminPannel\\AdminPannel\\Views\\Home\\HomePage.cshtml",
+              "RelativeToolTip": "AdminPannel\\Views\\Home\\HomePage.cshtml",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAO8IAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-05-18T04:35:14.424Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "TableController.cs",
+              "DocumentMoniker": "D:\\Project\\Back\\ASp\\AdminPannel\\AdminPannel\\Controllers\\TableController.cs",
+              "RelativeDocumentMoniker": "AdminPannel\\Controllers\\TableController.cs",
+              "ToolTip": "D:\\Project\\Back\\ASp\\AdminPannel\\AdminPannel\\Controllers\\TableController.cs",
+              "RelativeToolTip": "AdminPannel\\Controllers\\TableController.cs",
+              "ViewState": "AQIAAAoAAAAAAAAAAAAiwCAAAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-18T04:34:03.164Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

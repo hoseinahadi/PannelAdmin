@@ -1,0 +1,77 @@
+﻿@model IEnumerable<DomainModel.Models.Image>
+
+<div class="topTableBtn">
+    <div id="AddNewPageBtn" class="btn btn-success">
+        افزودن
+    </div>
+    <div id="FilterBtn" class="btn btn-success">
+        فیلتر ها
+    </div>
+    <div id="SortedBtn" class="btn btn-success">
+        مرتب سازی
+    </div>
+</div>
+
+
+<table class="table table-sm table-bordered">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeId)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.ImageName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Picture)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployeeId)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageCode)
+            </td>
+                <td style="width: 350px">
+                    <img style="width: 100%;" src="@Url.Content(item.ImageUrl)" />
+            </td>
+            <td>
+                <span id="Delete" data="@item.ImageId" class="btn btn-danger"> حذف </span>
+                <span id="Update" data="@item.ImageId" class="btn btn-success"> ویرایش </span>
+                <span id="Details" data="@item.ImageId" class="btn btn-group"> جزئیات </span>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,118 @@
+﻿<script>
+    $(document).on("click", "#Delete", function () {
+
+        var Url = '@Url.Action("DeleteUser", "User")';
+        var data = "userId=" + $(this).attr("data");
+        $.ajax({
+            url: Url,
+            data: data,
+            type: "Delete",
+            success: function (result) {
+                $("#modal").show();
+                $("#modal-body").html(result);
+            },
+            error: function (result) {
+
+            }
+        });
+
+    });
+    $(document).on("click", "#Update", function () {
+
+        var Url = '@Url.Action("UpdateUserPage", "User")';
+        var data = "userId=" + $(this).attr("data");
+        $.ajax({
+            url: Url,
+            data: data,
+            type: "GET",
+            success: function (result) {
+                $("#modal").show();
+                $("#modal-body").html(result);
+            },
+            error: function (result) {
+
+            }
+        });
+    });
+
+    $(document).on("click", "#AddNewUserPageBtn", function () {
+
+        var Url = '@Url.Action("AddNewUserPage", "User")';
+        $.ajax({
+            url: Url,
+            type: "GET",
+            success: function (result) {
+                $("#modal").show();
+                $("#modal-body").html(result);
+            },
+            error: function (result) {
+
+            }
+        });
+    });
+    $(document).on("click", "#UpdateFormBtn", function () {
+
+        var Url = '@Url.Action("UpdateUser", "User")';
+        var data = $("#UpdateFormUser").serialize();
+        $.ajax({
+            url: Url,
+            data: data,
+            type: "POST",
+            success: function (result) {
+                $("#modal2").show();
+                $("#modal-body2").html(result);
+            },
+            error: function (result) {
+
+            }
+        });
+
+
+    });
+    $(document).on("click", "#BtnAddNewUser", function () {
+
+        var Url = '@Url.Action("AddNewUser", "User")';
+        var data = $("#AddNewUserForm").serialize();
+        $.ajax({
+            url: Url,
+            data: data,
+            type: "POST",
+            success: function (result) {
+                $("#modal2").show();
+                $("#modal-body2").html(result);
+            },
+            error: function (result) {
+
+            }
+        });
+
+
+    });
+    $(document).on("click", "#Details", function () {
+        var Url = '@Url.Action("UserProfile", "User")';
+        var id = $(this).attr("data");
+
+        var data = "id=" + id;
+        $.ajax({
+            url: Url,
+            data: data,
+            type: "GET",
+            success: function (result) {
+                $(".MainGetAllUserContainrt").html(result);
+            },
+            error: function (result) {
+
+            }
+        });
+
+
+    });
+    $(document).on("click", "#BtnCloseModal", function () {
+        $("#modal").hide();
+
+    });
+    $(document).on("click", "#BtnCloseModal2", function () {
+
+        $("#modal2").hide();
+    });
+</script>
